@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nursery/widgets/not_implemented_dialog.dart';
 
 void main() {
   runApp(const MyApp());
@@ -192,20 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       showDialog(
                         context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Not Implemented'),
-                            content: const Text(
-                              'This feature is currently under development. Please check back later!',
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
+                        builder: (context) => const NotImplementedDialog(),
                       );
                     },
                   ),
@@ -219,20 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       showDialog(
                         context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Not Implemented'),
-                            content: const Text(
-                              'This feature is currently under development. Please check back later!',
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
+                        builder: (context) => const NotImplementedDialog(),
                       );
                     },
                   ),
@@ -259,7 +234,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: InkWell(
                         splashColor: Colors.blue.withAlpha(30),
                         onTap: () {
-                          debugPrint('Card tapped.');
+                          showDialog(
+                            context: context,
+                            builder: (context) => const NotImplementedDialog(),
+                          );
                         },
                         child: const SizedBox(
                           width: 120,
