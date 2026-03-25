@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nursery/widgets/dashboard_info_card.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 
 class Dashboard extends StatefulWidget {
@@ -105,51 +106,22 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
                 const SizedBox(width: 16),
-                Card(
-                  clipBehavior: Clip.hardEdge,
-                  child: InkWell(
-                    splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const NotImplementedDialog(),
-                      );
-                    },
-                    child: const SizedBox(
-                      width: 120,
-                      height: 50,
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.people, size: 30),
-                            SizedBox(width: 6),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'STAFF RATIO',
-                                  style: TextStyle(
-                                    fontSize: 7.5,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Text(
-                                  '1:3',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                DashboardInfoCard(
+                  icon: Icons.people,
+                  label: 'STAFF RATIO',
+                  value: '1:3',
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const NotImplementedDialog(),
+                    );
+                  },
                 ),
+                DashboardInfoCard(
+                  icon: Icons.schedule,
+                  label: 'Current Time',
+                  value: DateTime.now().toLocal().toString().substring(11, 16),
+                )
               ],
             ),
           ),
