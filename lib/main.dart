@@ -183,66 +183,121 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Icon(Icons.notifications, size: 25, color: Colors.grey),
-                  const Icon(Icons.notifications, size: 25, color: Colors.grey),
-                ],
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Good morning, Toni',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  IconButton(
+                    icon: Icon(
+                      Icons.notifications,
+                      size: 25,
+                      color: Colors.grey,
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Card(
-                    clipBehavior: Clip.hardEdge,
-                    child: InkWell(
-                      splashColor: Colors.blue.withAlpha(30),
-                      onTap: () {
-                        debugPrint('Card tapped.');
-                      },
-                      child: const SizedBox(
-                        width: 120,
-                        height: 50,
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.people, size: 30),
-                              SizedBox(width: 6),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'STAFF RATIO',
-                                    style: TextStyle(
-                                      fontSize: 7.5,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  Text(
-                                    '1:3',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Not Implemented'),
+                            content: const Text(
+                              'This feature is currently under development. Please check back later!',
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
                               ),
                             ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(width: 12),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.account_circle,
+                      size: 25,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Not Implemented'),
+                            content: const Text(
+                              'This feature is currently under development. Please check back later!',
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.all(12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: const Text(
+                        'Good morning, Toni',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Card(
+                      clipBehavior: Clip.hardEdge,
+                      child: InkWell(
+                        splashColor: Colors.blue.withAlpha(30),
+                        onTap: () {
+                          debugPrint('Card tapped.');
+                        },
+                        child: const SizedBox(
+                          width: 120,
+                          height: 50,
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Icon(Icons.people, size: 30),
+                                SizedBox(width: 6),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'STAFF RATIO',
+                                      style: TextStyle(
+                                        fontSize: 7.5,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      '1:3',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
