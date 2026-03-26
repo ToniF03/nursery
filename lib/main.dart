@@ -58,7 +58,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedMobileIndex = 0;
-  bool _isLoggedIn = false;
+  bool _isLoggedIn = true;
 
   static const List<String> _mobileSections = [
     'Dashboard',

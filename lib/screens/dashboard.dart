@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:nursery/widgets/dashboard_info_card.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
@@ -11,9 +13,46 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final TextEditingController _searchController = TextEditingController();
+  Timer? _alignTimer;
+  Timer? _clockTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAlignedClock();
+  }
+
+  void _startAlignedClock() {
+    final DateTime now = DateTime.now();
+    final Duration delay = Duration(
+      seconds: 60 - now.second,
+      milliseconds: -now.millisecond,
+      microseconds: -now.microsecond,
+    );
+
+    _alignTimer = Timer(delay, () {
+      if (!mounted) return;
+
+      setState(() {});
+      _clockTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+        if (mounted) {
+          setState(() {});
+        }
+      });
+    });
+  }
+
+  String _currentTime() {
+    final DateTime now = DateTime.now();
+    final String hours = now.hour.toString().padLeft(2, '0');
+    final String minutes = now.minute.toString().padLeft(2, '0');
+    return '$hours:$minutes';
+  }
 
   @override
   void dispose() {
+    _alignTimer?.cancel();
+    _clockTimer?.cancel();
     _searchController.dispose();
     super.dispose();
   }
@@ -120,7 +159,7 @@ class _DashboardState extends State<Dashboard> {
                 DashboardInfoCard(
                   icon: Icons.schedule,
                   label: 'Current Time',
-                  value: DateTime.now().toLocal().toString().substring(11, 16),
+                  value: _currentTime(),
                 )
               ],
             ),
