@@ -26,15 +26,17 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: SizedBox(
           width: 300,
-          height: 212,
+          height: 292,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Login Screen',
+                'Nursery',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
+              Text('Your healthcare management companion'),
               SizedBox(height: 20),
+              Text('Username:'),
+              SizedBox(height: 10),
               TextField(
                 controller: _usernameController,
                 decoration: InputDecoration(
@@ -42,6 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(height: 10),
+              Text('Password:'),
               SizedBox(height: 10),
               TextField(
                 controller: _passwordController,
