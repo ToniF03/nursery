@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nursery/screens/dashboard.dart';
+import 'package:nursery/screens/login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -125,12 +126,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isDesktop = constraints.maxWidth >= 900;
+        bool isLoggedIn = false; // This should be managed by your authentication logic
 
         return Scaffold(
           body: Row(
             children: [
-              if (isDesktop) _buildSidebar(),
-              Expanded(child: Dashboard()),
+              if (isDesktop && isLoggedIn) _buildSidebar(),
+              Expanded(child: isLoggedIn ? const Dashboard() : const LoginScreen()),
             ],
           ),
           bottomNavigationBar: isDesktop
