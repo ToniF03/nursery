@@ -58,6 +58,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedMobileIndex = 0;
+  bool _isLoggedIn = false;
 
   static const List<String> _mobileSections = [
     'Dashboard',
@@ -126,13 +127,22 @@ class _MyHomePageState extends State<MyHomePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isDesktop = constraints.maxWidth >= 900;
-        bool isLoggedIn = false; // This should be managed by your authentication logic
 
         return Scaffold(
           body: Row(
             children: [
-              if (isDesktop && isLoggedIn) _buildSidebar(),
-              Expanded(child: isLoggedIn ? const Dashboard() : const LoginScreen()),
+              if (isDesktop && _isLoggedIn) _buildSidebar(),
+              Expanded(
+                child: _isLoggedIn
+                    ? const Dashboard()
+                    : LoginScreen(
+                        onLoginSuccess: () {
+                          setState(() {
+                            _isLoggedIn = true;
+                          });
+                        },
+                      ),
+              ),
             ],
           ),
           bottomNavigationBar: isDesktop
