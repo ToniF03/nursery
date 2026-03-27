@@ -124,23 +124,18 @@ class _DashboardState extends State<Dashboard> {
               ),
             ],
           ),
+
           Padding(
             padding: EdgeInsets.all(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: const Text(
-                    'Good morning, Toni',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                DashboardInfoCard(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final mobileLayout = !isDesktop;
+                final minCardsWidth = 280.0;
+                final greetingWidth = (constraints.maxWidth - minCardsWidth)
+                    .clamp(220.0, constraints.maxWidth)
+                    .toDouble();
+
+                final staffRatioCard = DashboardInfoCard(
                   icon: Icons.people,
                   label: 'STAFF RATIO',
                   value: '1:3',
@@ -150,13 +145,53 @@ class _DashboardState extends State<Dashboard> {
                       builder: (context) => const NotImplementedDialog(),
                     );
                   },
-                ),
-                DashboardInfoCard(
+                );
+
+                final currentTimeCard = DashboardInfoCard(
                   icon: Icons.schedule,
                   label: 'Current Time',
                   value: _currentTime(),
-                ),
-              ],
+                );
+
+                return Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: greetingWidth,
+                      child: const Text(
+                        'Good morning, Toni',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    if (mobileLayout)
+                      SizedBox(
+                        width: constraints.maxWidth,
+                        child: Row(
+                          children: [
+                            Expanded(child: staffRatioCard),
+                            const SizedBox(width: 12),
+                            Expanded(child: currentTimeCard),
+                          ],
+                        ),
+                      )
+                    else
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          staffRatioCard,
+                          const SizedBox(width: 12),
+                          currentTimeCard,
+                        ],
+                      ),
+                  ],
+                );
+              },
             ),
           ),
 
@@ -191,6 +226,12 @@ class _DashboardState extends State<Dashboard> {
                           'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
                       color: Colors.red,
                       data: "155",
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const NotImplementedDialog(),
+                        );
+                      },
                     ),
                     AlertCard(
                       title: 'Room 102 - A. Johnson',
@@ -199,6 +240,12 @@ class _DashboardState extends State<Dashboard> {
                           'Post-op Morphine (5mg) scheduled 10 mins ago. Pain scale currently 7/10.',
                       color: Colors.brown,
                       data: Icon(Icons.alarm_rounded, size: 40),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const NotImplementedDialog(),
+                        );
+                      },
                     ),
                   ],
                 ),
