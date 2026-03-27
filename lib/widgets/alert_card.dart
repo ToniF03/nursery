@@ -80,7 +80,7 @@ class AlertCard extends StatelessWidget {
                           SizedBox(width: 8),
                           Text(
                             subtitle,
-                            style: TextStyle(fontSize: 14, color: color),
+                            style: TextStyle(fontSize: 14, color: color, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(width: 8),
                           Expanded(
