@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:nursery/app_layout_state.dart';
+import 'package:nursery/widgets/alert_card.dart';
 import 'package:nursery/widgets/dashboard_info_card.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
+import 'package:nursery/widgets/pill.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -85,15 +88,11 @@ class _DashboardState extends State<Dashboard> {
                     fillColor: const Color(0xFFF1F3F5),
                     hintText: 'Search for patients, schedules, or messages',
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                      ),
+                      borderSide: const BorderSide(color: Colors.transparent),
                       borderRadius: BorderRadius.circular(25.7),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                      ),
+                      borderSide: const BorderSide(color: Colors.transparent),
                       borderRadius: BorderRadius.circular(25.7),
                     ),
                   ),
@@ -101,11 +100,7 @@ class _DashboardState extends State<Dashboard> {
               ),
               const SizedBox(width: 12),
               IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                  size: 25,
-                  color: Colors.grey,
-                ),
+                icon: Icon(Icons.notifications, size: 25, color: Colors.grey),
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -160,8 +155,54 @@ class _DashboardState extends State<Dashboard> {
                   icon: Icons.schedule,
                   label: 'Current Time',
                   value: _currentTime(),
-                )
+                ),
               ],
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: FractionallySizedBox(
+                widthFactor: isDesktop ? 2 / 5 : 1,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Urgent Alerts',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Pill(text: '4 HIGH', color: Colors.red, bold: true),
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    AlertCard(
+                      title: 'Room 101 - J. Doe',
+                      subtitle: 'Tachycardia detected',
+                      description:
+                          'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
+                      color: Colors.red,
+                      data: "155",
+                    ),
+                    AlertCard(
+                      title: 'Room 102 - A. Johnson',
+                      subtitle: 'Pain Meds Due',
+                      description:
+                          'Post-op Morphine (5mg) scheduled 10 mins ago. Pain scale currently 7/10.',
+                      color: Colors.brown,
+                      data: Icon(Icons.alarm_rounded, size: 40),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
