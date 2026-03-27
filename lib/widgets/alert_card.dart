@@ -39,20 +39,20 @@ class AlertCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final dataWidget = _buildData();
     final rightPadding = dataWidget != null ? 84.0 : 0.0;
+    final borderRadius = BorderRadius.circular(12);
 
     final content = ConstrainedBox(
       constraints: BoxConstraints(minWidth: 51, minHeight: 51),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: borderRadius,
         clipBehavior: Clip.hardEdge,
-        child: Container(
+        child: Ink(
           width: double.infinity,
           height: 150,
           decoration: BoxDecoration(color: color),
           child: Padding(
             padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-            child: Container(
-              clipBehavior: Clip.antiAlias,
+            child: Ink(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -105,13 +105,14 @@ class AlertCard extends StatelessWidget {
 
     return Card(
       clipBehavior: Clip.hardEdge,
-      child: onTap != null
-          ? InkWell(
-              splashColor: Colors.red.withAlpha(30),
-              onTap: onTap,
-              child: content,
-            )
-          : content,
+      shape: RoundedRectangleBorder(borderRadius: borderRadius),
+      child: InkWell(
+        onTap: onTap,
+        customBorder: RoundedRectangleBorder(borderRadius: borderRadius),
+        splashColor: color.withAlpha(24),
+        highlightColor: color.withAlpha(10),
+        child: content,
+      ),
     );
   }
 }
