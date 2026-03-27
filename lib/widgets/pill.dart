@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class Pill extends StatelessWidget {
   final String text;
+  final bool bold;
   final Color color;
 
   const Pill({
     super.key,
     required this.text,
+    this.bold = false,
     this.color = Colors.blue,
   });
 
@@ -23,7 +25,7 @@ class Pill extends StatelessWidget {
         style: TextStyle(
           color: color,
           fontSize: 12,
-          fontWeight: FontWeight.w500,
+          fontWeight: bold ? FontWeight.bold : FontWeight.w500,
         ),
       ),
     );
