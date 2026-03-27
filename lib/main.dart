@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nursery/app_layout_state.dart';
 import 'package:nursery/screens/dashboard.dart';
 import 'package:nursery/screens/login/login_screen.dart';
 
@@ -125,12 +126,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return LayoutBuilder(
       builder: (context, constraints) {
-        final bool isDesktop = constraints.maxWidth >= 900;
+        final bool desktopLayout = constraints.maxWidth >= 900;
+        setIsDesktop(desktopLayout);
 
         return Scaffold(
           body: Row(
             children: [
-              if (isDesktop && _isLoggedIn) _buildSidebar(),
+              if (desktopLayout && _isLoggedIn) _buildSidebar(),
               Expanded(
                 child: _isLoggedIn
                     ? const Dashboard()
@@ -144,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          bottomNavigationBar: isDesktop
+          bottomNavigationBar: desktopLayout
               ? null
               : BottomNavigationBar(
                   currentIndex: _selectedMobileIndex,
