@@ -60,13 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedMobileIndex = 0;
   bool _isLoggedIn = true;
 
-  static const List<String> _mobileSections = [
-    'Dashboard',
-    'Patients',
-    'Schedule',
-    'Messaging',
-  ];
-
   Widget _buildSidebar() {
     return SizedBox(
       width: 240,

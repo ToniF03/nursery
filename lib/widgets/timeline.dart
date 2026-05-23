@@ -16,7 +16,7 @@ class Timeline extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFF1F1F1),
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
@@ -44,6 +44,7 @@ class Timeline extends StatelessWidget {
           for (int i = 0; i < children.length; i++) ...[
             TimelineItem(
               color: accentColor,
+              isFirst: i == 0,
               isLast: i == children.length - 1,
               child: children[i].child,
             ),
@@ -57,12 +58,14 @@ class Timeline extends StatelessWidget {
 class TimelineItem extends StatelessWidget {
   final Widget child;
   final Color color;
+  final bool isFirst;
   final bool isLast;
 
   const TimelineItem({
     super.key,
     required this.child,
     this.color = Colors.indigo,
+    this.isFirst = false,
     this.isLast = false,
   });
 
@@ -76,6 +79,18 @@ class TimelineItem extends StatelessWidget {
             width: 20,
             child: Column(
               children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: isFirst
+                        ? const SizedBox.shrink()
+                        : const VerticalDivider(
+                            thickness: 2,
+                            width: 2,
+                            color: Colors.grey,
+                          ),
+                  ),
+                ),
                 Container(
                   width: 14,
                   height: 14,
@@ -84,28 +99,28 @@ class TimelineItem extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
-                if (!isLast) ...[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: const VerticalDivider(
-                        thickness: 2,
-                        width: 2,
-                        color: Colors.grey,
-                      ),
-                    ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: isLast
+                        ? const SizedBox.shrink()
+                        : const VerticalDivider(
+                            thickness: 2,
+                            width: 2,
+                            color: Colors.grey,
+                          ),
                   ),
-                ],
+                ),
               ],
             ),
           ),
           const SizedBox(width: 8),
-          Flexible(
-            fit: FlexFit.loose,
-            child: Align(
-              alignment: Alignment.centerLeft,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12),
               child: Card(
-                margin: const EdgeInsets.only(bottom: 12),
+                color: Colors.white,
+                margin: const EdgeInsets.symmetric(vertical: 6),
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: child,

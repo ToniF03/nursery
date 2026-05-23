@@ -16,38 +16,50 @@ class DashboardInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = ConstrainedBox(
-      constraints: BoxConstraints(minWidth: 120, minHeight: 51),
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Icon(icon, size: 30),
-            SizedBox(width: 6),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.grey,
-                  ),
+    final content = LayoutBuilder(builder: (context, constraints) {
+      final w = constraints.maxWidth;
+      final iconSize = w.isFinite && w < 200 ? 22.0 : 30.0;
+      final labelSize = w.isFinite && w < 200 ? 9.0 : 10.0;
+      final valueSize = w.isFinite && w < 200 ? 14.0 : 15.0;
+      final pad = w.isFinite && w < 200 ? 6.0 : 8.0;
+
+      return ConstrainedBox(
+        constraints: BoxConstraints(minWidth: 120, minHeight: 44),
+        child: Padding(
+          padding: EdgeInsets.all(pad),
+          child: Row(
+            children: [
+              Icon(icon, size: iconSize),
+              SizedBox(width: 8),
+              Flexible(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontSize: labelSize,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: valueSize,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
 
     return Card(
       clipBehavior: Clip.hardEdge,
