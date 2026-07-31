@@ -2,53 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:nursery/app_layout_state.dart';
 import 'package:nursery/screens/dashboard.dart';
 import 'package:nursery/screens/login/login_screen.dart';
+import 'l10n/app_localizations.dart';
+import 'core/app_locale.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Nursery());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Nursery extends StatelessWidget {
+  const Nursery({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'nursery',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'nursery'),
+    return ValueListenableBuilder<Locale?>(
+      valueListenable: localeNotifier,
+      builder: (context, locale, child) {
+        return MaterialApp(
+          title: 'Nursery',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            scaffoldBackgroundColor: Colors.white,
+          ),
+          home: const MyHomePage(title: 'nursery'),
+          locale: locale,
+          // If the device locale is not supported, always fall back to English.
+          localeResolutionCallback: (deviceLocale, supportedLocales) {
+            if (deviceLocale != null) {
+              for (final supported in supportedLocales) {
+                if (supported.languageCode == deviceLocale.languageCode) {
+                  return supported;
+                }
+              }
+            }
+            return const Locale('en');
+          },
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        );
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -58,7 +56,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedMobileIndex = 0;
-  bool _isLoggedIn = true;
+  bool _isLoggedIn = false;
 
   Widget _buildSidebar() {
     return SizedBox(
@@ -111,12 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool desktopLayout = constraints.maxWidth >= 900;
@@ -126,6 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
           body: Row(
             children: [
               if (desktopLayout && _isLoggedIn) _buildSidebar(),
+
               Expanded(
                 child: _isLoggedIn
                     ? const Dashboard()
@@ -139,7 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          bottomNavigationBar: desktopLayout
+
+          bottomNavigationBar: desktopLayout || !_isLoggedIn
               ? null
               : BottomNavigationBar(
                   currentIndex: _selectedMobileIndex,
@@ -152,6 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.people),
+                      label: "Patients",
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.settings),

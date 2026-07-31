@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:nursery/l10n/app_localizations.dart';
+import 'package:nursery/core/app_locale.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.onLoginSuccess});
@@ -22,57 +26,66 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textBoxWidth = clampDouble(
+      MediaQuery.sizeOf(context).width * 0.8,
+      0,
+      400,
+    );
+
     return Scaffold(
       body: Center(
-        child: SizedBox(
-          width: 300,
-          height: 292,
+        child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(
-                'Nursery',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Image.asset(
+                'assets/images/logo_with_subtitle.png',
+                width: 384,
+                height: 384,
+                fit: BoxFit.contain,
               ),
-              Text('Your healthcare management companion'),
-              SizedBox(height: 20),
-              Text('Username:'),
-              SizedBox(height: 10),
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(),
+              SizedBox(
+                width: textBoxWidth,
+                child: TextField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.username,
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               SizedBox(height: 10),
-              Text('Password:'),
-              SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
+              SizedBox(
+                width: textBoxWidth,
+                child: TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.password,
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
                 ),
-                obscureText: true,
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  final String username = _usernameController.text.trim();
-                  final String password = _passwordController.text.trim();
+              SizedBox(
+                width: textBoxWidth,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final String username = _usernameController.text.trim();
+                    final String password = _passwordController.text.trim();
 
-                  if (username.isNotEmpty && password.isNotEmpty) {
-                    widget.onLoginSuccess();
-                    return;
-                  }
+                    if (username.isNotEmpty && password.isNotEmpty) {
+                      widget.onLoginSuccess();
+                      return;
+                    }
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please fill in both fields.'),
-                    ),
-                  );
-                },
-                child: Text('Login'),
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.fillBothFields),
+                      ),
+                    );
+                  },
+                  child: Text(AppLocalizations.of(context)!.login,),
+                ),
               ),
             ],
           ),

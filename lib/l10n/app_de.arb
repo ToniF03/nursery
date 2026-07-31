@@ -1,0 +1,9 @@
+{
+    "@@locale": "de",
+    "@@author": "Toni Fey",
+
+    "username": "Nutzername",
+    "password": "Passwort",
+    "login": "Einloggen",
+    "fillBothFields": "Bitte füllen Sie beide Felder aus."
+}
