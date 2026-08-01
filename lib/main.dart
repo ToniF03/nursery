@@ -116,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         return Scaffold(
           body: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (desktopLayout && _isLoggedIn) _buildSidebar(),
 

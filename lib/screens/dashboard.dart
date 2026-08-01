@@ -68,123 +68,139 @@ class _DashboardState extends State<Dashboard> {
     final bool isSmall = screenWidth < 600;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(isSmall ? 12 : 24, isSmall ? 8 : 10, isSmall ? 12 : 24, isSmall ? 8 : 10),
+      padding: EdgeInsets.fromLTRB(
+        isSmall ? 12 : 24,
+        isSmall ? 8 : 10,
+        isSmall ? 12 : 24,
+        isSmall ? 8 : 10,
+      ),
       child: SingleChildScrollView(
-        child: 
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: isSmall ? 12 : 20),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _searchController,
-                  enabled: true,
-                  readOnly: false,
-                  style: const TextStyle(color: Colors.black),
-                  cursorColor: Colors.indigo,
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 10,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFF1F1F1),
-                    hintText: AppLocalizations.of(context)!.searchHeadline,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(25.7),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(25.7),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: isSmall ? 12 : 20),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    enabled: true,
+                    readOnly: false,
+                    style: const TextStyle(color: Colors.black),
+                    cursorColor: Colors.indigo,
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFF1F1F1),
+                      hintText: AppLocalizations.of(context)!.searchHeadline,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(25.7),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(25.7),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              IconButton(
-                icon: Icon(Icons.notifications, size: isSmall ? 20 : 25, color: Colors.grey),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => const NotImplementedDialog(),
-                  );
-                },
-              ),
-              const SizedBox(width: 12),
-              IconButton(
-                icon: Icon(
-                  Icons.account_circle,
-                  size: isSmall ? 20 : 25,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => const NotImplementedDialog(),
-                  );
-                },
-              ),
-            ],
-          ),
-
-          Padding(
-            padding: EdgeInsets.all(isSmall ? 8 : 12),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final mobileLayout = constraints.maxWidth < 700 || isSmall;
-                final double cardMinWidth = 220.0;
-
-                Widget constrainedCard(Widget child) => ConstrainedBox(
-                      constraints: BoxConstraints(minWidth: cardMinWidth, maxWidth: 360),
-                      child: child,
-                    );
-
-                final staffRatioCard = constrainedCard(DashboardInfoCard(
-                  icon: Icons.people,
-                  label: AppLocalizations.of(context)!.staffRatio,
-                  value: '1:3',
-                  onTap: () {
+                const SizedBox(width: 12),
+                IconButton(
+                  icon: Icon(
+                    Icons.notifications,
+                    size: isSmall ? 20 : 25,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
                     showDialog(
                       context: context,
                       builder: (context) => const NotImplementedDialog(),
                     );
                   },
-                ));
+                ),
+                const SizedBox(width: 12),
+                IconButton(
+                  icon: Icon(
+                    Icons.account_circle,
+                    size: isSmall ? 20 : 25,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const NotImplementedDialog(),
+                    );
+                  },
+                ),
+              ],
+            ),
 
-                final currentTimeCard = DashboardInfoCard(
-                  icon: Icons.schedule,
-                  label: AppLocalizations.of(context)!.currentTime,
-                  value: _currentTime(),
-                );
+            Padding(
+              padding: EdgeInsets.all(isSmall ? 8 : 12),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final mobileLayout = constraints.maxWidth < 700 || isSmall;
+                  final double cardMinWidth = 220.0;
 
-                // Greeting + info cards
-                return _buildGreetingSection(
-                  mobileLayout: mobileLayout,
+                  Widget constrainedCard(Widget child) => ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: cardMinWidth,
+                      maxWidth: 360,
+                    ),
+                    child: child,
+                  );
+
+                  final staffRatioCard = constrainedCard(
+                    DashboardInfoCard(
+                      icon: Icons.people,
+                      label: AppLocalizations.of(context)!.staffRatio,
+                      value: '1:3',
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const NotImplementedDialog(),
+                        );
+                      },
+                    ),
+                  );
+
+                  final currentTimeCard = DashboardInfoCard(
+                    icon: Icons.schedule,
+                    label: AppLocalizations.of(context)!.currentTime,
+                    value: _currentTime(),
+                  );
+
+                  // Greeting + info cards
+                  return _buildGreetingSection(
+                    mobileLayout: mobileLayout,
+                    isSmall: isSmall,
+                    staffRatioCard: staffRatioCard,
+                    currentTimeCard: currentTimeCard,
+                    constrainedCard: constrainedCard,
+                  );
+                },
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 12),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: _buildAlertsSection(
+                  isDesktop: isDesktop,
                   isSmall: isSmall,
-                  staffRatioCard: staffRatioCard,
-                  currentTimeCard: currentTimeCard,
-                  constrainedCard: constrainedCard,
-                );
-              },
+                ),
+              ),
             ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 12),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: _buildAlertsSection(isDesktop: isDesktop, isSmall: isSmall),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
-    
-      ));
+    );
   }
 
   Widget _buildGreetingSection({
@@ -221,7 +237,7 @@ class _DashboardState extends State<Dashboard> {
     }
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: Text(
@@ -333,9 +349,7 @@ class _DashboardState extends State<Dashboard> {
             flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                alertsColumn,
-              ],
+              children: [alertsColumn],
             ),
           ),
           SizedBox(width: 12),
@@ -354,4 +368,3 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
-
