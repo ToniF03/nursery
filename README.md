@@ -39,7 +39,7 @@ This application runs seamlessly on multiple platforms:
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ToniF03/nursery.git
    cd nursery
    ```
 
