@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nursery/app_layout_state.dart';
+import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/alert_card.dart';
 import 'package:nursery/widgets/dashboard_info_card.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
@@ -68,7 +69,9 @@ class _DashboardState extends State<Dashboard> {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(isSmall ? 12 : 24, isSmall ? 8 : 10, isSmall ? 12 : 24, isSmall ? 8 : 10),
-      child: Column(
+      child: SingleChildScrollView(
+        child: 
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: isSmall ? 12 : 20),
@@ -90,7 +93,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     filled: true,
                     fillColor: const Color(0xFFF1F1F1),
-                    hintText: 'Search for patients, schedules, or messages',
+                    hintText: AppLocalizations.of(context)!.searchHeadline,
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: Colors.transparent),
                       borderRadius: BorderRadius.circular(25.7),
@@ -143,7 +146,7 @@ class _DashboardState extends State<Dashboard> {
 
                 final staffRatioCard = constrainedCard(DashboardInfoCard(
                   icon: Icons.people,
-                  label: 'STAFF RATIO',
+                  label: AppLocalizations.of(context)!.staffRatio,
                   value: '1:3',
                   onTap: () {
                     showDialog(
@@ -155,7 +158,7 @@ class _DashboardState extends State<Dashboard> {
 
                 final currentTimeCard = DashboardInfoCard(
                   icon: Icons.schedule,
-                  label: 'Current Time',
+                  label: AppLocalizations.of(context)!.currentTime,
                   value: _currentTime(),
                 );
 
@@ -165,7 +168,7 @@ class _DashboardState extends State<Dashboard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Good morning, Toni',
+                        AppLocalizations.of(context)!.goodMorning("Toni"),
                         style: TextStyle(
                           fontSize: isSmall ? 18 : 20,
                           color: Colors.black,
@@ -224,7 +227,7 @@ class _DashboardState extends State<Dashboard> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Urgent Alerts',
+                                      AppLocalizations.of(context)!.urgentAlerts,
                                       style: TextStyle(
                                         fontSize: isSmall ? 16 : 18,
                                         fontWeight: FontWeight.bold,
@@ -233,7 +236,7 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                   SizedBox(width: 8),
                                   Pill(
-                                    text: '4 HIGH',
+                                    text: '4 ${AppLocalizations.of(context)!.high.toUpperCase()}',
                                     color: Colors.red,
                                     bold: true,
                                   ),
@@ -241,7 +244,7 @@ class _DashboardState extends State<Dashboard> {
                               ),
                               SizedBox(height: isSmall ? 8 : 12),
                               AlertCard(
-                                title: 'Room 101 - J. Doe',
+                                title: '${AppLocalizations.of(context)!.room("101")} - J. Doe',
                                 subtitle: 'Tachycardia detected',
                                 description:
                                     'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
@@ -256,7 +259,7 @@ class _DashboardState extends State<Dashboard> {
                                 },
                               ),
                               AlertCard(
-                                title: 'Room 102 - A. Johnson',
+                                title: '${AppLocalizations.of(context)!.room("102")} - A. Johnson',
                                 subtitle: 'Pain Meds Due',
                                 description:
                                     'Post-op Morphine (5mg) scheduled 10 mins ago. Pain scale currently 7/10.',
@@ -282,19 +285,19 @@ class _DashboardState extends State<Dashboard> {
                             children: [
                               TimelineItem(
                                 child: Text(
-                                  '18:45 - Room 101 - J. Doe - Tachycardia resolved',
+                                  '18:45 - ${AppLocalizations.of(context)!.room("101")} - J. Doe - Tachycardia resolved',
                                   style: TextStyle(fontSize: isSmall ? 13 : 14),
                                 ),
                               ),
                               TimelineItem(
                                 child: Text(
-                                  '18:30 - Room 103 - M. Smith - Fall detected',
+                                  '18:30 - ${AppLocalizations.of(context)!.room("103")} - M. Smith - Fall detected',
                                   style: TextStyle(fontSize: isSmall ? 13 : 14),
                                 ),
                               ),
                               TimelineItem(
                                 child: Text(
-                                  '18:15 - Room 102 - A. Johnson - Pain meds administered',
+                                  '18:15 - ${AppLocalizations.of(context)!.room("102")} - A. Johnson - Pain meds administered',
                                   style: TextStyle(fontSize: isSmall ? 13 : 14),
                                 ),
                               ),
@@ -315,7 +318,7 @@ class _DashboardState extends State<Dashboard> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Urgent Alerts',
+                                      AppLocalizations.of(context)!.urgentAlerts,
                                       style: TextStyle(
                                         fontSize: isSmall ? 16 : 18,
                                         fontWeight: FontWeight.bold,
@@ -324,7 +327,7 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                   SizedBox(width: 8),
                                   Pill(
-                                    text: '4 HIGH',
+                                    text: '4 ${AppLocalizations.of(context)!.high.toUpperCase()}',
                                     color: Colors.red,
                                     bold: true,
                                   ),
@@ -332,7 +335,7 @@ class _DashboardState extends State<Dashboard> {
                               ),
                               SizedBox(height: isSmall ? 8 : 12),
                               AlertCard(
-                                title: 'Room 101 - J. Doe',
+                                title: '${AppLocalizations.of(context)!.room("101")} - J. Doe',
                                 subtitle: 'Tachycardia detected',
                                 description:
                                     'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
@@ -347,7 +350,7 @@ class _DashboardState extends State<Dashboard> {
                                 },
                               ),
                               AlertCard(
-                                title: 'Room 102 - A. Johnson',
+                                title: '${AppLocalizations.of(context)!.room("102")} - A. Johnson',
                                 subtitle: 'Pain Meds Due',
                                 description:
                                     'Post-op Morphine (5mg) scheduled 10 mins ago. Pain scale currently 7/10.',
@@ -373,19 +376,19 @@ class _DashboardState extends State<Dashboard> {
                             children: [
                               TimelineItem(
                                 child: Text(
-                                  '18:45 - Room 101 - J. Doe - Tachycardia resolved',
+                                  '18:45 - ${AppLocalizations.of(context)!.room("101")} - J. Doe - Tachycardia resolved',
                                   style: TextStyle(fontSize: isSmall ? 13 : 14),
                                 ),
                               ),
                               TimelineItem(
                                 child: Text(
-                                  '18:30 - Room 103 - M. Smith - Fall detected',
+                                  '18:30 - ${AppLocalizations.of(context)!.room("103")} - M. Smith - Fall detected',
                                   style: TextStyle(fontSize: isSmall ? 13 : 14),
                                 ),
                               ),
                               TimelineItem(
                                 child: Text(
-                                  '18:15 - Room 102 - A. Johnson - Pain meds administered',
+                                  '18:15 - ${AppLocalizations.of(context)!.room("102")} - A. Johnson - Pain meds administered',
                                   style: TextStyle(fontSize: isSmall ? 13 : 14),
                                 ),
                               ),
@@ -398,7 +401,8 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
       ),
-    );
+    
+      ));
   }
 }
 

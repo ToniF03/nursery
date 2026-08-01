@@ -19,4 +19,46 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get fillBothFields => 'Bitte füllen Sie beide Felder aus.';
+
+  @override
+  String get notImplementedYet => 'Noch nicht implementiert.';
+
+  @override
+  String get notImplementedYetDescription => 'Diese Funktion ist aktuell noch in der Entwicklung und wird bald implementiert.';
+
+  @override
+  String get staffRatio => 'Personalquote';
+
+  @override
+  String get currentTime => 'Aktuelle Zeit';
+
+  @override
+  String goodMorning(String name) {
+    return 'Guten Morgen, $name';
+  }
+
+  @override
+  String goodAfternoon(String name) {
+    return 'Guten Tag, $name';
+  }
+
+  @override
+  String get searchHeadline => 'Suche nach Patienten, Terminen oder Nachrichten';
+
+  @override
+  String room(String roomNumber) {
+    return 'Zimmer $roomNumber';
+  }
+
+  @override
+  String get high => 'Hoch';
+
+  @override
+  String get middle => 'Mittel';
+
+  @override
+  String get low => 'Niedrig';
+
+  @override
+  String get urgentAlerts => 'Wichtige Warnungen';
 }

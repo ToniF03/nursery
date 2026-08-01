@@ -19,4 +19,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fillBothFields => 'Please fill in both fields.';
+
+  @override
+  String get notImplementedYet => 'Not implemented yet.';
+
+  @override
+  String get notImplementedYetDescription => 'This feature is currently in development and will be soon implemented.';
+
+  @override
+  String get staffRatio => 'Staff Ratio';
+
+  @override
+  String get currentTime => 'Current Time';
+
+  @override
+  String goodMorning(String name) {
+    return 'Good Morning, $name';
+  }
+
+  @override
+  String goodAfternoon(String name) {
+    return 'Good Afternoon, $name';
+  }
+
+  @override
+  String get searchHeadline => 'Search for patients, schedules, or messages';
+
+  @override
+  String room(String roomNumber) {
+    return 'Room';
+  }
+
+  @override
+  String get high => 'High';
+
+  @override
+  String get middle => 'Middle';
+
+  @override
+  String get low => 'Low';
+
+  @override
+  String get urgentAlerts => 'Urgent Alerts';
 }

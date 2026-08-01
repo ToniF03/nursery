@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nursery/l10n/app_localizations.dart';
 
 class NotImplementedDialog extends StatelessWidget {
   const NotImplementedDialog({super.key});
@@ -6,8 +7,8 @@ class NotImplementedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Not Implemented'),
-      content: const Text('This feature is currently under development.'),
+      title: Text(AppLocalizations.of(context)!.notImplementedYet),
+      content: Text(AppLocalizations.of(context)!.notImplementedYetDescription),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

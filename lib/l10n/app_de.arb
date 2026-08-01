@@ -1,9 +1,41 @@
 {
     "@@locale": "de",
     "@@author": "Toni Fey",
-
     "username": "Nutzername",
     "password": "Passwort",
     "login": "Einloggen",
-    "fillBothFields": "Bitte füllen Sie beide Felder aus."
+    "fillBothFields": "Bitte füllen Sie beide Felder aus.",
+    "notImplementedYet": "Noch nicht implementiert.",
+    "notImplementedYetDescription": "Diese Funktion ist aktuell noch in der Entwicklung und wird bald implementiert.",
+    "staffRatio": "Personalquote",
+    "currentTime": "Aktuelle Zeit",
+    "goodMorning": "Guten Morgen, {name}",
+    "@goodMorning": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "goodAfternoon": "Guten Tag, {name}",
+    "@goodAfternoon": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "searchHeadline": "Suche nach Patienten, Terminen oder Nachrichten",
+    "room": "Zimmer {roomNumber}",
+    "@room": {
+        "placeholders": {
+            "roomNumber": {
+                "type": "String"
+            }
+        }
+    },
+    "high": "Hoch",
+    "middle": "Mittel",
+    "low": "Niedrig",
+    "urgentAlerts": "Wichtige Warnungen"
 }

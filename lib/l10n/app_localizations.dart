@@ -118,6 +118,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please fill in both fields.'**
   String get fillBothFields;
+
+  /// No description provided for @notImplementedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not implemented yet.'**
+  String get notImplementedYet;
+
+  /// No description provided for @notImplementedYetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is currently in development and will be soon implemented.'**
+  String get notImplementedYetDescription;
+
+  /// No description provided for @staffRatio.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff Ratio'**
+  String get staffRatio;
+
+  /// No description provided for @currentTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Time'**
+  String get currentTime;
+
+  /// No description provided for @goodMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning, {name}'**
+  String goodMorning(String name);
+
+  /// No description provided for @goodAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Afternoon, {name}'**
+  String goodAfternoon(String name);
+
+  /// No description provided for @searchHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for patients, schedules, or messages'**
+  String get searchHeadline;
+
+  /// No description provided for @room.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String room(String roomNumber);
+
+  /// No description provided for @high.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get high;
+
+  /// No description provided for @middle.
+  ///
+  /// In en, this message translates to:
+  /// **'Middle'**
+  String get middle;
+
+  /// No description provided for @low.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get low;
+
+  /// No description provided for @urgentAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent Alerts'**
+  String get urgentAlerts;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

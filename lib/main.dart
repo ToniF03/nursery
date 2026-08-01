@@ -137,6 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ? null
               : BottomNavigationBar(
                   currentIndex: _selectedMobileIndex,
+                  selectedItemColor: Colors.blue,
+                  unselectedItemColor: Colors.grey,
                   onTap: (index) {
                     setState(() {
                       _selectedMobileIndex = index;
