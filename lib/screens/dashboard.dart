@@ -163,48 +163,12 @@ class _DashboardState extends State<Dashboard> {
                 );
 
                 // Greeting + info cards
-                if (mobileLayout) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.goodMorning("Toni"),
-                        style: TextStyle(
-                          fontSize: isSmall ? 18 : 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(child: staffRatioCard),
-                          SizedBox(width: 12),
-                          Expanded(child: constrainedCard(currentTimeCard)),
-                        ],
-                      ),
-                    ],
-                  );
-                }
-
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: Text(
-                        'Good morning, Toni',
-                        style: TextStyle(
-                          fontSize: isSmall ? 18 : 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    staffRatioCard,
-                    SizedBox(width: 12),
-                    constrainedCard(currentTimeCard),
-                  ],
+                return _buildGreetingSection(
+                  mobileLayout: mobileLayout,
+                  isSmall: isSmall,
+                  staffRatioCard: staffRatioCard,
+                  currentTimeCard: currentTimeCard,
+                  constrainedCard: constrainedCard,
                 );
               },
             ),
@@ -214,195 +178,180 @@ class _DashboardState extends State<Dashboard> {
             padding: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 12),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: isDesktop
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.urgentAlerts,
-                                      style: TextStyle(
-                                        fontSize: isSmall ? 16 : 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Pill(
-                                    text: '4 ${AppLocalizations.of(context)!.high.toUpperCase()}',
-                                    color: Colors.red,
-                                    bold: true,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: isSmall ? 8 : 12),
-                              AlertCard(
-                                title: '${AppLocalizations.of(context)!.room("101")} - J. Doe',
-                                subtitle: 'Tachycardia detected',
-                                description:
-                                    'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
-                                color: Colors.red,
-                                data: "155",
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const NotImplementedDialog(),
-                                  );
-                                },
-                              ),
-                              AlertCard(
-                                title: '${AppLocalizations.of(context)!.room("102")} - A. Johnson',
-                                subtitle: 'Pain Meds Due',
-                                description:
-                                    'Post-op Morphine (5mg) scheduled 10 mins ago. Pain scale currently 7/10.',
-                                color: Colors.brown,
-                                data: Icon(Icons.alarm_rounded, size: isSmall ? 32 : 40),
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const NotImplementedDialog(),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          flex: 3,
-                          child: Timeline(
-                            title: 'Today\'s Shift Timeline',
-                            accentColor: Colors.indigo,
-                            children: [
-                              TimelineItem(
-                                child: Text(
-                                  '18:45 - ${AppLocalizations.of(context)!.room("101")} - J. Doe - Tachycardia resolved',
-                                  style: TextStyle(fontSize: isSmall ? 13 : 14),
-                                ),
-                              ),
-                              TimelineItem(
-                                child: Text(
-                                  '18:30 - ${AppLocalizations.of(context)!.room("103")} - M. Smith - Fall detected',
-                                  style: TextStyle(fontSize: isSmall ? 13 : 14),
-                                ),
-                              ),
-                              TimelineItem(
-                                child: Text(
-                                  '18:15 - ${AppLocalizations.of(context)!.room("102")} - A. Johnson - Pain meds administered',
-                                  style: TextStyle(fontSize: isSmall ? 13 : 14),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FractionallySizedBox(
-                          widthFactor: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.urgentAlerts,
-                                      style: TextStyle(
-                                        fontSize: isSmall ? 16 : 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Pill(
-                                    text: '4 ${AppLocalizations.of(context)!.high.toUpperCase()}',
-                                    color: Colors.red,
-                                    bold: true,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: isSmall ? 8 : 12),
-                              AlertCard(
-                                title: '${AppLocalizations.of(context)!.room("101")} - J. Doe',
-                                subtitle: 'Tachycardia detected',
-                                description:
-                                    'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
-                                color: Colors.red,
-                                data: "155",
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const NotImplementedDialog(),
-                                  );
-                                },
-                              ),
-                              AlertCard(
-                                title: '${AppLocalizations.of(context)!.room("102")} - A. Johnson',
-                                subtitle: 'Pain Meds Due',
-                                description:
-                                    'Post-op Morphine (5mg) scheduled 10 mins ago. Pain scale currently 7/10.',
-                                color: Colors.brown,
-                                data: Icon(Icons.alarm_rounded, size: isSmall ? 32 : 40),
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const NotImplementedDialog(),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: isSmall ? 8 : 12),
-                        FractionallySizedBox(
-                          widthFactor: 1,
-                          child: Timeline(
-                            title: 'Today\'s Shift Timeline',
-                            accentColor: Colors.indigo,
-                            children: [
-                              TimelineItem(
-                                child: Text(
-                                  '18:45 - ${AppLocalizations.of(context)!.room("101")} - J. Doe - Tachycardia resolved',
-                                  style: TextStyle(fontSize: isSmall ? 13 : 14),
-                                ),
-                              ),
-                              TimelineItem(
-                                child: Text(
-                                  '18:30 - ${AppLocalizations.of(context)!.room("103")} - M. Smith - Fall detected',
-                                  style: TextStyle(fontSize: isSmall ? 13 : 14),
-                                ),
-                              ),
-                              TimelineItem(
-                                child: Text(
-                                  '18:15 - ${AppLocalizations.of(context)!.room("102")} - A. Johnson - Pain meds administered',
-                                  style: TextStyle(fontSize: isSmall ? 13 : 14),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+              child: _buildAlertsSection(isDesktop: isDesktop, isSmall: isSmall),
             ),
           ),
         ],
       ),
     
       ));
+  }
+
+  Widget _buildGreetingSection({
+    required bool mobileLayout,
+    required bool isSmall,
+    required Widget staffRatioCard,
+    required Widget currentTimeCard,
+    required Widget Function(Widget) constrainedCard,
+  }) {
+    final greetingText = AppLocalizations.of(context)!.goodMorning("Toni");
+
+    if (mobileLayout) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            greetingText,
+            style: TextStyle(
+              fontSize: isSmall ? 18 : 20,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: staffRatioCard),
+              SizedBox(width: 12),
+              Expanded(child: constrainedCard(currentTimeCard)),
+            ],
+          ),
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+            greetingText,
+            style: TextStyle(
+              fontSize: isSmall ? 18 : 20,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(width: 12),
+        staffRatioCard,
+        SizedBox(width: 12),
+        constrainedCard(currentTimeCard),
+      ],
+    );
+  }
+
+  Widget _buildAlertsSection({required bool isDesktop, required bool isSmall}) {
+    final localized = AppLocalizations.of(context)!;
+
+    final headerRow = Row(
+      children: [
+        Expanded(
+          child: Text(
+            localized.urgentAlerts,
+            style: TextStyle(
+              fontSize: isSmall ? 16 : 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(width: 8),
+        Pill(
+          text: '4 ${localized.high.toUpperCase()}',
+          color: Colors.red,
+          bold: true,
+        ),
+      ],
+    );
+
+    final alertsColumn = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        headerRow,
+        SizedBox(height: isSmall ? 8 : 12),
+        AlertCard(
+          title: '${localized.room("101")} - J. Doe',
+          subtitle: 'Tachycardia detected',
+          description:
+              'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
+          color: Colors.red,
+          data: "155",
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => const NotImplementedDialog(),
+            );
+          },
+        ),
+        AlertCard(
+          title: '${localized.room("102")} - A. Johnson',
+          subtitle: 'Pain Meds Due',
+          description:
+              'Post-op Morphine (5mg) scheduled 10 mins ago. Pain scale currently 7/10.',
+          color: Colors.brown,
+          data: Icon(Icons.alarm_rounded, size: isSmall ? 32 : 40),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => const NotImplementedDialog(),
+            );
+          },
+        ),
+      ],
+    );
+
+    final timelineWidget = Timeline(
+      title: 'Today\'s Shift Timeline',
+      accentColor: Colors.indigo,
+      children: [
+        TimelineItem(
+          child: Text(
+            '18:45 - ${localized.room("101")} - J. Doe - Tachycardia resolved',
+            style: TextStyle(fontSize: isSmall ? 13 : 14),
+          ),
+        ),
+        TimelineItem(
+          child: Text(
+            '18:30 - ${localized.room("103")} - M. Smith - Fall detected',
+            style: TextStyle(fontSize: isSmall ? 13 : 14),
+          ),
+        ),
+        TimelineItem(
+          child: Text(
+            '18:15 - ${localized.room("102")} - A. Johnson - Pain meds administered',
+            style: TextStyle(fontSize: isSmall ? 13 : 14),
+          ),
+        ),
+      ],
+    );
+
+    if (isDesktop) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                alertsColumn,
+              ],
+            ),
+          ),
+          SizedBox(width: 12),
+          Expanded(flex: 3, child: timelineWidget),
+        ],
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FractionallySizedBox(widthFactor: 1, child: alertsColumn),
+        SizedBox(height: isSmall ? 8 : 12),
+        FractionallySizedBox(widthFactor: 1, child: timelineWidget),
+      ],
+    );
   }
 }
 
