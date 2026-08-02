@@ -37,5 +37,10 @@
     "high": "High",
     "middle": "Middle",
     "low": "Low",
-    "urgentAlerts": "Urgent Alerts"
+    "urgentAlerts": "Urgent Alerts",
+    "shiftPlan": "Shift Plan",
+    "notifications": "Notifications",
+    "helpCenter": "Help Center",
+    "settings": "Settings",
+    "logout": "Logout"
 }

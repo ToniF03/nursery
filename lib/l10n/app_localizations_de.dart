@@ -61,4 +61,19 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get urgentAlerts => 'Wichtige Warnungen';
+
+  @override
+  String get shiftPlan => 'Dienstplan';
+
+  @override
+  String get notifications => 'Benachrichtigungen';
+
+  @override
+  String get helpCenter => 'Hilfe Center';
+
+  @override
+  String get settings => 'Einstellungen';
+
+  @override
+  String get logout => 'Logout';
 }

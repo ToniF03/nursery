@@ -23,6 +23,13 @@ class Nursery extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              elevation: 0,
+              iconTheme: IconThemeData(color: Colors.black),
+              titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+            ),
           ),
           home: const MyHomePage(title: 'nursery'),
           locale: locale,
@@ -122,7 +129,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
               Expanded(
                 child: _isLoggedIn
-                    ? const Dashboard()
+                    ? Dashboard(
+                        onLogout: () {
+                          setState(() {
+                            _isLoggedIn = false;
+                          });
+                        },
+                      )
                     : LoginScreen(
                         onLoginSuccess: () {
                           setState(() {

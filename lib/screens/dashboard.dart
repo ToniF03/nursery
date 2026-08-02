@@ -8,9 +8,11 @@ import 'package:nursery/widgets/dashboard_info_card.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
 import 'package:nursery/widgets/timeline.dart';
+import 'package:nursery/screens/user_menu.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  final VoidCallback onLogout;
+  const Dashboard({super.key, required this.onLogout});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -131,9 +133,10 @@ class _DashboardState extends State<Dashboard> {
                     color: Colors.grey,
                   ),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const NotImplementedDialog(),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => UserMenuPage(onLogout: widget.onLogout),
+                      ),
                     );
                   },
                 ),

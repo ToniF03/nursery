@@ -190,6 +190,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Urgent Alerts'**
   String get urgentAlerts;
+
+  /// No description provided for @shiftPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift Plan'**
+  String get shiftPlan;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @helpCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center'**
+  String get helpCenter;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -61,4 +61,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get urgentAlerts => 'Urgent Alerts';
+
+  @override
+  String get shiftPlan => 'Shift Plan';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get helpCenter => 'Help Center';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get logout => 'Logout';
 }
