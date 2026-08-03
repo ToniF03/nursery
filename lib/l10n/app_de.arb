@@ -43,5 +43,6 @@
     "helpCenter": "Hilfe Center",
     "settings": "Einstellungen",
     "logout": "Logout",
-    "authException": "Authentifizierungs Fehler"
+    "authException": "Authentifizierungs Fehler",
+    "joinAsOrganization": "Zugriff als Organisation anfordern"
 }

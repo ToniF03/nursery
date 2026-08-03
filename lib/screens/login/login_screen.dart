@@ -89,26 +89,39 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 20),
               SizedBox(
                 width: textBoxWidth,
-                child: ElevatedButton(
-                  onPressed: () {
-                    final String username = _usernameController.text.trim();
-                    final String password = _passwordController.text.trim();
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        final String username = _usernameController.text.trim();
+                        final String password = _passwordController.text.trim();
 
-                    if (username.isNotEmpty && password.isNotEmpty) {
-                      signInWithEmail(username, password);
-                      //widget.onLoginSuccess();
-                      return;
-                    }
+                        if (username.isNotEmpty && password.isNotEmpty) {
+                          signInWithEmail(username, password);
+                          //widget.onLoginSuccess();
+                          return;
+                        }
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)!.fillBothFields,
-                        ),
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              AppLocalizations.of(context)!.fillBothFields,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(AppLocalizations.of(context)!.login),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        debugPrint("Join pressed");
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.joinAsOrganization,
                       ),
-                    );
-                  },
-                  child: Text(AppLocalizations.of(context)!.login),
+                    ),
+                  ],
                 ),
               ),
             ],

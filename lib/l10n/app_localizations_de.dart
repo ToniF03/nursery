@@ -79,4 +79,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get authException => 'Authentifizierungs Fehler';
+
+  @override
+  String get joinAsOrganization => 'Zugriff als Organisation anfordern';
 }

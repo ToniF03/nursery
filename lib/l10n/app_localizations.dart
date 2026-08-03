@@ -226,6 +226,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Authentication Exception'**
   String get authException;
+
+  /// No description provided for @joinAsOrganization.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Access as an Organization'**
+  String get joinAsOrganization;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
