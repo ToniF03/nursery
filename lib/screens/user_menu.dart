@@ -19,12 +19,21 @@ class _UserMenuPage extends State<UserMenuPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
-                Icon(Icons.account_circle, size: 50),
-                SizedBox(width: 10),
-                Text('Toni Fey', style: TextStyle(fontSize: 25.0)),
-              ],
+            InkWell(
+              onTap: () {
+                debugPrint('User header tapped');
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6.0),
+                child: Row(
+                  children: const [
+                    Icon(Icons.account_circle, size: 50),
+                    SizedBox(width: 10),
+                    Text('Toni Fey', style: TextStyle(fontSize: 25.0)),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 12),
             Expanded(
