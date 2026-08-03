@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nursery/l10n/app_localizations.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserMenuPage extends StatefulWidget {
   final VoidCallback onLogout;
@@ -10,6 +11,22 @@ class UserMenuPage extends StatefulWidget {
 }
 
 class _UserMenuPage extends State<UserMenuPage> {
+  final supabase = Supabase.instance.client;
+
+  void navigateToFirst() {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  Future<void> logOut() async {
+    try {
+      await supabase.auth.signOut();
+      navigateToFirst();
+      widget.onLogout();
+    } catch (e) {
+      debugPrint('Logout Exception: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +40,6 @@ class _UserMenuPage extends State<UserMenuPage> {
               onTap: () {
                 debugPrint('User header tapped');
               },
-              borderRadius: BorderRadius.circular(8),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6.0),
                 child: Row(
@@ -72,8 +88,7 @@ class _UserMenuPage extends State<UserMenuPage> {
                       leading: const Icon(Icons.logout),
                       title: Text(AppLocalizations.of(context)!.logout),
                       onTap: () {
-                        Navigator.of(context).pop();
-                        widget.onLogout();
+                        logOut();
                       },
                     ),
                   ],

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nursery/l10n/app_localizations.dart';
-import 'package:nursery/core/app_locale.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.onLoginSuccess});
@@ -16,6 +16,27 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final supabase = Supabase.instance.client;
+
+  Future<void> signInWithEmail(String email, String password) async {
+    try {
+      final AuthResponse res = await supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      final Session? session = res.session;
+      final User? user = res.user;
+
+      // Erfolgreicher Login
+      widget.onLoginSuccess();
+    } on AuthException catch (e) {
+      debugPrint('Auth-Exception: ${e.message}');
+    } catch (e) {
+      // Sonstige Fehler
+      debugPrint('Unexpected Error: $e');
+    }
+  }
 
   @override
   void dispose() {
@@ -74,17 +95,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     final String password = _passwordController.text.trim();
 
                     if (username.isNotEmpty && password.isNotEmpty) {
-                      widget.onLoginSuccess();
+                      signInWithEmail(username, password);
+                      //widget.onLoginSuccess();
                       return;
                     }
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(AppLocalizations.of(context)!.fillBothFields),
+                        content: Text(
+                          AppLocalizations.of(context)!.fillBothFields,
+                        ),
                       ),
                     );
                   },
-                  child: Text(AppLocalizations.of(context)!.login,),
+                  child: Text(AppLocalizations.of(context)!.login),
                 ),
               ),
             ],

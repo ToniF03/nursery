@@ -220,6 +220,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
+
+  /// No description provided for @authException.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication Exception'**
+  String get authException;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

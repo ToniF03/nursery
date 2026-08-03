@@ -76,4 +76,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get authException => 'Authentifizierungs Fehler';
 }

@@ -42,5 +42,6 @@
     "notifications": "Notifications",
     "helpCenter": "Help Center",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "authException": "Authentication Exception"
 }
