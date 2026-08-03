@@ -13,7 +13,7 @@
     "@goodMorning": {
         "placeholders": {
             "name": {
-                "type": "String"
+                "type": "string"
             }
         }
     },
