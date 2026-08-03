@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:nursery/app_layout_state.dart';
 import 'package:nursery/screens/dashboard.dart';
 import 'package:nursery/screens/login/login_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'l10n/app_localizations.dart';
 import 'core/app_locale.dart';
 
-void main() {
-  runApp(const Nursery());
+
+Future<void> main() async {
+  await Supabase.initialize(
+    url: 'https://djdwliacvcxwvulgnkxl.supabase.co',
+    publishableKey: 'sb_publishable_r7gSbJX0_fkmdadEa7bcWw_i71Yu11i',
+  );
+  runApp(Nursery());
 }
 
 class Nursery extends StatelessWidget {
