@@ -166,7 +166,7 @@ The application uses:
 
 ## 📄 License
 
-This project is private and not intended for public distribution.
+This project is intended purely for portfolio purposes and is not for public distribution. No person or organization may modify, publish, distribute, or use this project for commercial purposes without my prior written permission. I exclusively retain the right to sell this product.
 
 ## 💬 Support & Contribution
 
