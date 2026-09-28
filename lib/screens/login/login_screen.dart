@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nursery/l10n/app_localizations.dart';
+import 'package:nursery/screens/login/register_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,22 +20,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final supabase = Supabase.instance.client;
 
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   Future<void> signInWithEmail(String email, String password) async {
     try {
-      final AuthResponse res = await supabase.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
-      final Session? session = res.session;
-      final User? user = res.user;
+      final session = Supabase.instance.client.auth.currentSession;
+      print('SESSION: ${session != null}');
+      print('USER: ${session?.user.email}');
+      print('REFRESH TOKEN: ${session?.refreshToken}');
+      
+      await supabase.auth.signInWithPassword(email: email, password: password);
 
-      // Erfolgreicher Login
       widget.onLoginSuccess();
     } on AuthException catch (e) {
       debugPrint('Auth-Exception: ${e.message}');
+      _showErrorSnackBar(e.message);
     } catch (e) {
-      // Sonstige Fehler
       debugPrint('Unexpected Error: $e');
+      _showErrorSnackBar(e.toString());
     }
   }
 
@@ -54,8 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
             children: [
               Image.asset(
@@ -69,9 +76,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   controller: _usernameController,
                   decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.username,
+                    labelText: AppLocalizations.of(context)!.email,
                     border: OutlineInputBorder(),
                   ),
+                  onSubmitted: (String value) {
+                    final String username = _usernameController.text.trim();
+                    final String password = _passwordController.text.trim();
+
+                    if (username.isNotEmpty && password.isNotEmpty) {
+                      signInWithEmail(username, password);
+                      return;
+                    }
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)!.fillBothFields,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               SizedBox(height: 10),
@@ -83,6 +107,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: AppLocalizations.of(context)!.password,
                     border: OutlineInputBorder(),
                   ),
+                  onSubmitted: (String value) {
+                    final String username = _usernameController.text.trim();
+                    final String password = _passwordController.text.trim();
+
+                    if (username.isNotEmpty && password.isNotEmpty) {
+                      signInWithEmail(username, password);
+                      return;
+                    }
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)!.fillBothFields,
+                        ),
+                      ),
+                    );
+                  },
                   obscureText: true,
                 ),
               ),
@@ -98,7 +139,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         if (username.isNotEmpty && password.isNotEmpty) {
                           signInWithEmail(username, password);
-                          //widget.onLoginSuccess();
                           return;
                         }
 
@@ -115,7 +155,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        debugPrint("Join pressed");
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(
+                              onLoginSuccess: widget.onLoginSuccess,
+                            ),
+                          ),
+                        );
                       },
                       child: Text(
                         AppLocalizations.of(context)!.joinAsOrganization,

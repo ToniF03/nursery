@@ -9,13 +9,16 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get username => 'Username';
+  String get email => 'E-Mail';
 
   @override
   String get password => 'Password';
 
   @override
   String get login => 'Login';
+
+  @override
+  String get register => 'Register';
 
   @override
   String get fillBothFields => 'Please fill in both fields.';
@@ -82,4 +85,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get joinAsOrganization => 'Request Access as an Organization';
+
+  @override
+  String get loginInstead => 'Login instead';
+
+  @override
+  String get name => 'Name';
 }

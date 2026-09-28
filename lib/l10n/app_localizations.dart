@@ -95,11 +95,11 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
-  /// No description provided for @username.
+  /// No description provided for @email.
   ///
   /// In en, this message translates to:
-  /// **'Username'**
-  String get username;
+  /// **'E-Mail'**
+  String get email;
 
   /// No description provided for @password.
   ///
@@ -112,6 +112,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login'**
   String get login;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
 
   /// No description provided for @fillBothFields.
   ///
@@ -232,6 +238,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Request Access as an Organization'**
   String get joinAsOrganization;
+
+  /// No description provided for @loginInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'Login instead'**
+  String get loginInstead;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

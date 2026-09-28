@@ -1,9 +1,10 @@
 {
     "@@locale": "de",
     "@@author": "Toni Fey",
-    "username": "Nutzername",
+    "email": "E-Mail",
     "password": "Passwort",
     "login": "Einloggen",
+    "register": "Registrieren",
     "fillBothFields": "Bitte füllen Sie beide Felder aus.",
     "notImplementedYet": "Noch nicht implementiert.",
     "notImplementedYetDescription": "Diese Funktion ist aktuell noch in der Entwicklung und wird bald implementiert.",
@@ -13,7 +14,7 @@
     "@goodMorning": {
         "placeholders": {
             "name": {
-                "type": "string"
+                "type": "String"
             }
         }
     },
@@ -44,5 +45,7 @@
     "settings": "Einstellungen",
     "logout": "Logout",
     "authException": "Authentifizierungs Fehler",
-    "joinAsOrganization": "Zugriff als Organisation anfordern"
+    "joinAsOrganization": "Zugriff als Organisation anfordern",
+    "loginInstead": "Stattdessen Anmelden",
+    "name": "Name"
 }

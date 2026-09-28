@@ -1,9 +1,10 @@
 {
     "@@locale": "en",
     "@@author": "Toni Fey",
-    "username": "Username",
+    "email": "E-Mail",
     "password": "Password",
     "login": "Login",
+    "register": "Register",
     "fillBothFields": "Please fill in both fields.",
     "notImplementedYet": "Not implemented yet.",
     "notImplementedYetDescription": "This feature is currently in development and will be soon implemented.",
@@ -44,5 +45,7 @@
     "settings": "Settings",
     "logout": "Logout",
     "authException": "Authentication Exception",
-    "joinAsOrganization": "Request Access as an Organization"
+    "joinAsOrganization": "Request Access as an Organization",
+    "loginInstead": "Login instead",
+    "name": "Name"
 }

@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:nursery/app_layout_state.dart';
-import 'package:nursery/screens/dashboard.dart';
-import 'package:nursery/screens/login/login_screen.dart';
+import 'package:nursery/core/auth_gate.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'l10n/app_localizations.dart';
 import 'core/app_locale.dart';
@@ -70,6 +71,29 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedMobileIndex = 0;
   bool _isLoggedIn = false;
+  StreamSubscription<AuthState>? _authSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final auth = Supabase.instance.client.auth;
+    _isLoggedIn = auth.currentSession != null;
+    _authSubscription = auth.onAuthStateChange.listen((authState) {
+      final isLoggedIn = authState.session != null;
+      if (_isLoggedIn == isLoggedIn || !mounted) return;
+
+      setState(() {
+        _isLoggedIn = isLoggedIn;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _authSubscription?.cancel();
+    super.dispose();
+  }
 
   Widget _buildSidebar() {
     return SizedBox(
@@ -134,7 +158,15 @@ class _MyHomePageState extends State<MyHomePage> {
               if (desktopLayout && _isLoggedIn) _buildSidebar(),
 
               Expanded(
-                child: _isLoggedIn
+                child: AuthGate(
+                  onAuthStateChanged: (value) {
+                    if (_isLoggedIn == value) return;
+                    setState(() {
+                      _isLoggedIn = value;
+                    });
+                  },
+                )
+                /*_isLoggedIn
                     ? Dashboard(
                         onLogout: () {
                           setState(() {
@@ -148,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             _isLoggedIn = true;
                           });
                         },
-                      ),
+                      ),*/
               ),
             ],
           ),
