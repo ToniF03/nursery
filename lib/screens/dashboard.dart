@@ -9,6 +9,7 @@ import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
 import 'package:nursery/widgets/timeline.dart';
 import 'package:nursery/screens/user_menu.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dashboard extends StatefulWidget {
   final VoidCallback onLogout;
@@ -20,13 +21,16 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final TextEditingController _searchController = TextEditingController();
+  final supabase = Supabase.instance.client;
   Timer? _alignTimer;
   Timer? _clockTimer;
+  String name = '';
 
   @override
   void initState() {
     super.initState();
     _startAlignedClock();
+    getUserName();
   }
 
   void _startAlignedClock() {
@@ -48,6 +52,27 @@ class _DashboardState extends State<Dashboard> {
       });
     });
   }
+
+    Future<void> getUserName() async {
+      try {
+        final userId = supabase.auth.currentUser?.id;
+        if (userId == null) return;
+
+        final userData = await supabase
+            .from('userData')
+            .select('first_name, last_name')
+            .eq('id', userId)
+            .maybeSingle();
+
+        if (!mounted) return;
+        setState(() {
+          final firstName = userData?['first_name'] as String? ?? '';
+          name = firstName.trim();
+        });
+      } catch (e) {
+        debugPrint('Get Table Exception: $e');
+      }
+    }
 
   String _currentTime() {
     final DateTime now = DateTime.now();
@@ -135,7 +160,8 @@ class _DashboardState extends State<Dashboard> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => UserMenuPage(onLogout: widget.onLogout),
+                        builder: (context) =>
+                            UserMenuPage(onLogout: widget.onLogout),
                       ),
                     );
                   },
@@ -213,7 +239,7 @@ class _DashboardState extends State<Dashboard> {
     required Widget currentTimeCard,
     required Widget Function(Widget) constrainedCard,
   }) {
-    final greetingText = AppLocalizations.of(context)!.goodMorning("Toni");
+    final greetingText = AppLocalizations.of(context)!.goodMorning(name);
 
     if (mobileLayout) {
       return Column(

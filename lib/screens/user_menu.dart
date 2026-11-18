@@ -12,9 +12,38 @@ class UserMenuPage extends StatefulWidget {
 
 class _UserMenuPage extends State<UserMenuPage> {
   final supabase = Supabase.instance.client;
+  String name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getUserName();
+  }
 
   void navigateToFirst() {
     Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  Future<void> getUserName() async {
+    try {
+      final userId = supabase.auth.currentUser?.id;
+      if (userId == null) return;
+
+      final userData = await supabase
+          .from('userData')
+          .select('first_name, last_name')
+          .eq('id', userId)
+          .maybeSingle();
+
+      if (!mounted) return;
+      setState(() {
+        final firstName = userData?['first_name'] as String? ?? '';
+        final lastName = userData?['last_name'] as String? ?? '';
+        name = '$firstName $lastName'.trim();
+      });
+    } catch (e) {
+      debugPrint('Get Table Exception: $e');
+    }
   }
 
   Future<void> logOut() async {
@@ -43,10 +72,10 @@ class _UserMenuPage extends State<UserMenuPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6.0),
                 child: Row(
-                  children: const [
-                    Icon(Icons.account_circle, size: 50),
-                    SizedBox(width: 10),
-                    Text('Toni Fey', style: TextStyle(fontSize: 25.0)),
+                  children: [
+                    const Icon(Icons.account_circle, size: 50),
+                    const SizedBox(width: 10),
+                    Text(name, style: const TextStyle(fontSize: 25.0)),
                   ],
                 ),
               ),

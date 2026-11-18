@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.dashboard),
               title: Text('Dashboard'),
               onTap: () {
-                debugPrint('Dashboard tapped');
+                Navigator.of(context).popUntil((route) => route.isFirst);
               },
             ),
             ListTile(
