@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // Input controllers keep credential values for submit and validation.
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -28,11 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> signInWithEmail(String email, String password) async {
     try {
-      final session = Supabase.instance.client.auth.currentSession;
-      print('SESSION: ${session != null}');
-      print('USER: ${session?.user.email}');
-      print('REFRESH TOKEN: ${session?.refreshToken}');
-      
+      // Supabase validates credentials and establishes the active session.
       await supabase.auth.signInWithPassword(email: email, password: password);
 
       widget.onLoginSuccess();
@@ -54,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Limit form width while allowing it to fill most narrow screens.
     final textBoxWidth = clampDouble(
       MediaQuery.sizeOf(context).width * 0.8,
       0,
@@ -65,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: Column(
             children: [
+              // Branded login header.
               Image.asset(
                 'assets/images/logo_with_subtitle.png',
                 width: 384,
@@ -128,6 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: 20),
+              // Login and organization-registration actions.
               SizedBox(
                 width: textBoxWidth,
                 child: Column(

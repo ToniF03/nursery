@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Small rounded label for compact status or category text.
 class Pill extends StatelessWidget {
   final String text;
   final bool bold;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 
+// Shared feedback dialog for controls whose feature is not yet available.
 class NotImplementedDialog extends StatelessWidget {
   const NotImplementedDialog({super.key});
 

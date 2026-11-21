@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Displays a titled list of events with a shared accent color.
 class Timeline extends StatelessWidget {
   final List<TimelineItem> children;
   final String? title;
@@ -42,6 +43,7 @@ class Timeline extends StatelessWidget {
             ),
 
           for (int i = 0; i < children.length; i++) ...[
+            // Hide endpoint divider segments and apply the item's position styling.
             TimelineItem(
               color: accentColor,
               isFirst: i == 0,
@@ -56,6 +58,7 @@ class Timeline extends StatelessWidget {
 }
 
 class TimelineItem extends StatelessWidget {
+  // A timeline item with optional first/last endpoint behavior.
   final Widget child;
   final Color color;
   final bool isFirst;
@@ -121,10 +124,7 @@ class TimelineItem extends StatelessWidget {
               child: Card(
                 color: Colors.white,
                 margin: const EdgeInsets.symmetric(vertical: 6),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: child,
-                ),
+                child: Padding(padding: const EdgeInsets.all(12), child: child),
               ),
             ),
           ),

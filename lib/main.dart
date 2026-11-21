@@ -7,8 +7,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'l10n/app_localizations.dart';
 import 'core/app_locale.dart';
 
-
 Future<void> main() async {
+  // Initialize Supabase before Flutter builds and listens for auth changes.
   await Supabase.initialize(
     url: 'https://djdwliacvcxwvulgnkxl.supabase.co',
     publishableKey: 'sb_publishable_r7gSbJX0_fkmdadEa7bcWw_i71Yu11i',
@@ -22,6 +22,7 @@ class Nursery extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Rebuild MaterialApp whenever the app locale changes.
     return ValueListenableBuilder<Locale?>(
       valueListenable: localeNotifier,
       builder: (context, locale, child) {
@@ -35,7 +36,11 @@ class Nursery extends StatelessWidget {
               foregroundColor: Colors.black,
               elevation: 0,
               iconTheme: IconThemeData(color: Colors.black),
-              titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+              titleTextStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           home: const MyHomePage(title: 'nursery'),
@@ -69,6 +74,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // Tracks the mobile tab, login status, and auth stream subscription.
   int _selectedMobileIndex = 0;
   bool _isLoggedIn = false;
   StreamSubscription<AuthState>? _authSubscription;
@@ -77,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    // Seed login state from the current session and keep it synchronized.
     final auth = Supabase.instance.client.auth;
     _isLoggedIn = auth.currentSession != null;
     _authSubscription = auth.onAuthStateChange.listen((authState) {
@@ -96,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildSidebar() {
+    // Desktop navigation remains visible while a user is authenticated.
     return SizedBox(
       width: 240,
       child: SafeArea(
@@ -148,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        // Desktop navigation starts at 900 pixels of available width.
         final bool desktopLayout = constraints.maxWidth >= 900;
         setIsDesktop(desktopLayout);
 
@@ -165,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       _isLoggedIn = value;
                     });
                   },
-                )
+                ),
                 /*_isLoggedIn
                     ? Dashboard(
                         onLogout: () {

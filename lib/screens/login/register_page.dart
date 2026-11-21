@@ -14,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<RegisterPage> {
+  // Controllers collect organization, profile, and credential details.
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -23,24 +24,32 @@ class _LoginScreenState extends State<RegisterPage> {
   final supabase = Supabase.instance.client;
 
   void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  Future<void> signUpWithEmail(String email, String password, String organization, String name) async {
+  Future<void> signUpWithEmail(
+    String email,
+    String password,
+    String organization,
+    String name,
+  ) async {
     try {
+      // Create the auth account and include the person's display name.
       await supabase.auth.signUp(
         email: email,
         password: password,
-        data: {
-          "displayName": name
-        }
+        data: {"displayName": name},
       );
 
       final userId = supabase.auth.currentSession!.user.id;
-      await supabase.from('userData').insert({"id": userId, 'company': organization});
-      
+      // Store the organization separately in the application user profile.
+      await supabase.from('userData').insert({
+        "id": userId,
+        'company': organization,
+      });
+
       widget.onLoginSuccess();
       // IT DOES NOT REDIRECT CURRENTLY!
     } on AuthException catch (e) {
@@ -132,10 +141,20 @@ class _LoginScreenState extends State<RegisterPage> {
                         final String username = _usernameController.text.trim();
                         final String password = _passwordController.text.trim();
                         final String name = _nameController.text.trim();
-                        final String organization = _organizationNameController.text.trim();
+                        final String organization = _organizationNameController
+                            .text
+                            .trim();
 
-                        if (username.isNotEmpty && password.isNotEmpty && name.isNotEmpty && organization.isNotEmpty) {
-                          signUpWithEmail(username, password, organization, name);
+                        if (username.isNotEmpty &&
+                            password.isNotEmpty &&
+                            name.isNotEmpty &&
+                            organization.isNotEmpty) {
+                          signUpWithEmail(
+                            username,
+                            password,
+                            organization,
+                            name,
+                          );
                           return;
                         }
 

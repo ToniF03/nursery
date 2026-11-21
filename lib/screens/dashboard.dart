@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:nursery/app_layout_state.dart';
 import 'package:nursery/l10n/app_localizations.dart';
@@ -20,20 +19,25 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  // Controllers and timers owned by this screen.
   final TextEditingController _searchController = TextEditingController();
   final supabase = Supabase.instance.client;
   Timer? _alignTimer;
   Timer? _clockTimer;
+
+  // The user's first name is loaded once and used in the localized greeting.
   String name = '';
 
   @override
   void initState() {
     super.initState();
+    // Start the clock aligned to a minute boundary, then update every second.
     _startAlignedClock();
     getUserName();
   }
 
   void _startAlignedClock() {
+    // Wait until the next minute before starting the periodic clock timer.
     final DateTime now = DateTime.now();
     final Duration delay = Duration(
       seconds: 60 - now.second,
@@ -53,26 +57,26 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
-    Future<void> getUserName() async {
-      try {
-        final userId = supabase.auth.currentUser?.id;
-        if (userId == null) return;
+  Future<void> getUserName() async {
+    try {
+      final userId = supabase.auth.currentUser?.id;
+      if (userId == null) return;
 
-        final userData = await supabase
-            .from('userData')
-            .select('first_name, last_name')
-            .eq('id', userId)
-            .maybeSingle();
+      final userData = await supabase
+          .from('userData')
+          .select('first_name, last_name')
+          .eq('id', userId)
+          .maybeSingle();
 
-        if (!mounted) return;
-        setState(() {
-          final firstName = userData?['first_name'] as String? ?? '';
-          name = firstName.trim();
-        });
-      } catch (e) {
-        debugPrint('Get Table Exception: $e');
-      }
+      if (!mounted) return;
+      setState(() {
+        final firstName = userData?['first_name'] as String? ?? '';
+        name = firstName.trim();
+      });
+    } catch (e) {
+      debugPrint('Get Table Exception: $e');
     }
+  }
 
   String _currentTime() {
     final DateTime now = DateTime.now();
@@ -83,6 +87,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void dispose() {
+    // Cancel active timers and controllers before this state is removed.
     _alignTimer?.cancel();
     _clockTimer?.cancel();
     _searchController.dispose();
@@ -91,9 +96,11 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    // A compact layout is used on narrow screens; desktop state is tracked separately.
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isSmall = screenWidth < 600;
 
+    // Outer layout keeps the dashboard scrollable on short or narrow screens.
     return Padding(
       padding: EdgeInsets.fromLTRB(
         isSmall ? 12 : 24,
@@ -106,6 +113,8 @@ class _DashboardState extends State<Dashboard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: isSmall ? 12 : 20),
+
+            // Search and account actions.
             Row(
               children: [
                 Expanded(
@@ -169,6 +178,7 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
 
+            // Greeting and key status cards.
             Padding(
               padding: EdgeInsets.all(isSmall ? 8 : 12),
               child: LayoutBuilder(
@@ -176,6 +186,7 @@ class _DashboardState extends State<Dashboard> {
                   final mobileLayout = constraints.maxWidth < 700 || isSmall;
                   final double cardMinWidth = 220.0;
 
+                  // Status cards share a minimum width and a limited maximum width.
                   Widget constrainedCard(Widget child) => ConstrainedBox(
                     constraints: BoxConstraints(
                       minWidth: cardMinWidth,
@@ -184,6 +195,7 @@ class _DashboardState extends State<Dashboard> {
                     child: child,
                   );
 
+                  // Staff ratio card opens the shared placeholder dialog.
                   final staffRatioCard = constrainedCard(
                     DashboardInfoCard(
                       icon: Icons.people,
@@ -198,13 +210,13 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   );
 
+                  // The time card reads the live clock value produced by setState.
                   final currentTimeCard = DashboardInfoCard(
                     icon: Icons.schedule,
                     label: AppLocalizations.of(context)!.currentTime,
                     value: _currentTime(),
                   );
 
-                  // Greeting + info cards
                   return _buildGreetingSection(
                     mobileLayout: mobileLayout,
                     isSmall: isSmall,
@@ -216,6 +228,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
 
+            // Urgent alerts and the shift timeline.
             Padding(
               padding: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 12),
               child: Align(
@@ -241,6 +254,7 @@ class _DashboardState extends State<Dashboard> {
   }) {
     final greetingText = AppLocalizations.of(context)!.goodMorning(name);
 
+    // Stack the greeting above its cards in constrained layouts.
     if (mobileLayout) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,6 +279,7 @@ class _DashboardState extends State<Dashboard> {
       );
     }
 
+    // Use a single row when there is enough horizontal space.
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -289,6 +304,7 @@ class _DashboardState extends State<Dashboard> {
   Widget _buildAlertsSection({required bool isDesktop, required bool isSmall}) {
     final localized = AppLocalizations.of(context)!;
 
+    // Alert section header with the number of high-priority items.
     final headerRow = Row(
       children: [
         Expanded(
@@ -309,6 +325,7 @@ class _DashboardState extends State<Dashboard> {
       ],
     );
 
+    // The left column contains the alert header and patient alert cards.
     final alertsColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -345,6 +362,7 @@ class _DashboardState extends State<Dashboard> {
       ],
     );
 
+    // Recent shift events are shown as a vertical timeline.
     final timelineWidget = Timeline(
       title: 'Today\'s Shift Timeline',
       accentColor: Colors.indigo,
@@ -370,6 +388,7 @@ class _DashboardState extends State<Dashboard> {
       ],
     );
 
+    // Place alerts beside the timeline on desktop and stack them on smaller screens.
     if (isDesktop) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,

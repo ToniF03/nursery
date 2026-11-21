@@ -27,7 +27,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notImplementedYet => 'Noch nicht implementiert.';
 
   @override
-  String get notImplementedYetDescription => 'Diese Funktion ist aktuell noch in der Entwicklung und wird bald implementiert.';
+  String get notImplementedYetDescription =>
+      'Diese Funktion ist aktuell noch in der Entwicklung und wird bald implementiert.';
 
   @override
   String get staffRatio => 'Personalquote';
@@ -46,7 +47,8 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get searchHeadline => 'Suche nach Patienten, Terminen oder Nachrichten';
+  String get searchHeadline =>
+      'Suche nach Patienten, Terminen oder Nachrichten';
 
   @override
   String room(String roomNumber) {

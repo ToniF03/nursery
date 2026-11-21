@@ -27,7 +27,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notImplementedYet => 'Not implemented yet.';
 
   @override
-  String get notImplementedYetDescription => 'This feature is currently in development and will be soon implemented.';
+  String get notImplementedYetDescription =>
+      'This feature is currently in development and will be soon implemented.';
 
   @override
   String get staffRatio => 'Staff Ratio';

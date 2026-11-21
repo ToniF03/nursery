@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Displays the signed-in user's account menu and navigation options.
 class UserMenuPage extends StatefulWidget {
   final VoidCallback onLogout;
   const UserMenuPage({super.key, required this.onLogout});
@@ -11,12 +12,14 @@ class UserMenuPage extends StatefulWidget {
 }
 
 class _UserMenuPage extends State<UserMenuPage> {
+  // Supabase client used for profile lookup and logout.
   final supabase = Supabase.instance.client;
   String name = '';
 
   @override
   void initState() {
     super.initState();
+    // Load the user's display name when the menu opens.
     getUserName();
   }
 
