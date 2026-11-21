@@ -29,7 +29,7 @@ This application runs seamlessly on multiple platforms:
 
 ### Prerequisites
 
-- **Flutter SDK**: `>=3.11.3`
+- **Flutter SDK**: `>=3.50.0`
 - **Dart SDK**: (included with Flutter)
 - **Android SDK** (for Android development)
 - **Xcode** (for iOS development)
@@ -69,14 +69,26 @@ This application runs seamlessly on multiple platforms:
 
 ```
 lib/
-├── main.dart                      # Application entry point
-├── app_layout_state.dart          # Application layout and state management
+├── main.dart                       # Application entry point
+├── app_layout_state.dart           # Application layout and state management
+├── l10n.yaml                       # Localization configuration
+├── l10n/
+│   ├── app_en.arb                  # English translations
+│   ├── app_de.arb                  # German translations
+│   ├── app_localizations_de.dart   # Generated localization delegate for German
+│   ├── app_localizations_en.dart   # Generated localization delegate for English
+│   └── app_localizations.dart      # Generated localization delegate
 ├── screens/
-│   ├── dashboard.dart             # Main dashboard with real-time updates
+│   ├── dashboard.dart              # Main dashboard with real-time updates
+│   ├── user_menu.dart              # User profile and settings menu
 │   └── login/
-│       └── login_screen.dart      # Secure authentication screen
+│       └── login_screen.dart       # Secure authentication screen
+│       └── register_screen.dart    # Secure registration screen
+├── core/
+│   └── app_locale.dart             # Localization helper functions
+│   └── auth_gate.dart              # Authentication state management
 └── widgets/
-    ├── alert_card.dart            # Alert notification component
+    ├── alert_card.dart             # Alert notification component
     ├── dashboard_info_card.dart    # Patient information display cards
     ├── pill.dart                   # Reusable pill-shaped UI component
     ├── timeline.dart               # Timeline visualization for schedules
@@ -170,7 +182,7 @@ This project is intended purely for portfolio purposes and is not for public dis
 
 ## 💬 Support & Contribution
 
-For questions, bug reports, or feature requests, please contact the development team.
+For questions, bug reports, or feature requests, please contact the developer.
 
 ## 📚 Resources
 
@@ -183,5 +195,5 @@ For questions, bug reports, or feature requests, please contact the development 
 
 **Version**: 1.0.0  
 **Status**: 🔄 In Development  
-**Built with**: Flutter 3.11.3+  
+**Built with**: Flutter 3.50.0+  
 **Last Updated**: 2026

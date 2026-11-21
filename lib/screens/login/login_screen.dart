@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nursery/l10n/app_localizations.dart';
-import 'package:nursery/screens/login/register_page.dart';
+import 'package:nursery/screens/login/register_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
