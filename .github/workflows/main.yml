@@ -1,13 +1,24 @@
+
 name: Build Typst document
+
 on: push
 
 jobs:
   build_typst_documents:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Typst
         uses: lvignoli/typst-action@main
         with:
           source_file: assets/documentation.typ
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: assets/documentation.pdf
+          if-no-files-found: error
