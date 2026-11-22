@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/l10n/app_localizations.dart';
-import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/user_button.dart';
 
 class DashboardTopBar extends StatefulWidget {
@@ -63,9 +62,36 @@ class _DashboardTopBarState extends State<DashboardTopBar> {
             color: Colors.grey,
           ),
           onPressed: () {
-            showDialog(
+          final RenderBox button = context.findRenderObject()! as RenderBox;
+          final RenderBox overlay =
+              Navigator.of(context).overlay!.context.findRenderObject()!
+                  as RenderBox;
+
+          final Offset topLeft = button.localToGlobal(
+            Offset.zero,
+            ancestor: overlay,
+          );
+          final Offset bottomRight = button.localToGlobal(
+            button.size.bottomRight(Offset.zero),
+            ancestor: overlay,
+          );
+
+          final RelativeRect position = RelativeRect.fromLTRB(
+            topLeft.dx,
+            bottomRight.dy,
+            overlay.size.width - bottomRight.dx,
+            overlay.size.height - bottomRight.dy,
+          );
+
+            showMenu(
               context: context,
-              builder: (context) => const NotImplementedDialog(),
+              position: position,
+              items: [
+                const PopupMenuItem(
+                  enabled: false,
+                  child: Text('Aktuell keine neuen Nachrichten'),
+                ),
+              ],
             );
           },
         ),
