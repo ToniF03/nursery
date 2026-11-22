@@ -3,6 +3,9 @@ name: Build Typst document
 
 on:
   push:
+    paths:
+      - 'assets/documentation.typ'
+      - 'assets/template.typ'
     paths-ignore:
       - 'assets/documentation.pdf'
 
