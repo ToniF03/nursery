@@ -21,6 +21,8 @@ jobs:
 
       - name: Typst
         uses: lvignoli/typst-action@main
+        env:
+          TYPST_FONT_PATHS: fonts/
         with:
           source_file: assets/documentation.typ
 
