@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:nursery/app_layout_state.dart';
+import 'package:nursery/core/app_layout_state.dart';
+import 'package:nursery/core/globals.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/alert_card.dart';
 import 'package:nursery/widgets/dashboard_info_card.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
 import 'package:nursery/widgets/timeline.dart';
-import 'package:nursery/screens/user_menu.dart';
+import 'package:nursery/widgets/user_button.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dashboard extends StatefulWidget {
-  final VoidCallback onLogout;
-  const Dashboard({super.key, required this.onLogout});
+  const Dashboard({super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -96,10 +96,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    // A compact layout is used on narrow screens; desktop state is tracked separately.
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isSmall = screenWidth < 600;
-
     // Outer layout keeps the dashboard scrollable on short or narrow screens.
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -146,6 +142,8 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
                 const SizedBox(width: 12),
+
+                // Notification buttons.
                 IconButton(
                   icon: Icon(
                     Icons.notifications,
@@ -160,21 +158,9 @@ class _DashboardState extends State<Dashboard> {
                   },
                 ),
                 const SizedBox(width: 12),
-                IconButton(
-                  icon: Icon(
-                    Icons.account_circle,
-                    size: isSmall ? 20 : 25,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            UserMenuPage(onLogout: widget.onLogout),
-                      ),
-                    );
-                  },
-                ),
+
+                // User account button opens the user menu page.
+                UserButton(),
               ],
             ),
 
@@ -252,7 +238,7 @@ class _DashboardState extends State<Dashboard> {
     required Widget currentTimeCard,
     required Widget Function(Widget) constrainedCard,
   }) {
-    final greetingText = AppLocalizations.of(context)!.goodMorning(name);
+    final greetingText = AppLocalizations.of(context)!.goodMorning(Globals().userName ?? "");
 
     // Stack the greeting above its cards in constrained layouts.
     if (mobileLayout) {

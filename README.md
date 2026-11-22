@@ -85,14 +85,16 @@ lib/
 │       └── login_screen.dart       # Secure authentication screen
 │       └── register_screen.dart    # Secure registration screen
 ├── core/
-│   └── app_locale.dart             # Localization helper functions
-│   └── auth_gate.dart              # Authentication state management
+│   ├── app_locale.dart             # Localization helper functions
+│   ├── auth_gate.dart              # Authentication state management
+│   └── globals.dart                # Global application state
 └── widgets/
     ├── alert_card.dart             # Alert notification component
     ├── dashboard_info_card.dart    # Patient information display cards
     ├── pill.dart                   # Reusable pill-shaped UI component
     ├── timeline.dart               # Timeline visualization for schedules
-    └── not_implemented_dialog.dart # Placeholder for future features
+    ├── not_implemented_dialog.dart # Placeholder for future features
+    └── user_button.dart            # User profile button
 
 test/
 └── widget_test.dart                # Unit and widget tests

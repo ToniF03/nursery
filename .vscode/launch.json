@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "nursery: Desktop",
+            "type": "dart",
+            "request": "launch",
+            "deviceId": "windows"
+        },
+        {
             "name": "nursery",
             "request": "launch",
             "type": "dart"

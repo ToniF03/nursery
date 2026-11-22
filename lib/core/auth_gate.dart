@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nursery/core/globals.dart';
 import 'package:nursery/screens/dashboard.dart';
 import 'package:nursery/screens/login/login_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -27,6 +28,30 @@ class _AuthGateState extends State<AuthGate> {
     });
   }
 
+  Future<void> getUserName() async {
+    try {
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser?.id;
+      if (userId == null) return;
+
+      final userData = await supabase
+          .from('userData')
+          .select('first_name, last_name')
+          .eq('id', userId)
+          .maybeSingle();
+        Globals().currentUser = userData;
+
+      if (!mounted) return;
+      setState(() {
+        final firstName = userData?['first_name'] as String? ?? '';
+        Globals().userName = firstName.trim();
+        Globals().fullName = '${userData?['first_name'] ?? ''} ${userData?['last_name'] ?? ''}'.trim();
+      });
+    } catch (e) {
+      debugPrint('Get Table Exception: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final auth = Supabase.instance.client.auth;
@@ -38,7 +63,8 @@ class _AuthGateState extends State<AuthGate> {
         final session = snapshot.data?.session ?? auth.currentSession;
 
         if (session != null) {
-          return Dashboard(onLogout: () => widget.onAuthStateChanged(false));
+          getUserName();
+          return Dashboard();
         }
 
         return LoginScreen(

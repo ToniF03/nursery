@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nursery/core/logout_helper.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Displays the signed-in user's account menu and navigation options.
 class UserMenuPage extends StatefulWidget {
-  final VoidCallback onLogout;
-  const UserMenuPage({super.key, required this.onLogout});
+  const UserMenuPage({super.key});
 
   @override
   State<UserMenuPage> createState() => _UserMenuPage();
@@ -46,16 +46,6 @@ class _UserMenuPage extends State<UserMenuPage> {
       });
     } catch (e) {
       debugPrint('Get Table Exception: $e');
-    }
-  }
-
-  Future<void> logOut() async {
-    try {
-      await supabase.auth.signOut();
-      navigateToFirst();
-      widget.onLogout();
-    } catch (e) {
-      debugPrint('Logout Exception: $e');
     }
   }
 
@@ -120,7 +110,7 @@ class _UserMenuPage extends State<UserMenuPage> {
                       leading: const Icon(Icons.logout),
                       title: Text(AppLocalizations.of(context)!.logout),
                       onTap: () {
-                        logOut();
+                        logoutAndNavigate(context);
                       },
                     ),
                   ],

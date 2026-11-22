@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nursery/app_layout_state.dart';
+import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/core/auth_gate.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'l10n/app_localizations.dart';
@@ -29,7 +29,7 @@ class Nursery extends StatelessWidget {
         return MaterialApp(
           title: 'Nursery',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF4A9B9B)),
             scaffoldBackgroundColor: Colors.white,
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Nursery',
               style: TextStyle(
-                color: Colors.indigo,
+                color: Color(0xFF4A9B9B),
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -158,7 +158,9 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, constraints) {
         // Desktop navigation starts at 900 pixels of available width.
         final bool desktopLayout = constraints.maxWidth >= 900;
+        final bool smallLayout = constraints.maxWidth < 600;
         setIsDesktop(desktopLayout);
+        setIsSmall(smallLayout);
 
         return Scaffold(
           body: Row(
@@ -175,21 +177,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 ),
-                /*_isLoggedIn
-                    ? Dashboard(
-                        onLogout: () {
-                          setState(() {
-                            _isLoggedIn = false;
-                          });
-                        },
-                      )
-                    : LoginScreen(
-                        onLoginSuccess: () {
-                          setState(() {
-                            _isLoggedIn = true;
-                          });
-                        },
-                      ),*/
               ),
             ],
           ),
