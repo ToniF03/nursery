@@ -6,8 +6,6 @@ on:
     paths:
       - 'assets/documentation.typ'
       - 'assets/template.typ'
-    paths-ignore:
-      - 'assets/documentation.pdf'
 
 permissions:
   contents: write
