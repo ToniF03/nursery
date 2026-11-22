@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nursery/core/app_layout_state.dart';
-import 'package:nursery/core/globals.dart';
 import 'package:nursery/core/logout_helper.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/screens/user_menu.dart';
