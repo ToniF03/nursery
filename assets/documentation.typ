@@ -787,7 +787,7 @@ erDiagram
 *Note:* The `auth.users` table is managed by Supabase and is used for authentication purposes. The table is simplified in this diagram to show its relationship with the other table.
 
 == Class Diagram
-The class diagram shows the main classes of the current Flutter application. The widgets form the presentation layer, `AuthGate` controls the transition between the login screen and the dashboard, and the Supabase client handles authentication and data access.
+The class diagram shows the main classes of the current Flutter application. `Nursery` initializes the application, `MyHomePage` provides the responsive application shell, and `AuthGate` switches between authentication and the dashboard based on the current Supabase session. Reusable widgets form the presentation layer, while `AuthService` and the Supabase client provide authentication and data access.
 
 ```pintora
 classDiagram
@@ -798,55 +798,82 @@ classDiagram
 
   class MyHomePage {
     +title String
+    +build(context) Widget
   }
 
   class AuthGate {
     +onAuthStateChanged ValueChanged~bool~
+    +getUserName() Future~void~
     +build(context) Widget
   }
 
   class LoginScreen {
     +onLoginSuccess VoidCallback
-    +signInWithEmail(email, password) Future
+    +signInWithEmail(email, password) Future~void~
   }
 
   class RegisterPage {
     +onLoginSuccess VoidCallback
-    +signUpWithEmail(email, password, organization, name) Future
+    +signUpWithEmail(email, password, organization, name) Future~void~
   }
 
   class Dashboard {
-    +onLogout VoidCallback
-    +getUserName() Future
+    +getUserName() Future~void~
     +build(context) Widget
   }
 
   class UserMenuPage {
-    +onLogout VoidCallback
-    +getUserName() Future
-    +logOut() Future
+    +getUserName() Future~void~
+    +navigateToFirst() void
+    +build(context) Widget
+  }
+
+  class UserButton {
+    +build(context) Widget
   }
 
   class DashboardInfoCard {
+    +icon IconData
     +label String
     +value String
-    +onTap VoidCallback
+    +onTap VoidCallback?
+    +build(context) Widget
   }
 
   class AlertCard {
     +title String
     +subtitle String
     +description String
-    +onTap VoidCallback
+    +color Color
+    +data Object?
+    +onTap VoidCallback?
+    +build(context) Widget
   }
 
   class Timeline {
-    +title String
-    +children List~Widget~
+    +children List~TimelineItem~
+    +title String?
+    +accentColor Color
+    +build(context) Widget
   }
 
   class TimelineItem {
     +child Widget
+    +color Color
+    +isFirst bool
+    +isLast bool
+    +build(context) Widget
+  }
+
+  class Pill {
+    +text String
+    +bold bool
+    +color Color
+    +build(context) Widget
+  }
+
+  class NotImplementedDialog {
+    +build(context) Widget
   }
 
   class AppLocale {
@@ -854,17 +881,28 @@ classDiagram
     +setLocale(locale) void
   }
 
+  class AppLayoutState {
+    +isDesktopNotifier ValueNotifier~bool~
+    +isSmallNotifier ValueNotifier~bool~
+    +setIsDesktop(value) void
+    +setIsSmall(value) void
+  }
+
+  class Globals {
+    +currentUser Map~String, dynamic~?
+    +userName String?
+    +fullName String?
+  }
+
+  class AuthService {
+    +instance AuthService
+    +signOut() Future~void~
+    +onLogout VoidCallback?
+  }
+
   class SupabaseClient {
     +auth GoTrueClient
     +from(table) PostgrestQueryBuilder
-  }
-
-  class UserData {
-    +id uuid
-    +company String
-    +role String
-    +firstName String
-    +lastName String
   }
 
   Nursery *-- MyHomePage : starts
@@ -872,17 +910,26 @@ classDiagram
   AuthGate ..> LoginScreen : shows when unauthenticated
   AuthGate ..> Dashboard : shows when authenticated
   LoginScreen ..> RegisterPage : opens
+  LoginScreen ..> SupabaseClient : signs in
+  RegisterPage ..> SupabaseClient : registers user
   Dashboard *-- DashboardInfoCard : contains
   Dashboard *-- AlertCard : contains
   Dashboard *-- Timeline : contains
   Timeline *-- TimelineItem : contains
+  Dashboard ..> Pill : uses
+  Dashboard ..> NotImplementedDialog : opens
+  Dashboard ..> UserButton : contains
   Dashboard ..> UserMenuPage : opens
-  LoginScreen ..> SupabaseClient : authenticates
-  RegisterPage ..> SupabaseClient : registers
+  UserButton ..> UserMenuPage : opens on mobile
+  UserMenuPage ..> AuthService : signs out
+  UserMenuPage ..> SupabaseClient : reads profile
+  AuthService ..> SupabaseClient : signs out
+  AuthGate ..> SupabaseClient : observes session
   Dashboard ..> SupabaseClient : reads profile
-  UserMenuPage ..> SupabaseClient : reads profile and signs out
-  SupabaseClient ..> UserData : persists
-  Nursery ..> AppLocale : observes
+  SupabaseClient ..> Globals : stores profile data
+  Nursery ..> AppLocale : observes locale
+  MyHomePage ..> AppLayoutState : updates layout
+  Dashboard ..> AppLayoutState : reads layout
 ```
 
 = Testing
