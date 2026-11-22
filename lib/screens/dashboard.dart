@@ -4,11 +4,11 @@ import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/core/globals.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/alert_card.dart';
-import 'package:nursery/widgets/dashboard_info_card.dart';
+import 'package:nursery/widgets/dashboard/dashboard_info_card.dart';
+import 'package:nursery/widgets/dashboard/dashboard_top_bar.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
 import 'package:nursery/widgets/timeline.dart';
-import 'package:nursery/widgets/user_button.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dashboard extends StatefulWidget {
@@ -20,7 +20,6 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   // Controllers and timers owned by this screen.
-  final TextEditingController _searchController = TextEditingController();
   final supabase = Supabase.instance.client;
   Timer? _alignTimer;
   Timer? _clockTimer;
@@ -65,7 +64,6 @@ class _DashboardState extends State<Dashboard> {
     // Cancel active timers and controllers before this state is removed.
     _alignTimer?.cancel();
     _clockTimer?.cancel();
-    _searchController.dispose();
     super.dispose();
   }
 
@@ -86,58 +84,7 @@ class _DashboardState extends State<Dashboard> {
             SizedBox(height: isSmall ? 12 : 20),
 
             // Search and account actions.
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    enabled: true,
-                    readOnly: false,
-                    style: const TextStyle(color: Colors.black),
-                    cursorColor: Colors.indigo,
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 10,
-                      ),
-                      filled: true,
-                      fillColor: const Color(0xFFF1F1F1),
-                      hintText: AppLocalizations.of(context)!.searchHeadline,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(25.7),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(25.7),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-
-                // Notification buttons.
-                IconButton(
-                  icon: Icon(
-                    Icons.notifications,
-                    size: isSmall ? 20 : 25,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const NotImplementedDialog(),
-                    );
-                  },
-                ),
-                const SizedBox(width: 12),
-
-                // User account button opens the user menu page.
-                UserButton(),
-              ],
-            ),
+            const DashboardTopBar(),
 
             // Greeting and key status cards.
             Padding(
