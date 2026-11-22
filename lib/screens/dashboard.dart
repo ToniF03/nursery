@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nursery/core/app_layout_state.dart';
-import 'package:nursery/core/globals.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/alert_card.dart';
-import 'package:nursery/widgets/dashboard/dashboard_info_card.dart';
+import 'package:nursery/widgets/dashboard/dashboard_info_bar.dart';
 import 'package:nursery/widgets/dashboard/dashboard_top_bar.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
@@ -86,55 +85,7 @@ class _DashboardState extends State<Dashboard> {
             // Search and account actions.
             const DashboardTopBar(),
 
-            // Greeting and key status cards.
-            Padding(
-              padding: EdgeInsets.all(isSmall ? 8 : 12),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final mobileLayout = constraints.maxWidth < 700 || isSmall;
-                  final double cardMinWidth = 220.0;
-
-                  // Status cards share a minimum width and a limited maximum width.
-                  Widget constrainedCard(Widget child) => ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minWidth: cardMinWidth,
-                      maxWidth: 360,
-                    ),
-                    child: child,
-                  );
-
-                  // Staff ratio card opens the shared placeholder dialog.
-                  final staffRatioCard = constrainedCard(
-                    DashboardInfoCard(
-                      icon: Icons.people,
-                      label: AppLocalizations.of(context)!.staffRatio,
-                      value: '1:3',
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => const NotImplementedDialog(),
-                        );
-                      },
-                    ),
-                  );
-
-                  // The time card reads the live clock value produced by setState.
-                  final currentTimeCard = DashboardInfoCard(
-                    icon: Icons.schedule,
-                    label: AppLocalizations.of(context)!.currentTime,
-                    value: _currentTime(),
-                  );
-
-                  return _buildGreetingSection(
-                    mobileLayout: mobileLayout,
-                    isSmall: isSmall,
-                    staffRatioCard: staffRatioCard,
-                    currentTimeCard: currentTimeCard,
-                    constrainedCard: constrainedCard,
-                  );
-                },
-              ),
-            ),
+            Padding(padding: EdgeInsets.all(isSmall ? 8 : 12), child: const DashboardInfoBar()),
 
             // Urgent alerts and the shift timeline.
             Padding(
@@ -150,62 +101,6 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildGreetingSection({
-    required bool mobileLayout,
-    required bool isSmall,
-    required Widget staffRatioCard,
-    required Widget currentTimeCard,
-    required Widget Function(Widget) constrainedCard,
-  }) {
-    final greetingText = AppLocalizations.of(context)!.goodMorning(Globals().userName ?? "");
-
-    // Stack the greeting above its cards in constrained layouts.
-    if (mobileLayout) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            greetingText,
-            style: TextStyle(
-              fontSize: isSmall ? 18 : 20,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(child: staffRatioCard),
-              SizedBox(width: 12),
-              Expanded(child: constrainedCard(currentTimeCard)),
-            ],
-          ),
-        ],
-      );
-    }
-
-    // Use a single row when there is enough horizontal space.
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Text(
-            greetingText,
-            style: TextStyle(
-              fontSize: isSmall ? 18 : 20,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(width: 12),
-        staffRatioCard,
-        SizedBox(width: 12),
-        constrainedCard(currentTimeCard),
-      ],
     );
   }
 
