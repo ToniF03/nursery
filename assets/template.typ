@@ -92,6 +92,7 @@
   align(center)[
     #align(center + bottom)[
     #text(size: 18pt, weight: "bold", fill: accent-color)[Nursery Documentation]
+    #line(length: 100%, stroke: 0.5pt + border-color)
     #v(0.8em)
 
     #text(size: 11pt, fill: gray)[Copyright © 2026 Toni Fey. All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form without prior written permission.]
@@ -105,7 +106,7 @@
     paper: "a4",
     margin: (top: 2.5cm, bottom: 2.5cm, left: 2.2cm, right: 2.2cm),
     header: context {
-      if counter(page).get().first() > 2 [
+      if counter(page).get().first() > 1 and counter(page).get().first() < counter(page).final().first() [
         #set text(size: 8.5pt, fill: gray)
         #grid(
           columns: (1fr, 1fr),
