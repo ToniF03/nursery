@@ -30,7 +30,7 @@ class Nursery extends StatelessWidget {
           title: 'Nursery',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF4A9B9B)),
-            scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: Color(0xffF5F5F5),
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,

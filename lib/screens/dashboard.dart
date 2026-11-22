@@ -6,6 +6,7 @@ import 'package:nursery/widgets/dashboard/dashboard_info_bar.dart';
 import 'package:nursery/widgets/dashboard/dashboard_top_bar.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
+import 'package:nursery/widgets/quick_action_button.dart';
 import 'package:nursery/widgets/timeline.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -39,7 +40,98 @@ class _DashboardState extends State<Dashboard> {
             // Search and account actions.
             const DashboardTopBar(),
 
-            Padding(padding: EdgeInsets.all(isSmall ? 8 : 12), child: const DashboardInfoBar()),
+            Padding(
+              padding: EdgeInsets.all(isSmall ? 8 : 12),
+              child: const DashboardInfoBar(),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(isSmall ? 8 : 12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      "Quick Actions",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: isSmall ? 16 : 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: isSmall ? 8 : 12),
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: isSmall ? 8 : 12,
+                    children: [
+                      QuickActionButton(
+                        icon: Icons.medication,
+                        label: "Log Meds",
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const NotImplementedDialog(),
+                          );
+                        },
+                      ),
+                      QuickActionButton(
+                        icon: Icons.monitor_heart_outlined,
+                        label: "Record Vitals",
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const NotImplementedDialog(),
+                          );
+                        },
+                      ),
+                      QuickActionButton(
+                        icon: Icons.swap_horiz,
+                        label: "Patient Transfer",
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const NotImplementedDialog(),
+                          );
+                        },
+                      ),
+                      QuickActionButton(
+                        icon: Icons.insert_drive_file_outlined,
+                        label: "Report Incident",
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const NotImplementedDialog(),
+                          );
+                        },
+                      ),
+                      QuickActionButton(
+                        icon: Icons.message_outlined,
+                        label: "Contact Physician",
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const NotImplementedDialog(),
+                          );
+                        },
+                      ),
+                      QuickActionButton(
+                        icon: Icons.add,
+                        label: "Customize",
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const NotImplementedDialog(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
 
             // Urgent alerts and the shift timeline.
             Padding(
