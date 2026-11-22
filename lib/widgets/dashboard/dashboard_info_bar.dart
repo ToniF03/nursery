@@ -88,6 +88,12 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
           icon: Icons.people,
           label: AppLocalizations.of(context)!.staffRatio,
           value: '1:3',
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => const NotImplementedDialog(),
+            );
+          },
         );
 
         final timeCard = DashboardInfoCard(
@@ -98,7 +104,6 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
 
         final cardsMinWidth = minCardWidth * 2 + spacing;
 
-        // 1. Alles nebeneinander
         if (constraints.maxWidth >=
             textPainter.width + cardsMinWidth + spacing) {
           return Row(
@@ -112,7 +117,6 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
           );
         }
 
-        // 2. Begrüßung oben, Cards darunter
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -132,7 +136,6 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
                   );
                 }
 
-                // 3. Auch die Cards müssen umbrechen
                 return Wrap(
                   spacing: spacing,
                   runSpacing: spacing,
