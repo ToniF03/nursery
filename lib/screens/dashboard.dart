@@ -25,15 +25,11 @@ class _DashboardState extends State<Dashboard> {
   Timer? _alignTimer;
   Timer? _clockTimer;
 
-  // The user's first name is loaded once and used in the localized greeting.
-  String name = '';
-
   @override
   void initState() {
     super.initState();
     // Start the clock aligned to a minute boundary, then update every second.
     _startAlignedClock();
-    getUserName();
   }
 
   void _startAlignedClock() {
@@ -55,27 +51,6 @@ class _DashboardState extends State<Dashboard> {
         }
       });
     });
-  }
-
-  Future<void> getUserName() async {
-    try {
-      final userId = supabase.auth.currentUser?.id;
-      if (userId == null) return;
-
-      final userData = await supabase
-          .from('userData')
-          .select('first_name, last_name')
-          .eq('id', userId)
-          .maybeSingle();
-
-      if (!mounted) return;
-      setState(() {
-        final firstName = userData?['first_name'] as String? ?? '';
-        name = firstName.trim();
-      });
-    } catch (e) {
-      debugPrint('Get Table Exception: $e');
-    }
   }
 
   String _currentTime() {
