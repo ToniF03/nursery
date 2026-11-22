@@ -20,51 +20,6 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   // Controllers and timers owned by this screen.
   final supabase = Supabase.instance.client;
-  Timer? _alignTimer;
-  Timer? _clockTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    // Start the clock aligned to a minute boundary, then update every second.
-    _startAlignedClock();
-  }
-
-  void _startAlignedClock() {
-    // Wait until the next minute before starting the periodic clock timer.
-    final DateTime now = DateTime.now();
-    final Duration delay = Duration(
-      seconds: 60 - now.second,
-      milliseconds: -now.millisecond,
-      microseconds: -now.microsecond,
-    );
-
-    _alignTimer = Timer(delay, () {
-      if (!mounted) return;
-
-      setState(() {});
-      _clockTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-        if (mounted) {
-          setState(() {});
-        }
-      });
-    });
-  }
-
-  String _currentTime() {
-    final DateTime now = DateTime.now();
-    final String hours = now.hour.toString().padLeft(2, '0');
-    final String minutes = now.minute.toString().padLeft(2, '0');
-    return '$hours:$minutes';
-  }
-
-  @override
-  void dispose() {
-    // Cancel active timers and controllers before this state is removed.
-    _alignTimer?.cancel();
-    _clockTimer?.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
