@@ -33,7 +33,7 @@ jobs:
           TYPST_FONT_PATHS: fonts/
         with:
           source_file: assets/documentation.typ
-          options: --root .
+          options: --root=.
 
       - name: Commit generated PDF
         uses: stefanzweifel/git-auto-commit-action@v5
