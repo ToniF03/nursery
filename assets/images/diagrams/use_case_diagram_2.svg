@@ -19,6 +19,7 @@
     .relation { fill: none; stroke: #66757a; stroke-width: 1.5; }
     .relation-label { fill: #66757a; font: 11px Arial, sans-serif; }
   </style>
+
   <rect class="background" x="0" y="0" width="900" height="1050" rx="8"/>
   <rect class="system" x="170" y="50" width="560" height="950" rx="12"/>
   <ellipse class="use-case" cx="325.0" cy="186.0" rx="110.0" ry="31.0"/>

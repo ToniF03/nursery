@@ -10,6 +10,7 @@
     .type { fill: #66757a; font: 15px monospace; }
     .key { fill: #4a9b9b; font: 700 13px Arial, sans-serif; }
   </style>
+
   <rect class="background" x="0" y="0" width="1000" height="760" rx="8"/>
   <g aria-label="userData table">
     <rect class="table" x="40" y="35" width="330" height="360" rx="6"/>
