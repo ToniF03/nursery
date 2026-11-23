@@ -3,6 +3,7 @@ import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/alert_card.dart';
 import 'package:nursery/widgets/dashboard/dashboard_info_bar.dart';
+import 'package:nursery/widgets/dashboard/dashboard_priority_patients_table.dart';
 import 'package:nursery/widgets/dashboard/dashboard_quick_actions.dart';
 import 'package:nursery/widgets/dashboard/dashboard_top_bar.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
@@ -46,6 +47,8 @@ class _DashboardState extends State<Dashboard> {
             ),
 
             const DashboardQuickActions(),
+
+            const DashboardPriorityPatientsTable(),
 
             // Urgent alerts and the shift timeline.
             Padding(
