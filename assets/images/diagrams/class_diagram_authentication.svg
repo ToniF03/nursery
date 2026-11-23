@@ -19,6 +19,7 @@
     .relation { fill: none; stroke: #66757a; stroke-width: 1.5; }
     .relation-label { fill: #66757a; font: 11px Arial, sans-serif; }
   </style>
+
   <rect class="background" x="0" y="0" width="900" height="1050" rx="8"/>
   <rect class="class-card" x="50" y="80" width="260" height="140"/>
   <rect class="class-header" x="50" y="80" width="260" height="48"/>
