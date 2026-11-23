@@ -1,4 +1,3 @@
-
 name: Build Typst document
 
 on:
@@ -8,7 +7,6 @@ on:
       - 'assets/template.typ'
       - 'assets/database_schema.yaml'
       - 'assets/diagrams.yaml'
-      - 'assets/images/*.svg'
       - 'tool/generate_database_architecture.dart'
       - 'tool/generate_uml_diagrams.dart'
       - '.github/workflows/main.yml'
