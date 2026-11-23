@@ -69,7 +69,7 @@
   align(center)[
     #v(3cm)
     #align(center + horizon)[
-      #image("images/logo_with_subtitle.png", width: 75%)
+      #image("images/logo_with_subtitle_transparent.svg", width: 75%)
     ]
     #text(size: 26pt, weight: "bold", fill: black)[Documentation]
     #v(3cm)

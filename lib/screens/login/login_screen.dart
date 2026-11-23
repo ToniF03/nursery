@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/screens/login/register_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -63,9 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: Column(
             children: [
-              // Branded login header.
-              Image.asset(
-                'assets/images/logo_with_subtitle.png',
+              SvgPicture.asset(
+                'assets/images/logo_with_subtitle_transparent.svg',
                 width: 384,
                 height: 384,
                 fit: BoxFit.contain,

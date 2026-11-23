@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1050" viewBox="0 0 900 1050">
+  <style>
+    .background { fill: #f7f9fc; }
+    .system { fill: #ffffff; stroke: #4a9b9b; stroke-width: 3; }
+    .system-title { fill: #1f2328; font: 700 21px Arial, sans-serif; }
+    .use-case { fill: #ffffff; stroke: #4a9b9b; stroke-width: 2; }
+    .use-case-text { fill: #1f2328; font: 13px Arial, sans-serif; }
+    .actor { fill: #ffffff; stroke: #1f2328; stroke-width: 3; }
+    .actor-text { fill: #1f2328; font: 700 13px Arial, sans-serif; }
+    .actor-line { fill: none; stroke: #66757a; stroke-width: 2; }
+    .include-line { fill: none; stroke: #4a9b9b; stroke-width: 2; stroke-dasharray: 8 6; }
+    .group-title { fill: #1f2328; font: 700 22px Arial, sans-serif; }
+    .class-card { fill: #ffffff; stroke: #4a9b9b; stroke-width: 2; }
+    .class-header { fill: #4a9b9b; }
+    .class-title { fill: #ffffff; font: 700 15px Arial, sans-serif; }
+    .class-field { fill: #1f2328; font: 12px monospace; }
+    .class-method { fill: #365899; font: 12px monospace; }
+    .class-divider { stroke: #c9d8dc; stroke-width: 1; }
+    .relation { fill: none; stroke: #66757a; stroke-width: 1.5; }
+    .relation-label { fill: #66757a; font: 11px Arial, sans-serif; }
+  </style>
+  <rect class="background" x="0" y="0" width="900" height="1050" rx="8"/>
+  <rect class="system" x="170" y="50" width="560" height="950" rx="12"/>
+  <ellipse class="use-case" cx="325.0" cy="186.0" rx="110.0" ry="31.0"/>
+  <text class="use-case-text" x="325.0" y="191.0" text-anchor="middle">Register account</text>
+  <ellipse class="use-case" cx="585.0" cy="186.0" rx="110.0" ry="31.0"/>
+  <text class="use-case-text" x="585.0" y="191.0" text-anchor="middle">Sign in</text>
+  <ellipse class="use-case" cx="325.0" cy="311.0" rx="110.0" ry="31.0"/>
+  <text class="use-case-text" x="325.0" y="316.0" text-anchor="middle">Check authentication session</text>
+  <ellipse class="use-case" cx="585.0" cy="311.0" rx="110.0" ry="31.0"/>
+  <text class="use-case-text" x="585.0" y="316.0" text-anchor="middle">View dashboard overview</text>
+  <ellipse class="use-case" cx="325.0" cy="436.0" rx="110.0" ry="31.0"/>
+  <text class="use-case-text" x="325.0" y="441.0" text-anchor="middle">View current time and staff ratio</text>
+  <ellipse class="use-case" cx="585.0" cy="436.0" rx="110.0" ry="31.0"/>
+  <text class="use-case-text" x="585.0" y="441.0" text-anchor="middle">View alerts and shift timeline</text>
+  <circle class="actor" cx="45" cy="375" r="18"/>
+  <line class="actor" x1="45" y1="393" x2="45" y2="450"/>
+  <line class="actor" x1="17" y1="412" x2="73" y2="412"/>
+  <line class="actor" x1="45" y1="450" x2="25" y2="478"/>
+  <line class="actor" x1="45" y1="450" x2="65" y2="478"/>
+  <text class="actor-text" x="45" y="502" text-anchor="middle">Healthcare professional</text>
+
+  <circle class="actor" cx="810" cy="225" r="18"/>
+  <line class="actor" x1="810" y1="243" x2="810" y2="300"/>
+  <line class="actor" x1="782" y1="262" x2="838" y2="262"/>
+  <line class="actor" x1="810" y1="300" x2="790" y2="328"/>
+  <line class="actor" x1="810" y1="300" x2="830" y2="328"/>
+  <text class="actor-text" x="810" y="352" text-anchor="middle">Supabase Authentication</text>
+
+  <circle class="actor" cx="810" cy="485" r="18"/>
+  <line class="actor" x1="810" y1="503" x2="810" y2="560"/>
+  <line class="actor" x1="782" y1="522" x2="838" y2="522"/>
+  <line class="actor" x1="810" y1="560" x2="790" y2="588"/>
+  <line class="actor" x1="810" y1="560" x2="830" y2="588"/>
+  <text class="actor-text" x="810" y="612" text-anchor="middle">Supabase Database</text>
+
+  <circle class="actor" cx="810" cy="745" r="18"/>
+  <line class="actor" x1="810" y1="763" x2="810" y2="820"/>
+  <line class="actor" x1="782" y1="782" x2="838" y2="782"/>
+  <line class="actor" x1="810" y1="820" x2="790" y2="848"/>
+  <line class="actor" x1="810" y1="820" x2="830" y2="848"/>
+  <text class="actor-text" x="810" y="872" text-anchor="middle">Device locale</text>
+
+  <path class="actor-line" d="M73 430 H120 V186 H215"/>
+  <path class="actor-line" d="M73 430 H120 V186 H475"/>
+  <path class="actor-line" d="M73 430 H120 V311 H475"/>
+  <path class="actor-line" d="M695 186 H760 V280 H782"/>
+  <path class="actor-line" d="M435 186 H760 V280 H782"/>
+  <path class="actor-line" d="M435 311 H760 V280 H782"/>
+  <path class="actor-line" d="M435 186 H760 V540 H782"/>
+  <path class="actor-line" d="M435 311 H760 V540 H782"/>
+  <path class="include-line" d="M585 217 V248 H325 V280"/>
+  <path class="include-line" d="M435 311 H475"/>
+  <path class="include-line" d="M585 342 V373 H325 V405"/>
+  <path class="include-line" d="M585 342 V373 H585 V405"/>
+</svg>

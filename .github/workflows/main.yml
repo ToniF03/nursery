@@ -6,8 +6,14 @@ on:
     paths:
       - 'assets/documentation.typ'
       - 'assets/template.typ'
+      - 'assets/database_schema.yaml'
+      - 'assets/diagrams.yaml'
+      - 'assets/images/*.svg'
+      - 'tool/generate_database_architecture.dart'
+      - 'tool/generate_uml_diagrams.dart'
       - '.github/workflows/main.yml'
       - 'pubspec.yaml'
+      - 'pubspec.lock'
   workflow_dispatch:
   workflow_run:
     workflows: ["Update Project Versions"]
@@ -27,6 +33,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v2
+
+      - name: Install Dart dependencies
+        run: dart pub get
+
+      - name: Generate database architecture SVG
+        run: dart run tool/generate_database_architecture.dart
+
+      - name: Generate UML SVG diagrams
+        run: dart run tool/generate_uml_diagrams.dart
+
       - name: Typst
         uses: lvignoli/typst-action@main
         env:
@@ -35,8 +53,8 @@ jobs:
           source_file: assets/documentation.typ
           options: --root=.
 
-      - name: Commit generated PDF
+      - name: Commit generated diagram and PDF
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "docs: generated PDF from Typst source"
-          file_pattern: "README.md assets/documentation.pdf"
+          commit_message: "docs: generated database diagram and PDF"
+          file_pattern: "assets/images/database_architecture.svg assets/images/use_case_diagram_*.svg assets/images/class_diagram_*.svg assets/documentation.pdf"

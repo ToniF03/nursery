@@ -1,4 +1,10 @@
-# Nursery - Nursing Professional Management System
+![nursery logo title](.\assets\images\title.svg)
+
+![](./assets/images/subtitle.svg)
+
+---
+
+# Nursing Professional Management System
 
 A modern, cross-platform Flutter application designed for healthcare professionals to efficiently manage their daily nursing duties and improve patient care coordination.
 
@@ -38,29 +44,34 @@ This application runs seamlessly on multiple platforms:
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/ToniF03/nursery.git
    cd nursery
    ```
 
 2. **Install Flutter dependencies**
+
    ```bash
    flutter pub get
    ```
 
 3. **Run the application**
-   
+
    For mobile devices:
+
    ```bash
    flutter run
    ```
-   
+
    For web:
+
    ```bash
    flutter run -d chrome
    ```
-   
+
    For desktop (Windows/macOS/Linux):
+
    ```bash
    flutter run -d windows    # or macos, linux
    ```
@@ -99,6 +110,10 @@ lib/
 test/
 └── widget_test.dart                # Unit and widget tests
 
+tool/
+├── generate_database_architecture.dart  # Script to generate database architecture diagram
+└── generate_uml_diagrams.dart           # Script to generate UML diagrams
+
 android/, ios/, web/, windows/, macos/, linux/
 └── Platform-specific configurations and native code
 ```
@@ -106,6 +121,7 @@ android/, ios/, web/, windows/, macos/, linux/
 ## 🎯 Target Audience
 
 This application is designed for healthcare professionals including:
+
 - Registered Nurses (RNs)
 - Licensed Practical Nurses (LPNs)
 - Nursing Assistants (NAs)
@@ -117,6 +133,7 @@ This application is designed for healthcare professionals including:
 ### Running Tests
 
 Execute the test suite:
+
 ```bash
 flutter test
 ```
@@ -124,22 +141,26 @@ flutter test
 ### Building for Release
 
 **Android**:
+
 ```bash
 flutter build apk
 flutter build appbundle  # for Google Play Store
 ```
 
 **iOS**:
+
 ```bash
 flutter build ios
 ```
 
 **Web**:
+
 ```bash
 flutter build web
 ```
 
 **Desktop** (Windows/macOS/Linux):
+
 ```bash
 flutter build windows   # or macos, linux
 ```
@@ -147,6 +168,7 @@ flutter build windows   # or macos, linux
 ### Code Style & Linting
 
 This project follows Flutter and Dart best practices with analysis enabled via `analysis_options.yaml`. Run linting with:
+
 ```bash
 flutter analyze
 ```
@@ -154,10 +176,73 @@ flutter analyze
 ## 🏗️ Architecture
 
 The application uses:
+
 - **Stateful Widgets**: For dynamic, responsive UI updates
 - **Material Design**: Modern, accessible UI components
 - **State Management**: Currently using direct setState() (ready to scale to Provider, BLoC, or Riverpod patterns)
 - **Responsive Layout**: Adapts to mobile, tablet, and desktop screen sizes
+
+## Database Architecture Diagram
+
+The database architecture in the generated documentation is created dynamically from
+[`assets/database_schema.yaml`](assets/database_schema.yaml). The YAML file defines
+the tables, their columns, key types, layout side, and relationships.
+
+```yaml
+tables:
+  - name: userData
+    side: left
+    columns:
+      - name: id
+        type: uuid
+        key: PK
+
+relationships:
+  - from: userData.id
+    to: auth.users.uid
+```
+
+Generate or update [`assets/images/database_architecture.svg`](assets/images/database_architecture.svg)
+after changing the schema:
+
+```bash
+dart pub get
+dart run tool/generate_database_architecture.dart
+```
+
+You can add more tables by adding entries to `tables`, and you can add more
+column-to-column references by adding entries to `relationships`.
+Relationship endpoints use the fully qualified format
+`TableName.ColumnName`.
+
+## UML Diagrams
+
+The use-case and class diagrams are generated as separate SVG files from
+[`assets/diagrams.yaml`](assets/diagrams.yaml). This keeps the diagrams editable
+and avoids the very small rendering produced by the previous inline Pintora blocks.
+
+Update `use_cases`, `classes`, `actor_links`, `includes`, and
+`class_relationships` in the YAML specification, then run:
+
+```bash
+dart run tool/generate_uml_diagrams.dart
+```
+
+The generated files are:
+
+- [`assets/images/use_case_diagram_1.svg`](assets/images/use_case_diagram_1.svg)
+- [`assets/images/use_case_diagram_2.svg`](assets/images/use_case_diagram_2.svg)
+- [`assets/images/class_diagram_application.svg`](assets/images/class_diagram_application.svg)
+- [`assets/images/class_diagram_authentication.svg`](assets/images/class_diagram_authentication.svg)
+- [`assets/images/class_diagram_dashboard.svg`](assets/images/class_diagram_dashboard.svg)
+- [`assets/images/class_diagram_widgets.svg`](assets/images/class_diagram_widgets.svg)
+- [`assets/images/class_diagram_services.svg`](assets/images/class_diagram_services.svg)
+
+Compile the documentation locally with:
+
+```bash
+typst compile --root=. assets/documentation.typ assets/documentation.pdf
+```
 
 ## 📦 Built With
 

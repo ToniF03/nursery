@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1050" viewBox="0 0 900 1050">
+  <style>
+    .background { fill: #f7f9fc; }
+    .system { fill: #ffffff; stroke: #4a9b9b; stroke-width: 3; }
+    .system-title { fill: #1f2328; font: 700 21px Arial, sans-serif; }
+    .use-case { fill: #ffffff; stroke: #4a9b9b; stroke-width: 2; }
+    .use-case-text { fill: #1f2328; font: 13px Arial, sans-serif; }
+    .actor { fill: #ffffff; stroke: #1f2328; stroke-width: 3; }
+    .actor-text { fill: #1f2328; font: 700 13px Arial, sans-serif; }
+    .actor-line { fill: none; stroke: #66757a; stroke-width: 2; }
+    .include-line { fill: none; stroke: #4a9b9b; stroke-width: 2; stroke-dasharray: 8 6; }
+    .group-title { fill: #1f2328; font: 700 22px Arial, sans-serif; }
+    .class-card { fill: #ffffff; stroke: #4a9b9b; stroke-width: 2; }
+    .class-header { fill: #4a9b9b; }
+    .class-title { fill: #ffffff; font: 700 15px Arial, sans-serif; }
+    .class-field { fill: #1f2328; font: 12px monospace; }
+    .class-method { fill: #365899; font: 12px monospace; }
+    .class-divider { stroke: #c9d8dc; stroke-width: 1; }
+    .relation { fill: none; stroke: #66757a; stroke-width: 1.5; }
+    .relation-label { fill: #66757a; font: 11px Arial, sans-serif; }
+  </style>
+  <rect class="background" x="0" y="0" width="900" height="1050" rx="8"/>
+  <rect class="class-card" x="50" y="80" width="260" height="96"/>
+  <rect class="class-header" x="50" y="80" width="260" height="48"/>
+  <text class="class-title" x="180.0" y="110" text-anchor="middle">Dashboard</text>
+  <text class="class-method" x="64" y="150">+ build(context) Widget</text>
+  <rect class="class-card" x="320" y="80" width="260" height="96"/>
+  <rect class="class-header" x="320" y="80" width="260" height="48"/>
+  <text class="class-title" x="450.0" y="110" text-anchor="middle">DashboardTopBar</text>
+  <text class="class-method" x="334" y="150">+ build(context) Widget</text>
+  <rect class="class-card" x="590" y="80" width="260" height="140"/>
+  <rect class="class-header" x="590" y="80" width="260" height="48"/>
+  <text class="class-title" x="720.0" y="110" text-anchor="middle">DashboardInfoBar</text>
+  <text class="class-method" x="604" y="150">+ initState() void</text>
+  <text class="class-method" x="604" y="172">+ dispose() void</text>
+  <text class="class-method" x="604" y="194">+ build(context) Widget</text>
+  <rect class="class-card" x="50" y="320" width="260" height="96"/>
+  <rect class="class-header" x="50" y="320" width="260" height="48"/>
+  <text class="class-title" x="180.0" y="350" text-anchor="middle">DashboardQuickActions</text>
+  <text class="class-method" x="64" y="390">+ build(context) Widget</text>
+  <rect class="class-card" x="320" y="320" width="260" height="140"/>
+  <rect class="class-header" x="320" y="320" width="260" height="48"/>
+  <text class="class-title" x="450.0" y="350" text-anchor="middle">UserMenuPage</text>
+  <text class="class-method" x="334" y="390">+ getUserName() Future&lt;void&gt;</text>
+  <text class="class-method" x="334" y="412">+ navigateToFirst() void</text>
+  <text class="class-method" x="334" y="434">+ build(context) Widget</text>
+  <path class="relation" d="M310 104 H320"/>
+  <text class="relation-label" x="315" y="96">contains</text>
+  <path class="relation" d="M310 104 V484 H590 V104"/>
+  <text class="relation-label" x="450" y="476">contains</text>
+  <path class="relation" d="M180 176 V248 H162 V248 H180 V320"/>
+  <text class="relation-label" x="180" y="240">contains</text>
+</svg>

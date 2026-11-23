@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="760" viewBox="0 0 1000 760">
+  <style>
+    .background { fill: #f7f9fc; }
+    .table { fill: #ffffff; stroke: #4a9b9b; stroke-width: 2; }
+    .header { fill: #4a9b9b; }
+    .separator { stroke: #c9d8dc; stroke-width: 1; }
+    .connection { fill: none; stroke: #4a9b9b; stroke-width: 3; }
+    .title { fill: #ffffff; font: 700 20px Arial, sans-serif; }
+    .field { fill: #1f2328; font: 16px Arial, sans-serif; }
+    .type { fill: #66757a; font: 15px monospace; }
+    .key { fill: #4a9b9b; font: 700 13px Arial, sans-serif; }
+  </style>
+  <rect class="background" x="0" y="0" width="1000" height="760" rx="8"/>
+  <g aria-label="userData table">
+    <rect class="table" x="40" y="35" width="330" height="360" rx="6"/>
+    <rect class="header" x="40" y="35" width="330" height="52" rx="6"/>
+    <text class="title" x="60" y="68">userData</text>
+    <line class="separator" x1="40" y1="87" x2="370" y2="87"/>
+    <line class="separator" x1="40" y1="131" x2="370" y2="131"/>
+    <line class="separator" x1="40" y1="175" x2="370" y2="175"/>
+    <line class="separator" x1="40" y1="219" x2="370" y2="219"/>
+    <line class="separator" x1="40" y1="263" x2="370" y2="263"/>
+    <line class="separator" x1="40" y1="307" x2="370" y2="307"/>
+    <line class="separator" x1="40" y1="351" x2="370" y2="351"/>
+    <line class="separator" x1="40" y1="395" x2="370" y2="395"/>
+    <text class="key" x="55" y="114">PK</text>
+    <text class="field" x="95" y="114">id</text>
+    <text class="type" x="285" y="114">uuid</text>
+    <text class="field" x="95" y="158">created_at</text>
+    <text class="type" x="285" y="158">timestamptz</text>
+    <text class="field" x="95" y="202">company</text>
+    <text class="type" x="285" y="202">text</text>
+    <text class="field" x="95" y="246">role</text>
+    <text class="type" x="285" y="246">text</text>
+    <text class="field" x="95" y="290">birthday</text>
+    <text class="type" x="285" y="290">date</text>
+    <text class="field" x="95" y="334">first_name</text>
+    <text class="type" x="285" y="334">text</text>
+    <text class="field" x="95" y="378">last_name</text>
+    <text class="type" x="285" y="378">text</text>
+  </g>
+  <g aria-label="wardData table">
+    <rect class="table" x="40" y="465" width="330" height="272" rx="6"/>
+    <rect class="header" x="40" y="465" width="330" height="52" rx="6"/>
+    <text class="title" x="60" y="498">wardData</text>
+    <line class="separator" x1="40" y1="517" x2="370" y2="517"/>
+    <line class="separator" x1="40" y1="561" x2="370" y2="561"/>
+    <line class="separator" x1="40" y1="605" x2="370" y2="605"/>
+    <line class="separator" x1="40" y1="649" x2="370" y2="649"/>
+    <line class="separator" x1="40" y1="693" x2="370" y2="693"/>
+    <line class="separator" x1="40" y1="737" x2="370" y2="737"/>
+    <text class="key" x="55" y="544">PK</text>
+    <text class="field" x="95" y="544">id</text>
+    <text class="type" x="285" y="544">int</text>
+    <text class="field" x="95" y="588">name</text>
+    <text class="type" x="285" y="588">text</text>
+    <text class="field" x="95" y="632">currentCapacity</text>
+    <text class="type" x="285" y="632">int4</text>
+    <text class="field" x="95" y="676">maxCapacity</text>
+    <text class="type" x="285" y="676">int4</text>
+    <text class="key" x="55" y="720">FK</text>
+    <text class="field" x="95" y="720">ResidentialAreaManager</text>
+    <text class="type" x="285" y="720">uuid</text>
+  </g>
+  <g aria-label="auth.users table">
+    <rect class="table" x="620" y="35" width="330" height="228" rx="6"/>
+    <rect class="header" x="620" y="35" width="330" height="52" rx="6"/>
+    <text class="title" x="640" y="68">auth.users</text>
+    <line class="separator" x1="620" y1="87" x2="950" y2="87"/>
+    <line class="separator" x1="620" y1="131" x2="950" y2="131"/>
+    <line class="separator" x1="620" y1="175" x2="950" y2="175"/>
+    <line class="separator" x1="620" y1="219" x2="950" y2="219"/>
+    <line class="separator" x1="620" y1="263" x2="950" y2="263"/>
+    <text class="key" x="635" y="114">PK</text>
+    <text class="field" x="675" y="114">uid</text>
+    <text class="type" x="865" y="114">uuid</text>
+    <text class="field" x="675" y="158">displayName</text>
+    <text class="type" x="865" y="158">text</text>
+    <text class="field" x="675" y="202">email</text>
+    <text class="type" x="865" y="202">text</text>
+    <text class="field" x="675" y="246">phone</text>
+    <text class="type" x="865" y="246">text</text>
+  </g>
+  <path class="connection" d="M370 109 H495 V109 H620"/>
+  <path class="connection" d="M370 715 H495 V109 H620"/>
+</svg>

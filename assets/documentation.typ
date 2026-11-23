@@ -5,7 +5,7 @@
 #let dartVersion = "3.14.0"
 
 #let pubSpec = yaml("../pubspec.yaml")
-#let deps = pubSpec.dependencies
+#let deps = pubSpec.dependencies + pubSpec.dev_dependencies
 
 = Introduction
 == Project description
@@ -731,7 +731,8 @@ The application relies on several important dependencies to provide its function
 #list(
   [*Backend and Data Management*: supabase_flutter: #deps.supabase_flutter],
   [*Localization*: flutter_localizations],
-  [*Testing*: flutter_test and flutter_lints]
+  [*SVG Rendering*: flutter_svg: #deps.flutter_svg],
+  [*Testing*: flutter_test and flutter_lints: #deps.flutter_test],
 )
 
 == Sources and Licenses
@@ -759,272 +760,56 @@ The application follows a modular architecture that separates concerns into dist
 == Database architecture in Supabase
 The application uses Supabase as its backend service, which provides a PostgreSQL database along with authentication, storage, and real-time capabilities. The database architecture is designed to support the application's data requirements and ensure efficient data management.
 
-```pintora
-erDiagram
-  userData {
-    id uuid PK
-    created_at timestamptz
-    company text
-    role text
-    birthday date
-    first_name text
-    last_name text
-  }
-
-  wardData {
-    id int PK
-    name text
-    currentCapacity int4
-    maxCapacity int4
-    ResidentialAreaManager uuid FK
-  }
-
-  auth.users {
-    uid uuid PK
-    displayName text
-    email text
-    phone text
-  }
-
-  auth.users }|--|{ wardData : "wardData.ResidentialAreaManagement → auth.user.uid"
-  userData |o--|| auth.users : "userData.id → auth.user.uid"
-```
-*Note:* The `auth.users` table is managed by Supabase and is used for authentication purposes. The table is simplified in this diagram to show its relationship with the other table.
+#image("images/database_schema/database_architecture.svg", width: 100%)
+*Note:* The `auth.users` table is managed by Supabase. The custom diagram connects the exact relationship columns: `userData.id` and `wardData.ResidentialAreaManager` both reference `auth.users.uid`.
 
 == Use-Case Diagram
 The use-case diagram reflects the functionality currently implemented in the Flutter application. A healthcare professional can authenticate, register an account, view the dashboard, access profile information, open the account menu, and sign out. The dashboard provides an overview of the current time, staff ratio, alerts, and timeline entries. Quick-action controls are already visible, but their underlying workflows currently display a not-implemented dialog. Supabase Authentication and the Supabase database act as external systems for session management and profile data.
 
-```pintora
-dotDiagram
-digraph {
-  rankdir=LR;
-  node [shape=ellipse];
+The diagram is generated from `assets/diagrams.yaml`:
 
-  Staff [label="Healthcare professional", shape=box];
-  SupabaseAuth [label="Supabase Authentication", shape=box];
-  SupabaseDb [label="Supabase Database", shape=box];
-  DeviceLocale [label="Device locale", shape=box];
-
-  subgraph cluster_app {
-    label="Nursery application";
-    color="#4A9B9B";
-
-    Register [label="Register account"];
-    SignIn [label="Sign in"];
-    CheckSession [label="Check authentication session"];
-    ViewDashboard [label="View dashboard overview"];
-    ViewInfo [label="View current time and staff ratio"];
-    ViewAlerts [label="View alerts and shift timeline"];
-    OpenMenu [label="Open account menu"];
-    ViewProfile [label="View profile information"];
-    SignOut [label="Sign out"];
-    QuickAction [label="Use quick action"];
-    NotImplemented [label="Display not-implemented dialog"];
-    LocalizedInterface [label="Use localized interface"];
-  }
-
-  Staff -> Register;
-  Staff -> SignIn;
-  Staff -> ViewDashboard;
-  Staff -> OpenMenu;
-  Staff -> SignOut;
-  Staff -> QuickAction;
-  DeviceLocale -> LocalizedInterface;
-
-  SignIn -> CheckSession [label="includes", style=dashed];
-  CheckSession -> ViewDashboard [label="includes", style=dashed];
-  ViewDashboard -> ViewInfo [label="includes", style=dashed];
-  ViewDashboard -> ViewAlerts [label="includes", style=dashed];
-  OpenMenu -> ViewProfile [label="includes", style=dashed];
-  QuickAction -> NotImplemented [label="includes", style=dashed];
-
-  SignIn -> SupabaseAuth;
-  Register -> SupabaseAuth;
-  CheckSession -> SupabaseAuth;
-  SignOut -> SupabaseAuth;
-  Register -> SupabaseDb;
-  ViewProfile -> SupabaseDb;
-  CheckSession -> SupabaseDb;
-}
 ```
+dart run tool/generate_uml_diagrams.dart
+```
+
+#pagebreak()
+== Use-Case Diagram - Part 1
+#image("images/diagrams/use_case_diagram_1.svg", width: 92%)
+
+#pagebreak()
+== Use-Case Diagram - Part 2
+#image("images/diagrams/use_case_diagram_2.svg", width: 92%)
+
+#pagebreak()
 
 == Class Diagram
 The class diagram shows the main classes of the current Flutter application and their dependencies. `Nursery` initializes the application and its localization, `MyHomePage` provides the responsive application shell, and `AuthGate` switches between authentication and the dashboard based on the current Supabase session. The dashboard is composed of reusable widgets for navigation, overview information, quick actions, alerts, and the timeline. `AuthService`, `Globals`, and the Supabase client provide shared authentication and profile access. Private Flutter state classes are omitted to keep the diagram focused on the public application structure.
 
-```pintora
-classDiagram
+The class definitions and relationships are maintained in `assets/diagrams.yaml` and generated with the same UML generator:
 
-  class Nursery {
-    +build(context) Widget
-  }
-
-  class MyHomePage {
-    +title String
-    +initState() void
-    +dispose() void
-    +build(context) Widget
-  }
-
-  class AuthGate {
-    +onAuthStateChanged ValueChanged~bool~
-    +build(context) Widget
-  }
-
-  class LoginScreen {
-    +onLoginSuccess VoidCallback
-    +signInWithEmail(email, password) Future~void~
-    +build(context) Widget
-  }
-
-  class RegisterPage {
-    +onLoginSuccess VoidCallback
-    +signUpWithEmail(email, password, organization, name) Future~void~
-    +build(context) Widget
-  }
-
-  class Dashboard {
-    +build(context) Widget
-  }
-
-  class UserMenuPage {
-    +getUserName() Future~void~
-    +navigateToFirst() void
-    +build(context) Widget
-  }
-
-  class UserButton {
-    +build(context) Widget
-  }
-
-  class DashboardTopBar {
-    +build(context) Widget
-  }
-
-  class DashboardInfoBar {
-    +initState() void
-    +dispose() void
-    +build(context) Widget
-  }
-
-  class DashboardInfoCard {
-    +icon IconData
-    +label String
-    +value String
-    +onTap VoidCallback?
-    +build(context) Widget
-  }
-
-  class DashboardQuickActions {
-    +build(context) Widget
-  }
-
-  class QuickActionButton {
-    +icon IconData
-    +label String
-    +onPressed VoidCallback
-    +build(context) Widget
-  }
-
-  class AlertCard {
-    +title String
-    +subtitle String
-    +description String
-    +color Color
-    +data Object?
-    +onTap VoidCallback?
-    +build(context) Widget
-  }
-
-  class Timeline {
-    +children List~TimelineItem~
-    +title String?
-    +accentColor Color
-    +build(context) Widget
-  }
-
-  class TimelineItem {
-    +child Widget
-    +color Color
-    +isFirst bool
-    +isLast bool
-    +build(context) Widget
-  }
-
-  class Pill {
-    +text String
-    +bold bool
-    +color Color
-    +build(context) Widget
-  }
-
-  class NotImplementedDialog {
-    +build(context) Widget
-  }
-
-  class AppLocalizations {
-    <<abstract>>
-    +localeName String
-    +of(context) AppLocalizations?
-    +supportedLocales List~Locale~
-  }
-
-  class AppLocalizationsEn {
-    +localeName String
-  }
-
-  class AppLocalizationsDe {
-    +localeName String
-  }
-
-  class Globals {
-    +currentUser Map~String, dynamic~?
-    +userName String?
-    +fullName String?
-  }
-
-  class AuthService {
-    +instance AuthService
-    +signOut() Future~void~
-    +onLogout VoidCallback?
-  }
-
-  class SupabaseClient {
-    +auth GoTrueClient
-    +from(table) PostgrestQueryBuilder
-  }
-
-  Nursery *-- MyHomePage : starts
-  MyHomePage *-- AuthGate : contains
-  AuthGate ..> LoginScreen : shows when unauthenticated
-  AuthGate ..> Dashboard : shows when authenticated
-  LoginScreen ..> RegisterPage : opens
-  LoginScreen ..> SupabaseClient : signs in
-  RegisterPage ..> SupabaseClient : registers user
-  Dashboard *-- DashboardTopBar : contains
-  Dashboard *-- DashboardInfoBar : contains
-  Dashboard *-- DashboardQuickActions : contains
-  Dashboard *-- AlertCard : displays
-  Dashboard *-- Timeline : displays
-  DashboardTopBar *-- UserButton : contains
-  DashboardInfoBar *-- DashboardInfoCard : contains
-  DashboardQuickActions *-- QuickActionButton : contains
-  DashboardQuickActions ..> NotImplementedDialog : opens
-  Timeline *-- TimelineItem : contains
-  Dashboard ..> Pill : uses
-  Dashboard ..> NotImplementedDialog : opens
-  Dashboard ..> UserMenuPage : opens
-  UserButton ..> UserMenuPage : opens on mobile
-  UserMenuPage ..> AuthService : signs out
-  UserMenuPage ..> SupabaseClient : reads profile
-  AuthService ..> SupabaseClient : signs out
-  AuthGate ..> SupabaseClient : observes session
-  AuthGate ..> Globals : updates profile
-  DashboardInfoBar ..> Globals : reads user name
-  SupabaseClient ..> Globals : stores profile data
-  Nursery ..> AppLocalizations : configures localization
-  AppLocalizationsEn --|> AppLocalizations : implements
-  AppLocalizationsDe --|> AppLocalizations : implements
 ```
+dart run tool/generate_uml_diagrams.dart
+```
+
+#pagebreak()
+=== Application and Authentication
+#image("images/diagrams/class_diagram_application.svg", width: 92%)
+
+#pagebreak()
+=== Authentication Classes
+#image("images/diagrams/class_diagram_authentication.svg", width: 92%)
+
+#pagebreak()
+=== Dashboard
+#image("images/diagrams/class_diagram_dashboard.svg", width: 92%)
+
+#pagebreak()
+=== Widgets
+#image("images/diagrams/class_diagram_widgets.svg", width: 92%)
+
+#pagebreak()
+=== Services
+#image("images/diagrams/class_diagram_services.svg", width: 92%)
 
 = Testing
 == Unit Testing

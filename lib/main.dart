@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/core/auth_gate.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -110,14 +111,19 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView(
           padding: EdgeInsets.fromLTRB(15, 20, 16, 20),
           children: [
-            Text(
-              'Nursery',
-              style: TextStyle(
-                color: Color(0xFF4A9B9B),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            /*Image.asset(
+              'assets/images/logo_with_subtitle.png',
+              width: 150,
+              height: 150,
+              fit: BoxFit.contain,
+            ),*/
+            SvgPicture.asset(
+              'assets/images/title.svg',
+              width: 150,
+              height: 25.2,
+              fit: BoxFit.contain,
             ),
+            SizedBox(height: 20),
             ListTile(
               leading: Icon(Icons.dashboard),
               title: Text('Dashboard'),
