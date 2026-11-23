@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Dart
-        uses: dart-lang/setup-dart@v2
+        uses: dart-lang/setup-dart@v1.8.2
 
       - name: Install Dart dependencies
         run: dart pub get
