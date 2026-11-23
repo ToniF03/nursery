@@ -101,10 +101,11 @@ lib/
 │   └── globals.dart                # Global application state
 └── widgets/
     ├── alert_card.dart             # Alert notification component
+    ├── horizontal_fade_list.dart   # Horizontal list with fade effect
     ├── dashboard_info_card.dart    # Patient information display cards
+    ├── not_implemented_dialog.dart # Placeholder for future features
     ├── pill.dart                   # Reusable pill-shaped UI component
     ├── timeline.dart               # Timeline visualization for schedules
-    ├── not_implemented_dialog.dart # Placeholder for future features
     └── user_button.dart            # User profile button
 
 test/
