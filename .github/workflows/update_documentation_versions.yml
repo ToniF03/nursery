@@ -36,11 +36,11 @@ jobs:
           sed -i "s/\*\*Built with\*\*: Flutter .*/**Built with**: Flutter ${FLUTTER_VER} \& Dart ${DART_VER}  /g" README.md
 
           # 2. Update Typst variables
-          sed -i "s/#let flutterVersion = \".*\"/#let flutterVersion = \"${FLUTTER_VER}\"/g" path/to/your/file.typ
-          sed -i "s/#let dartVersion = \".*\"/#let dartVersion = \"${DART_VER}\"/g" path/to/your/file.typ
+          sed -i "s/#let flutterVersion = \".*\"/#let flutterVersion = \"${FLUTTER_VER}\"/g" assets/documentation.typ
+          sed -i "s/#let dartVersion = \".*\"/#let dartVersion = \"${DART_VER}\"/g" assets/documentation.typ
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "docs: update Flutter & Dart versions in README and Typst docs"
-          file_pattern: "README.md path/to/your/file.typ"
+          file_pattern: "README.md assets/documentation.typ"
