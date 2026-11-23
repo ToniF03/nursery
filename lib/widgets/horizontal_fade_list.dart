@@ -13,6 +13,7 @@ class _HorizontalFadeListState extends State<HorizontalFadeList> {
   final ScrollController _controller = ScrollController();
   bool _canScrollRight = false;
   bool _canScrollLeft = false;
+  double _scrollProgress = 0.0;
 
   @override
   void initState() {
@@ -33,6 +34,8 @@ class _HorizontalFadeListState extends State<HorizontalFadeList> {
     final maxScroll = _controller.position.maxScrollExtent;
     final currentScroll = _controller.offset;
     final canScroll = maxScroll > 0 && currentScroll < maxScroll - 1.0;
+
+    setState(() => _scrollProgress = (currentScroll / maxScroll).clamp(0.0, 1.0));
 
     if (canScroll != _canScrollRight) {
       setState(() => _canScrollRight = canScroll);
@@ -64,7 +67,7 @@ class _HorizontalFadeListState extends State<HorizontalFadeList> {
             Colors.white,
             _canScrollRight ? Colors.transparent : Colors.white,
           ],
-          stops: const [0.0, 0.15, 0.85, 1.0],
+          stops: [0.0, (_scrollProgress / 3).clamp(0.01, 0.15), ((_scrollProgress * 3).clamp(2.55, 2.99) / 3), 1.0],
         ).createShader(bounds);
       },
       blendMode: BlendMode.dstIn,
