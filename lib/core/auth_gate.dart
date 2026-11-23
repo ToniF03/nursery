@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/globals.dart';
 import 'package:nursery/screens/dashboard.dart';
 import 'package:nursery/screens/login/login_screen.dart';
@@ -64,7 +64,7 @@ class _AuthGateState extends State<AuthGate> {
 
         if (session != null) {
           getUserName();
-          return Dashboard();
+          return const Dashboard();
         }
 
         return LoginScreen(

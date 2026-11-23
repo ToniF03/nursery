@@ -21,13 +21,13 @@ void main(List<String> arguments) {
   imageDirectory.createSync(recursive: true);
 
   final useCaseSpec = document['use_cases'] as YamlMap;
-  final useCases = (useCaseSpec['use_cases'] as YamlList).cast<String>().toList();
+  final useCases = (useCaseSpec['use_cases'] as YamlList)
+      .cast<String>()
+      .toList();
   for (var index = 0; index < useCases.length; index += 6) {
     final end = index + 6 > useCases.length ? useCases.length : index + 6;
     final part = index ~/ 6 + 1;
-    final file = File(
-      '${imageDirectory.path}/use_case_diagram_$part.svg',
-    );
+    final file = File('${imageDirectory.path}/use_case_diagram_$part.svg');
     file.writeAsStringSync(
       _buildUseCaseSvg(useCaseSpec, useCases.sublist(index, end), part),
     );
@@ -43,22 +43,14 @@ void main(List<String> arguments) {
   final groups = classes.map((item) => item.group).toSet().toList();
 
   for (final group in groups) {
-    final slug = group.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '_');
-    final file = File(
-      '${imageDirectory.path}/class_diagram_$slug.svg',
-    );
-    file.writeAsStringSync(
-      _buildClassSvg(group, classes, relationships),
-    );
+    final slug = group.toLowerCase().replaceAll(RegExp('[^a-z0-9]'), '_');
+    final file = File('${imageDirectory.path}/class_diagram_$slug.svg');
+    file.writeAsStringSync(_buildClassSvg(group, classes, relationships));
     stdout.writeln('Generated ${file.path}');
   }
 }
 
-String _buildUseCaseSvg(
-  YamlMap spec,
-  List<String> useCases,
-  int part,
-) {
+String _buildUseCaseSvg(YamlMap spec, List<String> useCases, int part) {
   const width = 900;
   const height = 1050;
   const left = 45;
@@ -91,10 +83,7 @@ String _buildUseCaseSvg(
     final row = index ~/ 2;
     final x = systemX + 45 + column * 260;
     final y = systemY + 105 + row * 125;
-    final point = _Point(
-      x + caseWidth / 2,
-      y + caseHeight / 2,
-    );
+    final point = _Point(x + caseWidth / 2, y + caseHeight / 2);
     positions[useCases[index]] = point;
     buffer.writeln(
       '  <ellipse class="use-case" cx="${point.x}" cy="${point.y}" '
@@ -108,12 +97,11 @@ String _buildUseCaseSvg(
   }
 
   buffer.writeln(_actorSvg(spec['actor'] as String, left, 430));
-  final externalActors =
-      (spec['external_actors'] as YamlList).cast<String>().toList();
+  final externalActors = (spec['external_actors'] as YamlList)
+      .cast<String>()
+      .toList();
   for (var index = 0; index < externalActors.length; index++) {
-    buffer.writeln(
-      _actorSvg(externalActors[index], right, 280 + index * 260),
-    );
+    buffer.writeln(_actorSvg(externalActors[index], right, 280 + index * 260));
   }
 
   for (final item in (spec['actor_links'] as YamlList).cast<String>()) {
@@ -130,8 +118,7 @@ String _buildUseCaseSvg(
   for (var index = 0; index < externalActors.length; index++) {
     final actorName = externalActors[index];
     final actorY = 280 + index * 260;
-    for (final item
-        in (spec['external_links'] as YamlList).cast<String>()) {
+    for (final item in (spec['external_links'] as YamlList).cast<String>()) {
       final parts = item.split(' -> ');
       if (parts.length != 2 ||
           parts[1] != actorName ||
@@ -240,8 +227,7 @@ String _buildClassSvg(
   const left = 50;
   const top = 80;
 
-  final classes =
-      allClasses.where((item) => item.group == group).toList();
+  final classes = allClasses.where((item) => item.group == group).toList();
   final positions = <String, _Rect>{};
   final buffer = StringBuffer();
   buffer.writeln(
@@ -260,8 +246,12 @@ String _buildClassSvg(
     final x = left + column * 270;
     final y = top + row * 240;
     final cardHeight = _classCardHeight(classes[index]);
-    positions[classes[index].name] =
-        _Rect(x.toDouble(), y.toDouble(), cardWidth.toDouble(), cardHeight);
+    positions[classes[index].name] = _Rect(
+      x.toDouble(),
+      y.toDouble(),
+      cardWidth.toDouble(),
+      cardHeight,
+    );
     _writeClassCard(buffer, classes[index], x, y, cardWidth, cardHeight);
   }
 
@@ -314,8 +304,7 @@ void _writeClassCard(
   var lineY = y + 70;
   for (final field in item.fields) {
     buffer.writeln(
-      '  <text class="class-field" x="${x + 14}" y="$lineY">'
-      '+ ${_escape(field)}</text>',
+      '  <text class="class-field" x="${x + 14}" y="$lineY">+ ${_escape(field)}</text>',
     );
     lineY += 22;
   }
@@ -328,8 +317,7 @@ void _writeClassCard(
   }
   for (final method in item.methods) {
     buffer.writeln(
-      '  <text class="class-method" x="${x + 14}" y="$lineY">'
-      '+ ${_escape(method)}</text>',
+      '  <text class="class-method" x="${x + 14}" y="$lineY">+ ${_escape(method)}</text>',
     );
     lineY += 22;
   }
@@ -354,9 +342,7 @@ void _writeRelationship(
     final startRight = from.x < to.x
         ? (from.x + from.width).toInt()
         : from.x.toInt();
-    final endLeft = from.x < to.x
-        ? to.x.toInt()
-        : (to.x + to.width).toInt();
+    final endLeft = from.x < to.x ? to.x.toInt() : (to.x + to.width).toInt();
     final segmentStart = startRight < endLeft ? startRight : endLeft;
     final segmentEnd = startRight < endLeft ? endLeft : startRight;
     final lineY = (from.y + 24).toInt();
@@ -380,18 +366,23 @@ void _writeRelationship(
       endX = endLeft;
       startY = lineY;
       endY = (to.y + 24).toInt();
-      final laneY = ([
-        from.y + from.height,
-        to.y + to.height,
-        ...obstacles
-            .where((obstacle) =>
-                obstacle.x < segmentEnd &&
-                obstacle.x + obstacle.width > segmentStart)
-            .map((obstacle) => obstacle.y + obstacle.height),
-      ].reduce((value, element) => value > element ? value : element) +
-              24)
-          .toInt();
-      labelX = ((startX + endX) / 2).toInt();
+      final laneY =
+          ([
+                    from.y + from.height,
+                    to.y + to.height,
+                    ...obstacles
+                        .where(
+                          (obstacle) =>
+                              obstacle.x < segmentEnd &&
+                              obstacle.x + obstacle.width > segmentStart,
+                        )
+                        .map((obstacle) => obstacle.y + obstacle.height),
+                  ].reduce(
+                    (value, element) => value > element ? value : element,
+                  ) +
+                  24)
+              .toInt();
+      labelX = (startX + endX) ~/ 2;
       labelY = laneY - 8;
       buffer.writeln(
         '  <path class="relation" d="M$startX $startY '
@@ -413,12 +404,10 @@ void _writeRelationship(
     }
     startY = (from.y + 24).toInt();
     endY = (to.y + 24).toInt();
-    labelX = ((startX + endX) / 2).toInt();
+    labelX = (startX + endX) ~/ 2;
     labelY = startY - 8;
 
-    buffer.writeln(
-      '  <path class="relation" d="M$startX $startY H$endX"/>',
-    );
+    buffer.writeln('  <path class="relation" d="M$startX $startY H$endX"/>');
   } else {
     startX = (from.x + from.width / 2).toInt();
     endX = (to.x + to.width / 2).toInt();
@@ -430,9 +419,9 @@ void _writeRelationship(
       endY = (to.y + to.height).toInt();
     }
     final laneY = (startY < endY)
-        ? ((startY + endY) / 2).toInt()
-        : ((startY + endY) / 2).toInt();
-    labelX = ((startX + endX) / 2).toInt();
+        ? (startY + endY) ~/ 2
+        : (startY + endY) ~/ 2;
+    labelX = (startX + endX) ~/ 2;
     labelY = laneY - 8;
 
     final endOffset = endX - 18;
@@ -475,11 +464,7 @@ class _ClassDefinition {
 }
 
 class _Relationship {
-  _Relationship({
-    required this.from,
-    required this.to,
-    required this.label,
-  });
+  _Relationship({required this.from, required this.to, required this.label});
 
   final String from;
   final String to;
@@ -508,7 +493,8 @@ class _Rect {
   final double height;
 }
 
-String _svgStyle() => '''  <style>
+String _svgStyle() => '''
+  <style>
     .background { fill: #f7f9fc; }
     .system { fill: #ffffff; stroke: #4a9b9b; stroke-width: 3; }
     .system-title { fill: #1f2328; font: 700 21px Arial, sans-serif; }
@@ -527,7 +513,8 @@ String _svgStyle() => '''  <style>
     .class-divider { stroke: #c9d8dc; stroke-width: 1; }
     .relation { fill: none; stroke: #66757a; stroke-width: 1.5; }
     .relation-label { fill: #66757a; font: 11px Arial, sans-serif; }
-  </style>''';
+  </style>
+''';
 
 String _escape(String value) => value
     .replaceAll('&', '&amp;')

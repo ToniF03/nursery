@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AlertCard extends StatelessWidget {
   // Text content and accent color displayed across the card.
@@ -57,7 +57,7 @@ class AlertCard extends StatelessWidget {
         final descSize = w.isFinite && w < 360 ? 12.0 : 14.0;
 
         return ConstrainedBox(
-          constraints: BoxConstraints(minWidth: 51, minHeight: 110),
+          constraints: const BoxConstraints(minWidth: 51, minHeight: 110),
           child: ClipRRect(
             borderRadius: borderRadius,
             clipBehavior: Clip.hardEdge,
@@ -65,9 +65,9 @@ class AlertCard extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(color: color),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
                 child: Ink(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
@@ -75,7 +75,7 @@ class AlertCard extends StatelessWidget {
                     ),
                   ),
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(16, 10, 10, 10),
+                    margin: const EdgeInsets.fromLTRB(16, 10, 10, 10),
                     child: Stack(
                       children: [
                         Padding(
@@ -91,7 +91,7 @@ class AlertCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 6),
+                              const SizedBox(height: 6),
                               Text(
                                 subtitle,
                                 style: TextStyle(
@@ -100,7 +100,7 @@ class AlertCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               Text(
                                 description,
                                 style: TextStyle(fontSize: descSize),

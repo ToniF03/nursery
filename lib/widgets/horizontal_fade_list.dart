@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class HorizontalFadeList extends StatefulWidget {
   final List<Widget> children;
@@ -88,8 +88,6 @@ class _HorizontalFadeListState extends State<HorizontalFadeList> {
       child: ShaderMask(
         shaderCallback: (Rect bounds) {
           return LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
             colors: const [
               Colors.transparent,
               Colors.white,

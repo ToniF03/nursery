@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/screens/login/register_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -68,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 'assets/images/logo_with_subtitle_transparent.svg',
                 width: 384,
                 height: 384,
-                fit: BoxFit.contain,
               ),
               SizedBox(
                 width: textBoxWidth,
@@ -76,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _usernameController,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context)!.email,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   onSubmitted: (String value) {
                     final String username = _usernameController.text.trim();
@@ -97,14 +96,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(
                 width: textBoxWidth,
                 child: TextField(
                   controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context)!.password,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   onSubmitted: (String value) {
                     final String username = _usernameController.text.trim();
@@ -126,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // Login and organization-registration actions.
               SizedBox(
                 width: textBoxWidth,
@@ -152,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: Text(AppLocalizations.of(context)!.login),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(

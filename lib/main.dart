@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
+import 'package:nursery/core/app_locale.dart';
 import 'package:nursery/core/auth_gate.dart';
+import 'package:nursery/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'l10n/app_localizations.dart';
-import 'core/app_locale.dart';
 
 Future<void> main() async {
   // Initialize Supabase before Flutter builds and listens for auth changes.
@@ -14,7 +14,7 @@ Future<void> main() async {
     url: 'https://djdwliacvcxwvulgnkxl.supabase.co',
     publishableKey: 'sb_publishable_r7gSbJX0_fkmdadEa7bcWw_i71Yu11i',
   );
-  runApp(Nursery());
+  runApp(const Nursery());
 }
 
 class Nursery extends StatelessWidget {
@@ -30,8 +30,8 @@ class Nursery extends StatelessWidget {
         return MaterialApp(
           title: 'Nursery',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF4A9B9B)),
-            scaffoldBackgroundColor: Color(0xffF5F5F5),
+            colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4A9B9B)),
+            scaffoldBackgroundColor: const Color(0xffF5F5F5),
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
@@ -44,7 +44,7 @@ class Nursery extends StatelessWidget {
               ),
             ),
           ),
-          home: const MyHomePage(title: 'nursery'),
+          home: const MyHomePage(),
           locale: locale,
           // If the device locale is not supported, always fall back to English.
           localeResolutionCallback: (deviceLocale, supportedLocales) {
@@ -66,9 +66,7 @@ class Nursery extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -109,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
       width: 200,
       child: SafeArea(
         child: ListView(
-          padding: EdgeInsets.fromLTRB(15, 20, 16, 20),
+          padding: const EdgeInsets.fromLTRB(15, 20, 16, 20),
           children: [
             /*Image.asset(
               'assets/images/logo_with_subtitle.png',
@@ -121,33 +119,32 @@ class _MyHomePageState extends State<MyHomePage> {
               'assets/images/title.svg',
               width: 150,
               height: 25.2,
-              fit: BoxFit.contain,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ListTile(
-              leading: Icon(Icons.dashboard),
-              title: Text('Dashboard'),
+              leading: const Icon(Icons.dashboard),
+              title: const Text('Dashboard'),
               onTap: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
             ),
             ListTile(
-              leading: Icon(Icons.people),
-              title: Text('Patients'),
+              leading: const Icon(Icons.people),
+              title: const Text('Patients'),
               onTap: () {
                 debugPrint('Patients tapped');
               },
             ),
             ListTile(
-              leading: Icon(Icons.calendar_today),
-              title: Text('Schedule'),
+              leading: const Icon(Icons.calendar_today),
+              title: const Text('Schedule'),
               onTap: () {
                 debugPrint('Schedule tapped');
               },
             ),
             ListTile(
-              leading: Icon(Icons.mail),
-              title: Text('Messaging'),
+              leading: const Icon(Icons.mail),
+              title: const Text('Messaging'),
               onTap: () {
                 debugPrint('Messaging tapped');
               },

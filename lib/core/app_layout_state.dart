@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Shared desktop layout state used across the app shell and dashboard.
 final ValueNotifier<bool> isDesktopNotifier = ValueNotifier<bool>(false);

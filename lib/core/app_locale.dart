@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Global notifier for the selected app locale.
 /// If the notifier's value is `null`, the system/device locale is used.

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -86,53 +86,52 @@ class _LoginScreenState extends State<RegisterPage> {
                 'assets/images/logo_with_subtitle_transparent.svg',
                 width: 384,
                 height: 384,
-                fit: BoxFit.contain,
               ),
               SizedBox(
                 width: textBoxWidth,
                 child: TextField(
                   controller: _organizationNameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Organization",
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(
                 width: textBoxWidth,
                 child: TextField(
                   controller: _nameController,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context)!.name,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(
                 width: textBoxWidth,
                 child: TextField(
                   controller: _usernameController,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context)!.email,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(
                 width: textBoxWidth,
                 child: TextField(
                   controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context)!.password,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                   obscureText: true,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 width: textBoxWidth,
                 child: Column(
@@ -169,7 +168,7 @@ class _LoginScreenState extends State<RegisterPage> {
                       },
                       child: Text(AppLocalizations.of(context)!.register),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();

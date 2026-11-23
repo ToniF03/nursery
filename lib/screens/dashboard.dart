@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/alert_card.dart';
@@ -45,7 +45,7 @@ class _DashboardState extends State<Dashboard> {
               child: const DashboardInfoBar(),
             ),
 
-            DashboardQuickActions(),
+            const DashboardQuickActions(),
 
             // Urgent alerts and the shift timeline.
             Padding(
@@ -79,7 +79,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Pill(
           text: '4 ${localized.high.toUpperCase()}',
           color: Colors.red,
@@ -99,7 +99,6 @@ class _DashboardState extends State<Dashboard> {
           subtitle: 'Tachycardia detected',
           description:
               'Spiked from 88 BPM at 18:42. Patient reported mild chest tightness.',
-          color: Colors.red,
           data: "155",
           onTap: () {
             showDialog(
@@ -127,7 +126,7 @@ class _DashboardState extends State<Dashboard> {
 
     // Recent shift events are shown as a vertical timeline.
     final timelineWidget = Timeline(
-      title: 'Today\'s Shift Timeline',
+      title: "Today's Shift Timeline",
       accentColor: Colors.indigo,
       children: [
         TimelineItem(
@@ -163,7 +162,7 @@ class _DashboardState extends State<Dashboard> {
               children: [alertsColumn],
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Expanded(flex: 3, child: timelineWidget),
         ],
       );

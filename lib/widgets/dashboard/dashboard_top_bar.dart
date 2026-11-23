@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/user_button.dart';
@@ -28,7 +28,6 @@ class _DashboardTopBarState extends State<DashboardTopBar> {
           child: TextField(
             controller: _searchController,
             enabled: true,
-            readOnly: false,
             style: const TextStyle(color: Colors.black),
             cursorColor: Colors.indigo,
             textAlignVertical: TextAlignVertical.center,
@@ -98,7 +97,7 @@ class _DashboardTopBarState extends State<DashboardTopBar> {
         const SizedBox(width: 12),
 
         // User account button opens the user menu page.
-        UserButton(),
+        const UserButton(),
       ],
     );
   }

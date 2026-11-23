@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Displays a titled list of events with a shared accent color.
 class Timeline extends StatelessWidget {

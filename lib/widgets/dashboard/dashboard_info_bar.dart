@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/core/globals.dart';
 import 'package:nursery/l10n/app_localizations.dart';
@@ -102,7 +102,7 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
           value: _currentTime(),
         );
 
-        final cardsMinWidth = minCardWidth * 2 + spacing;
+        const cardsMinWidth = minCardWidth * 2 + spacing;
 
         if (constraints.maxWidth >=
             textPainter.width + cardsMinWidth + spacing) {

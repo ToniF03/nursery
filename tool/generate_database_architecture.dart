@@ -108,7 +108,6 @@ class PositionedTable {
   final double x;
   final double y;
 
-  double get width => tableWidth;
   double get height =>
       headerHeight + definition.columns.length * rowHeight;
 
@@ -159,7 +158,9 @@ String _buildSvg(
     'width="${layout.width.toInt()}" height="${layout.height.toInt()}" '
     'viewBox="0 0 ${layout.width.toInt()} ${layout.height.toInt()}">',
   );
-  buffer.writeln('''  <style>
+  buffer.writeln(
+'''
+  <style>
     .background { fill: #f7f9fc; }
     .table { fill: #ffffff; stroke: #4a9b9b; stroke-width: 2; }
     .header { fill: #4a9b9b; }
@@ -169,7 +170,9 @@ String _buildSvg(
     .field { fill: #1f2328; font: 16px Arial, sans-serif; }
     .type { fill: #66757a; font: 15px monospace; }
     .key { fill: #4a9b9b; font: 700 13px Arial, sans-serif; }
-  </style>''');
+  </style>
+'''
+);
   buffer.writeln(
     '  <rect class="background" x="0" y="0" '
     'width="${layout.width.toInt()}" height="${layout.height.toInt()}" rx="8"/>',

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/core/logout_helper.dart';
 import 'package:nursery/l10n/app_localizations.dart';
@@ -46,8 +46,8 @@ class UserButton extends StatelessWidget {
                 value: 'shiftPlan',
                 child: Row(
                   children: [
-                    Icon(Icons.calendar_today),
-                    SizedBox(width: 10),
+                    const Icon(Icons.calendar_today),
+                    const SizedBox(width: 10),
                     Text(AppLocalizations.of(context)!.shiftPlan),
                   ],
                 ),
@@ -56,8 +56,8 @@ class UserButton extends StatelessWidget {
                 value: 'helpCenter',
                 child: Row(
                   children: [
-                    Icon(Icons.help),
-                    SizedBox(width: 10),
+                    const Icon(Icons.help),
+                    const SizedBox(width: 10),
                     Text(AppLocalizations.of(context)!.helpCenter),
                   ],
                 ),
@@ -66,8 +66,8 @@ class UserButton extends StatelessWidget {
                 value: 'settings',
                 child: Row(
                   children: [
-                    Icon(Icons.settings),
-                    SizedBox(width: 10),
+                    const Icon(Icons.settings),
+                    const SizedBox(width: 10),
                     Text(AppLocalizations.of(context)!.settings),
                   ],
                 ),
@@ -76,8 +76,8 @@ class UserButton extends StatelessWidget {
                 value: 'logout',
                 child: Row(
                   children: [
-                    Icon(Icons.logout),
-                    SizedBox(width: 10),
+                    const Icon(Icons.logout),
+                    const SizedBox(width: 10),
                     Text(AppLocalizations.of(context)!.logout),
                   ],
                 ),
@@ -88,14 +88,13 @@ class UserButton extends StatelessWidget {
               switch (value) {
                 case 'logout':
                   logoutAndNavigate(context);
-                  break;
               }
             }
           });
         } else {
           Navigator.of(
             context,
-          ).push(MaterialPageRoute(builder: (context) => UserMenuPage()));
+          ).push(MaterialPageRoute(builder: (context) => const UserMenuPage()));
         }
       },
     );

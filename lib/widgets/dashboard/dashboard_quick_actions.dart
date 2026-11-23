@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/l10n/app_localizations.dart';
+import 'package:nursery/widgets/horizontal_fade_list.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/quick_action_button.dart';
-import 'package:nursery/widgets/horizontal_fade_list.dart';
 
 class DashboardQuickActions extends StatelessWidget {
   const DashboardQuickActions({super.key});
@@ -13,7 +13,6 @@ class DashboardQuickActions extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(isSmall ? 8 : 12),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
