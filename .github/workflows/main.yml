@@ -58,4 +58,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "docs: generated database diagram and PDF"
-          file_pattern: "assets/images/database_architecture.svg assets/images/use_case_diagram_*.svg assets/images/class_diagram_*.svg assets/documentation.pdf"
+          file_pattern: "assets/images/database_schema/database_architecture.svg assets/images/diagrams/use_case_diagram_*.svg assets/images/diagrams/class_diagram_*.svg assets/documentation.pdf"
