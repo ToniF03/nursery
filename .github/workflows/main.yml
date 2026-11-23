@@ -6,6 +6,11 @@ on:
     paths:
       - 'assets/documentation.typ'
       - 'assets/template.typ'
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Update Project Versions"]
+    types:
+      - completed
 
 permissions:
   contents: write
