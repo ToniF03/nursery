@@ -1,34 +1,47 @@
-- name: Resolve versions from .metadata & update files
+name: Update Project Versions
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.metadata'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve versions from .metadata & update files
         run: |
           # Strip carriage returns (\r) and extract revision
-          REV=$(tr -d '\r' < .metadata | grep -A 3 "^version:" | grep "revision:" | awk '{print $2}')
+          REV=$(tr -d '\r' < .metadata \vert{} grep -A 3 "^version:" \vert{} grep "revision:" \vert{} awk '{print $2}')
           echo "Found revision: '$REV'"
 
           # Search in Linux and Windows releases (supports shortened hashes)
-          RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json | jq -c --arg rev "$REV" '.releases[] | select(.hash | startswith($rev))' | head -n 1)
+          RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json | jq -c --arg rev "$REV" '.releases[] \vert{} select(.hash \vert{} startswith($rev))' | head -n 1)
           
           if [ -z "$RELEASE_INFO" ]; then
-            RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_windows.json | jq -c --arg rev "$REV" '.releases[] | select(.hash | startswith($rev))' | head -n 1)
+            RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_windows.json | jq -c --arg rev "$REV" '.releases[] \vert{} select(.hash \vert{} startswith($rev))' | head -n 1)
           fi
 
           FLUTTER_VER=$(echo "$RELEASE_INFO" | jq -r '.version')
           DART_VER=$(echo "$RELEASE_INFO" | jq -r '.dart_sdk_version' | awk '{print $1}')
           
-          if [ -z "$FLUTTER_VER" ] || [ "$FLUTTER_VER" == "null" ]; then
+          if [ -z "$FLUTTER_VER" ] \vert{}\vert{} [ "$FLUTTER_VER" == "null" ]; then
             echo "Could not resolve Flutter version for revision: $REV"
             cat .metadata
             exit 1
           fi
 
-          echo "Resolved Flutter: $FLUTTER_VER, Dart: $DART_VER"
+          echo "Resolved Flutter: $FLUTTER_VER, Dart:$DART_VER"
 
           # 1. Update README.md
           sed -i "s/- \*\*Flutter SDK\*\*: \`>=.*\`/- **Flutter SDK**: \`>=${FLUTTER_VER}\`/g" README.md
           sed -i "s/- \*\*Dart SDK\*\*: .*/- **Dart SDK**: \`>=${DART_VER}\` (included with Flutter)/g" README.md
           sed -i "s|- \[Flutter\](https://flutter.dev/) - .*|- [Flutter](https://flutter.dev/) (${FLUTTER_VER}) - Cross-platform UI framework|g" README.md
-          sed -i "s|- \[Dart\](https://dart.dev/) - .*|- [Dart](https://dart.dev/) (${DART_VER}) - Modern, strongly-typed programming language|g" README.md
-          sed -i "s/\*\*Built with\*\*: Flutter .*/**Built with**: Flutter ${FLUTTER_VER} \& Dart ${DART_VER}  /g" README.md
-
-          # 2. Update Typst variables
-          sed -i "s/#let flutterVersion = \".*\"/#let flutterVersion = \"${FLUTTER_VER}\"/g" path/to/your/file.typ
-          sed -i "s/#let dartVersion = \".*\"/#let dartVersion = \"${DART_VER}\"/g" path/to/your/file.typ
+          sed -i "s|- \[Dart\](https://dart.dev/) - .*|- [Dart](https://dart.dev/) (${D
