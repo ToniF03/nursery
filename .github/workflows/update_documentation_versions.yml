@@ -19,20 +19,20 @@ jobs:
       - name: Resolve versions from .metadata & update files
         run: |
           # Strip carriage returns (\r) and extract revision
-          REV=$(tr -d '\r' < .metadata \vert{} grep -A 3 "^version:" \vert{} grep "revision:" \vert{} awk '{print $2}')
+          REV=$(tr -d '\r' < .metadata | grep -A 3 "^version:" | grep "revision:" | awk '{print $2}')
           echo "Found revision: '$REV'"
 
           # Search in Linux and Windows releases (supports shortened hashes)
-          RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json | jq -c --arg rev "$REV" '.releases[] \vert{} select(.hash \vert{} startswith($rev))' | head -n 1)
+          RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json | jq -c --arg rev "$REV" '.releases[] | select(.hash | startswith($rev))' | head -n 1)
           
           if [ -z "$RELEASE_INFO" ]; then
-            RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_windows.json | jq -c --arg rev "$REV" '.releases[] \vert{} select(.hash \vert{} startswith($rev))' | head -n 1)
+            RELEASE_INFO=$(curl -s https://storage.googleapis.com/flutter_infra_release/releases/releases_windows.json | jq -c --arg rev "$REV" '.releases[] | select(.hash | startswith($rev))' | head -n 1)
           fi
 
           FLUTTER_VER=$(echo "$RELEASE_INFO" | jq -r '.version')
           DART_VER=$(echo "$RELEASE_INFO" | jq -r '.dart_sdk_version' | awk '{print $1}')
           
-          if [ -z "$FLUTTER_VER" ] \vert{}\vert{} [ "$FLUTTER_VER" == "null" ]; then
+          if [ -z "$FLUTTER_VER" ] || [ "$FLUTTER_VER" == "null" ]; then
             echo "Could not resolve Flutter version for revision: $REV"
             cat .metadata
             exit 1
