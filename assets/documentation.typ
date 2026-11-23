@@ -733,6 +733,7 @@ The application relies on several important dependencies to provide its function
   [*Localization*: flutter_localizations],
   [*SVG Rendering*: flutter_svg: #deps.flutter_svg],
   [*Testing*: flutter_test and flutter_lints: #deps.flutter_test],
+  [*Linting and Code Quality*: lint: #deps.lint]
 )
 
 == Sources and Licenses

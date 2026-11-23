@@ -5,7 +5,7 @@
 ---
 
 # Nursing Professional Management System
-
+[![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 A modern, cross-platform Flutter application designed for healthcare professionals to efficiently manage their daily nursing duties and improve patient care coordination.
 
 ## Overview
