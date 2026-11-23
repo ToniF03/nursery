@@ -1,7 +1,7 @@
 #import "template.typ": *
 #show: nursery-template
 
-#let flutterVersion = "3.50.0"
+#let flutterVersion = "3.50.1"
 #let dartVersion = "3.14.0"
 
 = Introduction

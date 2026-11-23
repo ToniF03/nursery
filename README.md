@@ -29,8 +29,8 @@ This application runs seamlessly on multiple platforms:
 
 ### Prerequisites
 
-- **Flutter SDK**: `>=3.50.0`
-- **Dart SDK**: (included with Flutter)
+- **Flutter SDK**: `>=3.50.1`
+- **Dart SDK**: `>=3.14.0` (included with Flutter)
 - **Android SDK** (for Android development)
 - **Xcode** (for iOS development)
 - **Git** (for version control)
@@ -161,8 +161,8 @@ The application uses:
 
 ## 📦 Built With
 
-- [Flutter](https://flutter.dev/) - Cross-platform UI framework
-- [Dart](https://dart.dev/) - Modern, strongly-typed programming language
+- [Flutter](https://flutter.dev/) (3.50.1) - Cross-platform UI framework
+- [Dart](https://dart.dev/) (3.14.0) - Modern, strongly-typed programming language
 - [Material Design](https://material.io/) - Google's design system
 - [Cupertino Icons](https://pub.dev/packages/cupertino_icons) - iOS-style icon set
 - [Flutter Lints](https://pub.dev/packages/flutter_lints) - Recommended linting rules
@@ -197,5 +197,5 @@ For questions, bug reports, or feature requests, please contact the developer.
 
 **Version**: 1.0.0  
 **Status**: 🔄 In Development  
-**Built with**: Flutter 3.50.0+  
+**Built with**: Flutter 3.50.1 & Dart 3.14.0  
 **Last Updated**: 2026
