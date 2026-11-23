@@ -19,7 +19,7 @@ jobs:
       - name: Resolve versions from .metadata & update files
         run: |
           # Strip carriage returns (\r) and extract revision
-          REV=$(tr -d '\r' < .metadata | grep -A 3 "^version:" | grep "revision:" | awk '{print $2}')
+          REV=$(tr -d '\r"' < .metadata | grep -A 3 "^version:" | grep "revision:" | awk '{print $2}')
           echo "Found revision: '$REV'"
 
           # Search in Linux and Windows releases (supports shortened hashes)
