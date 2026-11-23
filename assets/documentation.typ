@@ -1,6 +1,9 @@
 #import "template.typ": *
 #show: nursery-template
 
+#let flutterVersion = "3.50.0"
+#let dartVersion = "3.14.0"
+
 = Introduction
 == Project description
 The developed application is a cross-platform mobile application built entirely with Flutter, designed to modernize workflows in the healthcare sector. Its primary goal is to provide healthcare professionals with a centralized platform for patient management, communication, scheduling, and emergency coordination.
@@ -24,8 +27,8 @@ Rather than replacing specialized hospital information systems, Nursery is desig
 The app needs following components to be installed and run:
 
 #list(
-  [Flutter SDK (version 3.50.0 or higher)],
-  [Dart SDK (Version 3.14.0 or higher)],
+  [Flutter SDK (version #flutterVersion or higher)],
+  [Dart SDK (Version #dartVersion or higher)],
   [Git (Version 2.56.0 or higher)],
   [Android SDK (version 36.0.0 or higher)]
 )
@@ -703,8 +706,8 @@ The application was developed using the Flutter framework in the Dart programmin
 Versions used at the time of development:
 
 #list(
-  [*Programming Language*: Dart 3.14.0],
-  [*Framework*: Flutter 3.50.0]
+  [*Programming Language*: Dart #dartVersion],
+  [*Framework*: Flutter #flutterVersion]
 )
 
 == Development Environment
