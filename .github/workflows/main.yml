@@ -6,6 +6,8 @@ on:
     paths:
       - 'assets/documentation.typ'
       - 'assets/template.typ'
+      - '.github/workflows/main.yml'
+      - 'pubspec.yaml'
   workflow_dispatch:
   workflow_run:
     workflows: ["Update Project Versions"]

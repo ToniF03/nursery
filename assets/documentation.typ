@@ -4,6 +4,9 @@
 #let flutterVersion = "3.50.1"
 #let dartVersion = "3.14.0"
 
+#let pubSpec = yaml("../pubspec.yaml")
+#let deps = pubSpec.dependencies
+
 = Introduction
 == Project description
 The developed application is a cross-platform mobile application built entirely with Flutter, designed to modernize workflows in the healthcare sector. Its primary goal is to provide healthcare professionals with a centralized platform for patient management, communication, scheduling, and emergency coordination.
@@ -726,10 +729,9 @@ The application was developed in a development environment that includes the fol
 The application relies on several important dependencies to provide its functionality. These dependencies include:
 
 #list(
-  [*Backend and Data Management*: supabase_flutter: ^2.12.2],
+  [*Backend and Data Management*: supabase_flutter: #deps.supabase_flutter],
   [*Localization*: flutter_localizations],
-  [*Design*: google_fonts: ^6.2.1],
-  [*Testing*: flutter_test and flutter_lints: ^6.0.0]
+  [*Testing*: flutter_test and flutter_lints]
 )
 
 == Sources and Licenses
@@ -755,12 +757,12 @@ The application follows a modular architecture that separates concerns into dist
 #pagebreak()
 
 == Database architecture in Supabase
-The application uses Supabase as its backend service, which provides a PostgreSQL database along with authentication, storage, and real-time capabilities. The database architecture is designed to support the application's data requirements and ensure efficient data management. 
+The application uses Supabase as its backend service, which provides a PostgreSQL database along with authentication, storage, and real-time capabilities. The database architecture is designed to support the application's data requirements and ensure efficient data management.
 
 ```pintora
 erDiagram
   userData {
-    id int PK
+    id uuid PK
     created_at timestamptz
     company text
     role text
@@ -789,8 +791,65 @@ erDiagram
 ```
 *Note:* The `auth.users` table is managed by Supabase and is used for authentication purposes. The table is simplified in this diagram to show its relationship with the other table.
 
+== Use-Case Diagram
+The use-case diagram reflects the functionality currently implemented in the Flutter application. A healthcare professional can authenticate, register an account, view the dashboard, access profile information, open the account menu, and sign out. The dashboard provides an overview of the current time, staff ratio, alerts, and timeline entries. Quick-action controls are already visible, but their underlying workflows currently display a not-implemented dialog. Supabase Authentication and the Supabase database act as external systems for session management and profile data.
+
+```pintora
+dotDiagram
+digraph {
+  rankdir=LR;
+  node [shape=ellipse];
+
+  Staff [label="Healthcare professional", shape=box];
+  SupabaseAuth [label="Supabase Authentication", shape=box];
+  SupabaseDb [label="Supabase Database", shape=box];
+  DeviceLocale [label="Device locale", shape=box];
+
+  subgraph cluster_app {
+    label="Nursery application";
+    color="#4A9B9B";
+
+    Register [label="Register account"];
+    SignIn [label="Sign in"];
+    CheckSession [label="Check authentication session"];
+    ViewDashboard [label="View dashboard overview"];
+    ViewInfo [label="View current time and staff ratio"];
+    ViewAlerts [label="View alerts and shift timeline"];
+    OpenMenu [label="Open account menu"];
+    ViewProfile [label="View profile information"];
+    SignOut [label="Sign out"];
+    QuickAction [label="Use quick action"];
+    NotImplemented [label="Display not-implemented dialog"];
+    LocalizedInterface [label="Use localized interface"];
+  }
+
+  Staff -> Register;
+  Staff -> SignIn;
+  Staff -> ViewDashboard;
+  Staff -> OpenMenu;
+  Staff -> SignOut;
+  Staff -> QuickAction;
+  DeviceLocale -> LocalizedInterface;
+
+  SignIn -> CheckSession [label="includes", style=dashed];
+  CheckSession -> ViewDashboard [label="includes", style=dashed];
+  ViewDashboard -> ViewInfo [label="includes", style=dashed];
+  ViewDashboard -> ViewAlerts [label="includes", style=dashed];
+  OpenMenu -> ViewProfile [label="includes", style=dashed];
+  QuickAction -> NotImplemented [label="includes", style=dashed];
+
+  SignIn -> SupabaseAuth;
+  Register -> SupabaseAuth;
+  CheckSession -> SupabaseAuth;
+  SignOut -> SupabaseAuth;
+  Register -> SupabaseDb;
+  ViewProfile -> SupabaseDb;
+  CheckSession -> SupabaseDb;
+}
+```
+
 == Class Diagram
-The class diagram shows the main classes of the current Flutter application. `Nursery` initializes the application, `MyHomePage` provides the responsive application shell, and `AuthGate` switches between authentication and the dashboard based on the current Supabase session. Reusable widgets form the presentation layer, while `AuthService` and the Supabase client provide authentication and data access.
+The class diagram shows the main classes of the current Flutter application and their dependencies. `Nursery` initializes the application and its localization, `MyHomePage` provides the responsive application shell, and `AuthGate` switches between authentication and the dashboard based on the current Supabase session. The dashboard is composed of reusable widgets for navigation, overview information, quick actions, alerts, and the timeline. `AuthService`, `Globals`, and the Supabase client provide shared authentication and profile access. Private Flutter state classes are omitted to keep the diagram focused on the public application structure.
 
 ```pintora
 classDiagram
@@ -801,27 +860,29 @@ classDiagram
 
   class MyHomePage {
     +title String
+    +initState() void
+    +dispose() void
     +build(context) Widget
   }
 
   class AuthGate {
     +onAuthStateChanged ValueChanged~bool~
-    +getUserName() Future~void~
     +build(context) Widget
   }
 
   class LoginScreen {
     +onLoginSuccess VoidCallback
     +signInWithEmail(email, password) Future~void~
+    +build(context) Widget
   }
 
   class RegisterPage {
     +onLoginSuccess VoidCallback
     +signUpWithEmail(email, password, organization, name) Future~void~
+    +build(context) Widget
   }
 
   class Dashboard {
-    +getUserName() Future~void~
     +build(context) Widget
   }
 
@@ -835,11 +896,32 @@ classDiagram
     +build(context) Widget
   }
 
+  class DashboardTopBar {
+    +build(context) Widget
+  }
+
+  class DashboardInfoBar {
+    +initState() void
+    +dispose() void
+    +build(context) Widget
+  }
+
   class DashboardInfoCard {
     +icon IconData
     +label String
     +value String
     +onTap VoidCallback?
+    +build(context) Widget
+  }
+
+  class DashboardQuickActions {
+    +build(context) Widget
+  }
+
+  class QuickActionButton {
+    +icon IconData
+    +label String
+    +onPressed VoidCallback
     +build(context) Widget
   }
 
@@ -879,16 +961,19 @@ classDiagram
     +build(context) Widget
   }
 
-  class AppLocale {
-    +localeNotifier ValueNotifier~Locale?~
-    +setLocale(locale) void
+  class AppLocalizations {
+    <<abstract>>
+    +localeName String
+    +of(context) AppLocalizations?
+    +supportedLocales List~Locale~
   }
 
-  class AppLayoutState {
-    +isDesktopNotifier ValueNotifier~bool~
-    +isSmallNotifier ValueNotifier~bool~
-    +setIsDesktop(value) void
-    +setIsSmall(value) void
+  class AppLocalizationsEn {
+    +localeName String
+  }
+
+  class AppLocalizationsDe {
+    +localeName String
   }
 
   class Globals {
@@ -915,24 +1000,30 @@ classDiagram
   LoginScreen ..> RegisterPage : opens
   LoginScreen ..> SupabaseClient : signs in
   RegisterPage ..> SupabaseClient : registers user
-  Dashboard *-- DashboardInfoCard : contains
-  Dashboard *-- AlertCard : contains
-  Dashboard *-- Timeline : contains
+  Dashboard *-- DashboardTopBar : contains
+  Dashboard *-- DashboardInfoBar : contains
+  Dashboard *-- DashboardQuickActions : contains
+  Dashboard *-- AlertCard : displays
+  Dashboard *-- Timeline : displays
+  DashboardTopBar *-- UserButton : contains
+  DashboardInfoBar *-- DashboardInfoCard : contains
+  DashboardQuickActions *-- QuickActionButton : contains
+  DashboardQuickActions ..> NotImplementedDialog : opens
   Timeline *-- TimelineItem : contains
   Dashboard ..> Pill : uses
   Dashboard ..> NotImplementedDialog : opens
-  Dashboard ..> UserButton : contains
   Dashboard ..> UserMenuPage : opens
   UserButton ..> UserMenuPage : opens on mobile
   UserMenuPage ..> AuthService : signs out
   UserMenuPage ..> SupabaseClient : reads profile
   AuthService ..> SupabaseClient : signs out
   AuthGate ..> SupabaseClient : observes session
-  Dashboard ..> SupabaseClient : reads profile
+  AuthGate ..> Globals : updates profile
+  DashboardInfoBar ..> Globals : reads user name
   SupabaseClient ..> Globals : stores profile data
-  Nursery ..> AppLocale : observes locale
-  MyHomePage ..> AppLayoutState : updates layout
-  Dashboard ..> AppLayoutState : reads layout
+  Nursery ..> AppLocalizations : configures localization
+  AppLocalizationsEn --|> AppLocalizations : implements
+  AppLocalizationsDe --|> AppLocalizations : implements
 ```
 
 = Testing
