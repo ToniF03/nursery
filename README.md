@@ -1,4 +1,4 @@
-![nursery logo title](.\assets\images\title.svg)
+![nursery logo title](./assets/images/title.svg)
 
 ![](./assets/images/subtitle.svg)
 
