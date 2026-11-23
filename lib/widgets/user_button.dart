@@ -87,7 +87,9 @@ class UserButton extends StatelessWidget {
             if (value != null) {
               switch (value) {
                 case 'logout':
-                  logoutAndNavigate(context);
+                  if (context.mounted) {
+                    logoutAndNavigate(context);
+                  }
               }
             }
           });
