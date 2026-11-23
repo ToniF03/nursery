@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 class HorizontalFadeList extends StatefulWidget {
   final List<Widget> children;
+  final double fadeWidth; // Width ratio of the fade effect (0.15 = 15%)
+  final double fadeRampDistance; // Scroll distance in pixels to smoothly fade in/out
 
-  const HorizontalFadeList({super.key, required this.children});
+  const HorizontalFadeList({
+    super.key,
+    required this.children,
+    this.fadeWidth = 0.15,
+    this.fadeRampDistance = 40.0,
+  });
 
   @override
   State<HorizontalFadeList> createState() => _HorizontalFadeListState();
@@ -11,9 +18,8 @@ class HorizontalFadeList extends StatefulWidget {
 
 class _HorizontalFadeListState extends State<HorizontalFadeList> {
   final ScrollController _controller = ScrollController();
-  bool _canScrollRight = false;
-  bool _canScrollLeft = false;
-  double _scrollProgress = 0.0;
+  double _leftStop = 0.0;
+  double _rightStop = 1.0;
 
   @override
   void initState() {
@@ -22,7 +28,7 @@ class _HorizontalFadeListState extends State<HorizontalFadeList> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _updateScrollState());
   }
 
-  // Wichtig, falls sich die Anzahl der Children dynamisch ändert
+  // Re-evaluate scroll bounds when children change dynamically
   @override
   void didUpdateWidget(covariant HorizontalFadeList oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -33,18 +39,35 @@ class _HorizontalFadeListState extends State<HorizontalFadeList> {
     if (!_controller.hasClients) return;
     final maxScroll = _controller.position.maxScrollExtent;
     final currentScroll = _controller.offset;
-    final canScroll = maxScroll > 0 && currentScroll < maxScroll - 1.0;
 
-    setState(() => _scrollProgress = (currentScroll / maxScroll).clamp(0.0, 1.0));
-
-    if (canScroll != _canScrollRight) {
-      setState(() => _canScrollRight = canScroll);
+    if (maxScroll <= 0) {
+      if (_leftStop != 0.0 || _rightStop != 1.0) {
+        setState(() {
+          _leftStop = 0.0;
+          _rightStop = 1.0;
+        });
+      }
+      return;
     }
 
-    if (currentScroll > 1.0 && !_canScrollLeft) {
-      setState(() => _canScrollLeft = true);
-    } else if (currentScroll <= 1.0 && _canScrollLeft) {
-      setState(() => _canScrollLeft = false);
+    // Clamp scroll offset to handle negative/excessive values during bounce overscroll
+    final clampedScroll = currentScroll.clamp(0.0, maxScroll);
+
+    // Smoothly interpolate from 0.0 to 1.0 over the first [fadeRampDistance] pixels
+    final leftFactor = (clampedScroll / widget.fadeRampDistance).clamp(0.0, 1.0);
+    // Smoothly interpolate from 0.0 to 1.0 over the last [fadeRampDistance] pixels
+    final rightFactor = ((maxScroll - clampedScroll) / widget.fadeRampDistance).clamp(0.0, 1.0);
+
+    final newLeftStop = widget.fadeWidth * leftFactor;
+    final newRightStop = 1.0 - (widget.fadeWidth * rightFactor);
+
+    // Only trigger a rebuild if the gradient visibly changes
+    if ((newLeftStop - _leftStop).abs() > 0.005 ||
+        (newRightStop - _rightStop).abs() > 0.005) {
+      setState(() {
+        _leftStop = newLeftStop;
+        _rightStop = newRightStop;
+      });
     }
   }
 
@@ -56,25 +79,37 @@ class _HorizontalFadeListState extends State<HorizontalFadeList> {
 
   @override
   Widget build(BuildContext context) {
-    return ShaderMask(
-      shaderCallback: (Rect bounds) {
-        return LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            _canScrollLeft ? Colors.transparent : Colors.white,
-            Colors.white,
-            Colors.white,
-            _canScrollRight ? Colors.transparent : Colors.white,
-          ],
-          stops: [0.0, (_scrollProgress / 3).clamp(0.01, 0.15), ((_scrollProgress * 3).clamp(2.55, 2.99) / 3), 1.0],
-        ).createShader(bounds);
+    return NotificationListener<ScrollMetricsNotification>(
+      // Update fade when viewport size changes (e.g. window resize)
+      onNotification: (_) {
+        _updateScrollState();
+        return false;
       },
-      blendMode: BlendMode.dstIn,
-      child: SingleChildScrollView(
-        controller: _controller,
-        scrollDirection: Axis.horizontal,
-        child: Row(children: widget.children),
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: const [
+              Colors.transparent,
+              Colors.white,
+              Colors.white,
+              Colors.transparent,
+            ],
+            // When _leftStop == 0.0, the transparent region has zero width (no fade)
+            stops: [0.0, _leftStop, _rightStop, 1.0],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstIn,
+        child: SingleChildScrollView(
+          controller: _controller,
+          scrollDirection: Axis.horizontal,
+          // Enables elastic overscroll bounce across all platforms (including desktop/Android)
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          child: Row(children: widget.children),
+        ),
       ),
     );
   }
