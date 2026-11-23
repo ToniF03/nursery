@@ -7,7 +7,6 @@ import 'package:nursery/widgets/dashboard/dashboard_quick_actions.dart';
 import 'package:nursery/widgets/dashboard/dashboard_top_bar.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
-import 'package:nursery/widgets/quick_action_button.dart';
 import 'package:nursery/widgets/timeline.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
