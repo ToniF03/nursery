@@ -27,8 +27,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notImplementedYet => 'Not implemented yet.';
 
   @override
-  String get notImplementedYetDescription =>
-      'This feature is currently in development and will be soon implemented.';
+  String get notImplementedYetDescription => 'This feature is currently in development and will be soon implemented.';
 
   @override
   String get staffRatio => 'Staff Ratio';
@@ -92,4 +91,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get name => 'Name';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get logMeds => 'Log Meds';
+
+  @override
+  String get recordVitals => 'Record Vitals';
+
+  @override
+  String get patientTransfer => 'Patient Transfer';
+
+  @override
+  String get reportIncident => 'Report Incident';
+
+  @override
+  String get contactPhysician => 'Contact Physician';
+
+  @override
+  String get customize => 'Customize';
 }

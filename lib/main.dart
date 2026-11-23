@@ -105,10 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildSidebar() {
     // Desktop navigation remains visible while a user is authenticated.
     return SizedBox(
-      width: 240,
+      width: 200,
       child: SafeArea(
         child: ListView(
-          padding: EdgeInsets.fromLTRB(30, 20, 16, 20),
+          padding: EdgeInsets.fromLTRB(15, 20, 16, 20),
           children: [
             Text(
               'Nursery',

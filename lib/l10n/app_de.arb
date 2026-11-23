@@ -47,5 +47,12 @@
     "authException": "Authentifizierungs Fehler",
     "joinAsOrganization": "Zugriff als Organisation anfordern",
     "loginInstead": "Stattdessen Anmelden",
-    "name": "Name"
+    "name": "Name",
+    "quickActions": "Schnellaktionen",
+    "logMeds": "Medikamente protokollieren",
+    "recordVitals": "Vitalwerte aufzeichnen",
+    "patientTransfer": "Patientenübertragung",
+    "reportIncident": "Vorfall melden",
+    "contactPhysician": "Arzt kontaktieren",
+    "customize": "Anpassen"
 }

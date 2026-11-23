@@ -47,5 +47,12 @@
     "authException": "Authentication Exception",
     "joinAsOrganization": "Request Access as an Organization",
     "loginInstead": "Login instead",
-    "name": "Name"
+    "name": "Name",
+    "quickActions": "Quick Actions",
+    "logMeds": "Log Meds",
+    "recordVitals": "Record Vitals",
+    "patientTransfer": "Patient Transfer",
+    "reportIncident": "Report Incident",
+    "contactPhysician": "Contact Physician",
+    "customize": "Customize"
 }
