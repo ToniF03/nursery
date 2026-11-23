@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:nursery/core/app_layout_state.dart';
 
 class QuickActionButton extends StatefulWidget {
   final IconData icon;
@@ -22,43 +22,45 @@ class _QuickActionButtonState extends State<QuickActionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: widget.onPressed,
-        hoverColor: Theme.of(context).primaryColor,
-        onHover: (hovering) {
-          setState(() => isHovered = hovering);
-        },
+    return Padding(
+      padding: EdgeInsetsGeometry.all(isSmall ? 8 : 12),
+      child: Material(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        child: Container(
-          width: 140,
-          height: 104,
-          padding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 12,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                widget.icon,
-                size: 28,
-                color: isHovered ? Colors.white : Theme.of(context).primaryColor,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                widget.label.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.8,
-                  color: isHovered ? Colors.white : Colors.black,
+        child: InkWell(
+          onTap: widget.onPressed,
+          hoverColor: Theme.of(context).primaryColor,
+          onHover: (hovering) {
+            setState(() => isHovered = hovering);
+          },
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            width: 140,
+            height: 104,
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  widget.icon,
+                  size: 28,
+                  color: isHovered
+                      ? Colors.white
+                      : Theme.of(context).primaryColor,
                 ),
-              ),
-            ],
+                const SizedBox(height: 10),
+                Text(
+                  widget.label.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.8,
+                    color: isHovered ? Colors.white : Colors.black,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -54,5 +54,7 @@
     "patientTransfer": "Patientenübertragung",
     "reportIncident": "Vorfall melden",
     "contactPhysician": "Arzt kontaktieren",
-    "customize": "Anpassen"
+    "customize": "Anpassen",
+    "codeBlue": "Herzalarm",
+    "codeBlueDescription": "Ein Herzalarm wurde ausgelöst. Bitte reagieren Sie sofort."
 }

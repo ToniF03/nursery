@@ -54,5 +54,7 @@
     "patientTransfer": "Patient Transfer",
     "reportIncident": "Report Incident",
     "contactPhysician": "Contact Physician",
-    "customize": "Customize"
+    "customize": "Customize",
+    "codeBlue": "Code Blue",
+    "codeBlueDescription": "A Code Blue has been triggered. Please respond immediately."
 }

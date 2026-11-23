@@ -3,6 +3,7 @@ import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/quick_action_button.dart';
+import 'package:nursery/widgets/horizontal_fade_list.dart';
 
 class DashboardQuickActions extends StatelessWidget {
   const DashboardQuickActions({super.key});
@@ -27,9 +28,7 @@ class DashboardQuickActions extends StatelessWidget {
             ),
           ),
           SizedBox(height: isSmall ? 8 : 12),
-          Wrap(
-            direction: Axis.horizontal,
-            spacing: isSmall ? 8 : 12,
+          HorizontalFadeList(
             children: [
               QuickActionButton(
                 icon: Icons.medication,
@@ -74,6 +73,16 @@ class DashboardQuickActions extends StatelessWidget {
               QuickActionButton(
                 icon: Icons.message_outlined,
                 label: AppLocalizations.of(context)!.contactPhysician,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const NotImplementedDialog(),
+                  );
+                },
+              ),
+              QuickActionButton(
+                icon: Icons.emergency_rounded,
+                label: AppLocalizations.of(context)!.codeBlue,
                 onPressed: () {
                   showDialog(
                     context: context,

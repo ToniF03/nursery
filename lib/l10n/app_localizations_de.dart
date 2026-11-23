@@ -112,4 +112,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get customize => 'Anpassen';
+
+  @override
+  String get codeBlue => 'Herzalarm';
+
+  @override
+  String get codeBlueDescription => 'Ein Herzalarm wurde ausgelöst. Bitte reagieren Sie sofort.';
 }

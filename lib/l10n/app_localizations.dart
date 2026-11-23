@@ -292,6 +292,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Customize'**
   String get customize;
+
+  /// No description provided for @codeBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'Code Blue'**
+  String get codeBlue;
+
+  /// No description provided for @codeBlueDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A Code Blue has been triggered. Please respond immediately.'**
+  String get codeBlueDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
