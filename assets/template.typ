@@ -122,7 +122,7 @@
         #line(length: 100%, stroke: 0.5pt + border-color)
         #v(-0.4em)
         #set text(size: 8.5pt, fill: gray)
-        #align(right)[Page #counter(page).display() of #counter(page).final().first()]
+        #align(right)[Page #(counter(page).get().first() - 1) of #(counter(page).final().first()-2)]
       ]
     }
   )
