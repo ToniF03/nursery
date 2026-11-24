@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
@@ -19,6 +18,7 @@ Future<void> main() async {
 
 class Nursery extends StatelessWidget {
   const Nursery({super.key});
+  static const Color primaryColor = Color(0xFF4A9B9B);
 
   // This widget is the root of your application.
   @override
@@ -30,7 +30,11 @@ class Nursery extends StatelessWidget {
         return MaterialApp(
           title: 'Nursery',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4A9B9B)),
+            colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+            splashColor: primaryColor.withAlpha(76),
+            highlightColor: primaryColor.withAlpha(25),
+            hoverColor: primaryColor.withAlpha(13),
+            focusColor: primaryColor.withAlpha(31),
             scaffoldBackgroundColor: const Color(0xffF5F5F5),
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,

@@ -75,8 +75,13 @@ class DashboardPriorityPatientsTable extends StatelessWidget {
               children: [
                 for (int i = 0; i < 3; i++) ...[
                   if (i > 0)
-                    const Divider(height: 1, thickness: 1, color: Color(0xFFF1F1F1)),
+                    const Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Color(0xFFF1F1F1),
+                    ),
                   InkWell(
+                    focusColor: Theme.of(context).primaryColor.withAlpha(12),
                     onTap: () {
                       showDialog(
                         context: context,
