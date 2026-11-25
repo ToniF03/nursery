@@ -2,6 +2,13 @@
 name: Build Flutter APK
 
 on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'releases/**'
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 permissions:
