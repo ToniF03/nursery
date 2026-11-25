@@ -5,10 +5,14 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'releases/**'
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -16,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Setup Java
@@ -37,9 +41,35 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - name: Determine APK name
+        id: version
+        run: |
+          echo "name=app-${GITHUB_REF_NAME}.apk" >> $GITHUB_OUTPUT
+
+      - name: Checkout main branch
+        uses: actions/checkout@v4
         with:
-          name: flutter-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 30
+          ref: main
+          path: repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Copy APK into repository
+        run: |
+          mkdir -p repo/releases
+          cp build/app/outputs/flutter-apk/app-release.apk \
+            "repo/releases/${{ steps.version.outputs.name }}"
+
+      - name: Commit and push APK
+        run: |
+          cd repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add releases/
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Build APK ${{ github.ref_name }}"
+            git push origin main
+          else
+            echo "No changes to commit."
+          fi
