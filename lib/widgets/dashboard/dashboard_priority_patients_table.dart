@@ -99,22 +99,42 @@ class _DashboardPriorityPatientsTableState
           _SortColumn.spo2 => a.spo2.compareTo(b.spo2),
           _SortColumn.pulse => a.pulse.compareTo(b.pulse),
           _SortColumn.temp => a.temp.compareTo(b.temp),
-          _SortColumn.lastSync => a.lastSyncMinutes.compareTo(b.lastSyncMinutes),
+          _SortColumn.lastSync => a.lastSyncMinutes.compareTo(
+            b.lastSyncMinutes,
+          ),
         };
         return _ascending ? comparison : -comparison;
       });
     });
   }
 
+  /// Wraps each cell so it takes at least [minWidth] on narrow screens,
+  /// and expands proportionally with [flex] when extra width is available.
+  Widget _buildCell({
+    required double minWidth,
+    required int flex,
+    required Widget child,
+  }) {
+    return Expanded(
+      flex: flex,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: minWidth),
+        child: child,
+      ),
+    );
+  }
+
   Widget _buildHeaderCell(
     String label,
     _SortColumn column, {
+    required double minWidth,
     int flex = 1,
     bool alignRight = false,
   }) {
     final bool isActive = _sortColumn == column;
 
-    return Expanded(
+    return _buildCell(
+      minWidth: minWidth,
       flex: flex,
       child: InkWell(
         onTap: () => _onSort(column),
@@ -122,18 +142,18 @@ class _DashboardPriorityPatientsTableState
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
           child: Row(
-            mainAxisAlignment:
-                alignRight ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: alignRight
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Flexible(
-                child: Text(
-                  label,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
-                    color: isActive ? Colors.black : Colors.black87,
-                  ),
+              Text(
+                label,
+                maxLines: 1,
+                softWrap: false,
+                style: TextStyle(
+                  fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
+                  color: isActive ? Colors.black : Colors.black87,
                 ),
               ),
               if (isActive) ...[
@@ -152,12 +172,21 @@ class _DashboardPriorityPatientsTableState
 
   @override
   Widget build(BuildContext context) {
+    // Minimum widths per column so content never wraps awkwardly on small screens
+    const double patientMinW = 175.0;
+    const double statusMinW = 105.0;
+    const double spo2MinW = 68.0;
+    const double pulseMinW = 82.0;
+    const double tempMinW = 68.0;
+    const double lastSyncMinW = 110.0;
+
     return Container(
       padding: EdgeInsets.all(isSmall ? 8.0 : 12.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Fixed Top Header (does not scroll horizontally)
           DecoratedBox(
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -188,93 +217,172 @@ class _DashboardPriorityPatientsTableState
               ),
             ),
           ),
-          Material(
-            color: const Color(0xFFF1F1F1),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 8.0,
-              ),
-              child: Row(
-                children: [
-                  _buildHeaderCell('PATIENT & ROOM', _SortColumn.patient, flex: 3),
-                  _buildHeaderCell('STATUS', _SortColumn.status, flex: 2),
-                  _buildHeaderCell('SPO2', _SortColumn.spo2),
-                  _buildHeaderCell('PULSE', _SortColumn.pulse),
-                  _buildHeaderCell('TEMP', _SortColumn.temp),
-                  _buildHeaderCell(
-                    'LAST SYNC',
-                    _SortColumn.lastSync,
-                    flex: 2,
-                    alignRight: true,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Material(
-            color: Colors.white,
-            clipBehavior: Clip.antiAlias,
+
+          // Horizontally Scrollable Table (Column Headers + Rows)
+          ClipRRect(
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(12.0),
               bottomRight: Radius.circular(12.0),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (int i = 0; i < _patients.length; i++) ...[
-                  if (i > 0)
-                    const Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: Color(0xFFF1F1F1),
-                    ),
-                  InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const NotImplementedDialog(),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 12.0,
-                      ),
-                      child: Row(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                    child: IntrinsicWidth(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              '${_patients[i].name} - ${_patients[i].room}',
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Pill(
-                                text: _patients[i].status,
-                                color: _patients[i].statusColor,
+                          // Column Headers
+                          Material(
+                            color: const Color(0xFFF1F1F1),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                                vertical: 8.0,
+                              ),
+                              child: Row(
+                                children: [
+                                  _buildHeaderCell(
+                                    'PATIENT & ROOM',
+                                    _SortColumn.patient,
+                                    minWidth: patientMinW,
+                                    flex: 3,
+                                  ),
+                                  _buildHeaderCell(
+                                    'STATUS',
+                                    _SortColumn.status,
+                                    minWidth: statusMinW,
+                                    flex: 2,
+                                  ),
+                                  _buildHeaderCell(
+                                    'SPO2',
+                                    _SortColumn.spo2,
+                                    minWidth: spo2MinW,
+                                  ),
+                                  _buildHeaderCell(
+                                    'PULSE',
+                                    _SortColumn.pulse,
+                                    minWidth: pulseMinW,
+                                  ),
+                                  _buildHeaderCell(
+                                    'TEMP',
+                                    _SortColumn.temp,
+                                    minWidth: tempMinW,
+                                  ),
+                                  _buildHeaderCell(
+                                    'LAST SYNC',
+                                    _SortColumn.lastSync,
+                                    minWidth: lastSyncMinW,
+                                    flex: 2,
+                                    alignRight: true,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          Expanded(child: Text('${_patients[i].spo2}%')),
-                          Expanded(child: Text('${_patients[i].pulse} BPM')),
-                          Expanded(child: Text('${_patients[i].temp}°C')),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              _patients[i].lastSyncLabel,
-                              textAlign: TextAlign.end,
+
+                          // Patient Rows
+                          Material(
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (int i = 0; i < _patients.length; i++) ...[
+                                  if (i > 0)
+                                    const Divider(
+                                      height: 1,
+                                      thickness: 1,
+                                      color: Color(0xFFF1F1F1),
+                                    ),
+                                  InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            const NotImplementedDialog(),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0,
+                                        vertical: 12.0,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          _buildCell(
+                                            minWidth: patientMinW,
+                                            flex: 3,
+                                            child: Text(
+                                              '${_patients[i].name} - ${_patients[i].room}',
+                                              maxLines: 1,
+                                              softWrap: false,
+                                            ),
+                                          ),
+                                          _buildCell(
+                                            minWidth: statusMinW,
+                                            flex: 2,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Pill(
+                                                text: _patients[i].status,
+                                                color: _patients[i].statusColor,
+                                              ),
+                                            ),
+                                          ),
+                                          _buildCell(
+                                            minWidth: spo2MinW,
+                                            flex: 1,
+                                            child: Text(
+                                              '${_patients[i].spo2}%',
+                                              maxLines: 1,
+                                              softWrap: false,
+                                            ),
+                                          ),
+                                          _buildCell(
+                                            minWidth: pulseMinW,
+                                            flex: 1,
+                                            child: Text(
+                                              '${_patients[i].pulse} BPM',
+                                              maxLines: 1,
+                                              softWrap: false,
+                                            ),
+                                          ),
+                                          _buildCell(
+                                            minWidth: tempMinW,
+                                            flex: 1,
+                                            child: Text(
+                                              '${_patients[i].temp}°C',
+                                              maxLines: 1,
+                                              softWrap: false,
+                                            ),
+                                          ),
+                                          _buildCell(
+                                            minWidth: lastSyncMinW,
+                                            flex: 2,
+                                            child: Text(
+                                              _patients[i].lastSyncLabel,
+                                              maxLines: 1,
+                                              softWrap: false,
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ],
-              ],
+                );
+              },
             ),
           ),
         ],
