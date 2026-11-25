@@ -7,12 +7,11 @@ on:
       - main
     paths-ignore:
       - 'releases/**'
-    tags:
-      - 'v*'
+      - 'debug/**'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -20,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Java
@@ -39,37 +38,12 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug
+        run: flutter build apk --debug --split-per-abi
 
-      - name: Determine APK name
-        id: version
-        run: |
-          echo "name=app-debug.apk" >> $GITHUB_OUTPUT
-
-      - name: Checkout main branch
-        uses: actions/checkout@v4
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
         with:
-          ref: main
-          path: repo
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Copy APK into repository
-        run: |
-          mkdir -p repo/debug
-          cp build/app/outputs/flutter-apk/app-debug.apk \
-            "repo/debug/${{ steps.version.outputs.name }}"
-
-      - name: Commit and push APK
-        run: |
-          cd repo
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add debug/
-
-          if ! git diff --cached --quiet; then
-            git commit -m "Build APK ${{ github.ref_name }}"
-            git push origin main
-          else
-            echo "No changes to commit."
-          fi
+          name: nursery-debug-apks
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 30
+          if-no-files-found: error
