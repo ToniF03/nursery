@@ -168,11 +168,11 @@ abstract class AppLocalizations {
   /// **'Search for patients, schedules, or messages'**
   String get searchHeadline;
 
-  /// No description provided for @room.
+  /// No description provided for @roomWithNumber.
   ///
   /// In en, this message translates to:
-  /// **'Room'**
-  String room(String roomNumber);
+  /// **'Room {roomNumber}'**
+  String roomWithNumber(Object roomNumber);
 
   /// No description provided for @high.
   ///
@@ -312,6 +312,12 @@ abstract class AppLocalizations {
   /// **'Dashboard'**
   String get dashboard;
 
+  /// No description provided for @patient.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient'**
+  String get patient;
+
   /// No description provided for @patients.
   ///
   /// In en, this message translates to:
@@ -341,6 +347,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expand'**
   String get expand;
+
+  /// No description provided for @priorityPatients.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority Patients'**
+  String get priorityPatients;
+
+  /// No description provided for @room.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get room;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @spo2.
+  ///
+  /// In en, this message translates to:
+  /// **'SpO2'**
+  String get spo2;
+
+  /// No description provided for @pulse.
+  ///
+  /// In en, this message translates to:
+  /// **'Pulse'**
+  String get pulse;
+
+  /// No description provided for @temperature.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get temperature;
+
+  /// No description provided for @temp.
+  ///
+  /// In en, this message translates to:
+  /// **'Temp'**
+  String get temp;
+
+  /// No description provided for @lastSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Sync'**
+  String get lastSync;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
+
+  /// No description provided for @noNewNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No new notifications'**
+  String get noNewNotifications;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -86,9 +86,9 @@ class _DashboardTopBarState extends State<DashboardTopBar> {
               context: context,
               position: position,
               items: [
-                const PopupMenuItem(
+                PopupMenuItem(
                   enabled: false,
-                  child: Text('Aktuell keine neuen Nachrichten'),
+                  child: Text(AppLocalizations.of(context)!.noNewNotifications),
                 ),
               ],
             );

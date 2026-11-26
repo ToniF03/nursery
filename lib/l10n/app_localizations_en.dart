@@ -49,8 +49,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchHeadline => 'Search for patients, schedules, or messages';
 
   @override
-  String room(String roomNumber) {
-    return 'Room';
+  String roomWithNumber(Object roomNumber) {
+    return 'Room $roomNumber';
   }
 
   @override
@@ -123,6 +123,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboard => 'Dashboard';
 
   @override
+  String get patient => 'Patient';
+
+  @override
   String get patients => 'Patients';
 
   @override
@@ -136,4 +139,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expand => 'Expand';
+
+  @override
+  String get priorityPatients => 'Priority Patients';
+
+  @override
+  String get room => 'Room';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get spo2 => 'SpO2';
+
+  @override
+  String get pulse => 'Pulse';
+
+  @override
+  String get temperature => 'Temperature';
+
+  @override
+  String get temp => 'Temp';
+
+  @override
+  String get lastSync => 'Last Sync';
+
+  @override
+  String get viewAll => 'View All';
+
+  @override
+  String get noNewNotifications => 'No new notifications';
 }

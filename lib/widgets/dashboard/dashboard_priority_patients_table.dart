@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
+import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
 
@@ -94,13 +95,13 @@ class _DashboardPriorityPatientsTableState
 
       _patients.sort((a, b) {
         final int comparison = switch (column) {
-          _SortColumn.patient => a.name.compareTo(b.name),
-          _SortColumn.status => a.statusPriority.compareTo(b.statusPriority),
-          _SortColumn.spo2 => a.spo2.compareTo(b.spo2),
-          _SortColumn.pulse => a.pulse.compareTo(b.pulse),
-          _SortColumn.temp => a.temp.compareTo(b.temp),
-          _SortColumn.lastSync => a.lastSyncMinutes.compareTo(
-            b.lastSyncMinutes,
+          _SortColumn.patient => b.name.compareTo(a.name),
+          _SortColumn.status => b.statusPriority.compareTo(a.statusPriority),
+          _SortColumn.spo2 => b.spo2.compareTo(a.spo2),
+          _SortColumn.pulse => b.pulse.compareTo(a.pulse),
+          _SortColumn.temp => b.temp.compareTo(a.temp),
+          _SortColumn.lastSync => b.lastSyncMinutes.compareTo(
+            a.lastSyncMinutes,
           ),
         };
         return _ascending ? comparison : -comparison;
@@ -201,11 +202,11 @@ class _DashboardPriorityPatientsTableState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Priority Patients',
+                    AppLocalizations.of(context)!.priorityPatients,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   TextButton(
-                    child: const Text('View All'),
+                    child: Text(AppLocalizations.of(context)!.viewAll),
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -246,34 +247,34 @@ class _DashboardPriorityPatientsTableState
                               child: Row(
                                 children: [
                                   _buildHeaderCell(
-                                    'PATIENT & ROOM',
+                                    '${AppLocalizations.of(context)!.patient} & ${AppLocalizations.of(context)!.room}'.toUpperCase(),
                                     _SortColumn.patient,
                                     minWidth: patientMinW,
                                     flex: 3,
                                   ),
                                   _buildHeaderCell(
-                                    'STATUS',
+                                    AppLocalizations.of(context)!.status.toUpperCase(),
                                     _SortColumn.status,
                                     minWidth: statusMinW,
                                     flex: 2,
                                   ),
                                   _buildHeaderCell(
-                                    'SPO2',
+                                    AppLocalizations.of(context)!.spo2.toUpperCase(),
                                     _SortColumn.spo2,
                                     minWidth: spo2MinW,
                                   ),
                                   _buildHeaderCell(
-                                    'PULSE',
+                                    AppLocalizations.of(context)!.pulse.toUpperCase(),
                                     _SortColumn.pulse,
                                     minWidth: pulseMinW,
                                   ),
                                   _buildHeaderCell(
-                                    'TEMP',
+                                    AppLocalizations.of(context)!.temp.toUpperCase(),
                                     _SortColumn.temp,
                                     minWidth: tempMinW,
                                   ),
                                   _buildHeaderCell(
-                                    'LAST SYNC',
+                                    AppLocalizations.of(context)!.lastSync.toUpperCase(),
                                     _SortColumn.lastSync,
                                     minWidth: lastSyncMinW,
                                     flex: 2,

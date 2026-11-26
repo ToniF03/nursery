@@ -27,8 +27,8 @@
         }
     },
     "searchHeadline": "Search for patients, schedules, or messages",
-    "room": "Room",
-    "@room": {
+    "roomWithNumber": "Room {roomNumber}",
+    "@roomWithNumber": {
         "placeholders": {
             "roomNumber": {
                 "type": "String"
@@ -58,9 +58,20 @@
     "codeBlue": "Code Blue",
     "codeBlueDescription": "A Code Blue has been triggered. Please respond immediately.",
     "dashboard": "Dashboard",
+    "patient": "Patient",
     "patients": "Patients",
     "schedule": "Schedule",
     "messaging": "Messaging",
     "collapse": "Collapse",
-    "expand": "Expand"
+    "expand": "Expand",
+    "priorityPatients": "Priority Patients",
+    "room": "Room",
+    "status": "Status",
+    "spo2": "SpO2",
+    "pulse": "Pulse",
+    "temperature": "Temperature",
+    "temp": "Temp",
+    "lastSync": "Last Sync",
+    "viewAll": "View All",
+    "noNewNotifications": "No new notifications"
 }

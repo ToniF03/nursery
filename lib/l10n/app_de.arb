@@ -27,8 +27,8 @@
         }
     },
     "searchHeadline": "Suche nach Patienten, Terminen oder Nachrichten",
-    "room": "Zimmer {roomNumber}",
-    "@room": {
+    "roomWithNumber": "Zimmer {roomNumber}",
+    "@roomWithNumber": {
         "placeholders": {
             "roomNumber": {
                 "type": "String"
@@ -58,9 +58,20 @@
     "codeBlue": "Herzalarm",
     "codeBlueDescription": "Ein Herzalarm wurde ausgelöst. Bitte reagieren Sie sofort.",
     "dashboard": "Dashboard",
+    "patient": "Patient",
     "patients": "Patienten",
     "schedule": "Zeitplan",
     "messaging": "Nachrichten",
     "collapse": "Einklappen",
-    "expand": "Ausklappen"
+    "expand": "Ausklappen",
+    "priorityPatients": "Dringende Patienten",
+    "room": "Zimmer",
+    "status": "Status",
+    "spo2": "SpO2",
+    "pulse": "Puls",
+    "temperature": "Temperatur",
+    "temp": "Temp",
+    "lastSync": "Letzte Sync",
+    "viewAll": "Alle anzeigen",
+    "noNewNotifications": "Aktuell keine neuen Benachrichtigungen"
 }
