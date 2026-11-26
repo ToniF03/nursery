@@ -4,8 +4,6 @@ import 'package:nursery/widgets/dashboard/dashboard_info_bar.dart';
 import 'package:nursery/widgets/dashboard/dashboard_priority_patients_table.dart';
 import 'package:nursery/widgets/dashboard/dashboard_quick_actions.dart';
 import 'package:nursery/widgets/dashboard/dashboard_top_bar.dart';
-import 'package:nursery/widgets/pill.dart';
-import 'package:nursery/widgets/table_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dashboard extends StatefulWidget {
