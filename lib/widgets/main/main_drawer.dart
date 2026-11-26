@@ -99,7 +99,7 @@ class MainDrawerState extends State<MainDrawer> {
                       },
                     ),
                     _buildDrawerTile(
-                      icon: Icons.mail,
+                      icon: Icons.mail_outline,
                       label: l10n.messaging,
                       onTap: () {
                         widget.onSelectedMobileIndex(3);

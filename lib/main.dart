@@ -152,22 +152,22 @@ class _MyHomePageState extends State<MyHomePage> {
                       _selectedMobileIndex = index;
                     });
                   },
-                  items: const [
+                  items: [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
+                      icon: const Icon(Icons.dashboard),
+                      label: AppLocalizations.of(context)!.dashboard,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.people),
-                      label: "Patients",
+                      icon: const Icon(Icons.people),
+                      label: AppLocalizations.of(context)!.patients,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.settings),
-                      label: 'Settings',
+                      icon: const Icon(Icons.calendar_today),
+                      label: AppLocalizations.of(context)!.schedule,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.contact_mail),
-                      label: 'Contact Us',
+                      icon: const Icon(Icons.mail_outline),
+                      label: AppLocalizations.of(context)!.messaging,
                     ),
                   ],
                 ),
