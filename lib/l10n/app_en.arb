@@ -56,5 +56,11 @@
     "contactPhysician": "Contact Physician",
     "customize": "Customize",
     "codeBlue": "Code Blue",
-    "codeBlueDescription": "A Code Blue has been triggered. Please respond immediately."
+    "codeBlueDescription": "A Code Blue has been triggered. Please respond immediately.",
+    "dashboard": "Dashboard",
+    "patients": "Patients",
+    "schedule": "Schedule",
+    "messaging": "Messaging",
+    "collapse": "Collapse",
+    "expand": "Expand"
 }

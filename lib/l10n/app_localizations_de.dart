@@ -118,4 +118,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get codeBlueDescription => 'Ein Herzalarm wurde ausgelöst. Bitte reagieren Sie sofort.';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get patients => 'Patienten';
+
+  @override
+  String get schedule => 'Zeitplan';
+
+  @override
+  String get messaging => 'Nachrichten';
+
+  @override
+  String get collapse => 'Einklappen';
+
+  @override
+  String get expand => 'Ausklappen';
 }

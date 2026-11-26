@@ -56,5 +56,11 @@
     "contactPhysician": "Arzt kontaktieren",
     "customize": "Anpassen",
     "codeBlue": "Herzalarm",
-    "codeBlueDescription": "Ein Herzalarm wurde ausgelöst. Bitte reagieren Sie sofort."
+    "codeBlueDescription": "Ein Herzalarm wurde ausgelöst. Bitte reagieren Sie sofort.",
+    "dashboard": "Dashboard",
+    "patients": "Patienten",
+    "schedule": "Zeitplan",
+    "messaging": "Nachrichten",
+    "collapse": "Einklappen",
+    "expand": "Ausklappen"
 }

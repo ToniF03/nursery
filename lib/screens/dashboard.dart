@@ -51,7 +51,7 @@ class _DashboardState extends State<Dashboard> {
             const DashboardPriorityPatientsTable(),
 
             // Urgent alerts and the shift timeline.
-            Padding(
+            /*Padding(
               padding: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 12),
               child: Align(
                 alignment: Alignment.topLeft,
@@ -60,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
                   isSmall: isSmall,
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

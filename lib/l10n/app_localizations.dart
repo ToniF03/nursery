@@ -83,7 +83,7 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static final List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -305,6 +305,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A Code Blue has been triggered. Please respond immediately.'**
   String get codeBlueDescription;
+
+  /// No description provided for @dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboard;
+
+  /// No description provided for @patients.
+  ///
+  /// In en, this message translates to:
+  /// **'Patients'**
+  String get patients;
+
+  /// No description provided for @schedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get schedule;
+
+  /// No description provided for @messaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Messaging'**
+  String get messaging;
+
+  /// No description provided for @collapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse'**
+  String get collapse;
+
+  /// No description provided for @expand.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand'**
+  String get expand;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

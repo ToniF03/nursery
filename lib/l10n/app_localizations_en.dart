@@ -118,4 +118,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get codeBlueDescription => 'A Code Blue has been triggered. Please respond immediately.';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get patients => 'Patients';
+
+  @override
+  String get schedule => 'Schedule';
+
+  @override
+  String get messaging => 'Messaging';
+
+  @override
+  String get collapse => 'Collapse';
+
+  @override
+  String get expand => 'Expand';
 }

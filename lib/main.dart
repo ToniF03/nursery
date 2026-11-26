@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/core/app_locale.dart';
 import 'package:nursery/core/auth_gate.dart';
 import 'package:nursery/l10n/app_localizations.dart';
+import 'package:nursery/widgets/main/main_drawer.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -105,60 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  Widget _buildSidebar() {
-    // Desktop navigation remains visible while a user is authenticated.
-    return SizedBox(
-      width: 200,
-      child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(15, 20, 16, 20),
-          children: [
-            /*Image.asset(
-              'assets/images/logo_with_subtitle.png',
-              width: 150,
-              height: 150,
-              fit: BoxFit.contain,
-            ),*/
-            SvgPicture.asset(
-              'assets/images/title.svg',
-              width: 150,
-              height: 25.2,
-            ),
-            const SizedBox(height: 20),
-            ListTile(
-              leading: const Icon(Icons.dashboard),
-              title: const Text('Dashboard'),
-              onTap: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.people),
-              title: const Text('Patients'),
-              onTap: () {
-                debugPrint('Patients tapped');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.calendar_today),
-              title: const Text('Schedule'),
-              onTap: () {
-                debugPrint('Schedule tapped');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.mail),
-              title: const Text('Messaging'),
-              onTap: () {
-                debugPrint('Messaging tapped');
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -173,7 +119,14 @@ class _MyHomePageState extends State<MyHomePage> {
           body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (desktopLayout && _isLoggedIn) _buildSidebar(),
+              if (desktopLayout && _isLoggedIn)
+                MainDrawer(
+                  onSelectedMobileIndex: (index) {
+                    setState(() {
+                      _selectedMobileIndex = index;
+                    });
+                  },
+                ),
 
               Expanded(
                 child: AuthGate(
