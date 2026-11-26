@@ -34,29 +34,29 @@
   <rect class="class-card" x="590" y="80" width="260" height="74"/>
   <rect class="class-header" x="590" y="80" width="260" height="48"/>
   <text class="class-title" x="720.0" y="110" text-anchor="middle">AppLocalizationsDe</text>
-  <rect class="class-card" x="50" y="320" width="260" height="140"/>
-  <rect class="class-header" x="50" y="320" width="260" height="48"/>
-  <text class="class-title" x="180.0" y="350" text-anchor="middle">Globals</text>
-  <text class="class-field" x="64" y="390">+ currentUser Map&lt;String, dynamic&gt;?</text>
-  <text class="class-field" x="64" y="412">+ userName String?</text>
-  <text class="class-field" x="64" y="434">+ fullName String?</text>
-  <rect class="class-card" x="320" y="320" width="260" height="140"/>
-  <rect class="class-header" x="320" y="320" width="260" height="48"/>
-  <text class="class-title" x="450.0" y="350" text-anchor="middle">AuthService</text>
-  <text class="class-field" x="334" y="390">+ instance AuthService</text>
-  <line class="class-divider" x1="320" y1="412" x2="580" y2="412"/>
-  <text class="class-method" x="334" y="424">+ signOut() Future&lt;void&gt;</text>
-  <text class="class-method" x="334" y="446">+ onLogout VoidCallback?</text>
-  <rect class="class-card" x="590" y="320" width="260" height="118"/>
-  <rect class="class-header" x="590" y="320" width="260" height="48"/>
-  <text class="class-title" x="720.0" y="350" text-anchor="middle">SupabaseClient</text>
-  <text class="class-field" x="604" y="390">+ auth GoTrueClient</text>
-  <line class="class-divider" x1="590" y1="412" x2="850" y2="412"/>
-  <text class="class-method" x="604" y="424">+ from(table) PostgrestQueryBuilder</text>
-  <path class="relation" d="M580 344 H590"/>
-  <text class="relation-label" x="585" y="336">uses</text>
-  <path class="relation" d="M320 104 H310"/>
-  <text class="relation-label" x="315" y="96">implements</text>
-  <path class="relation" d="M590 104 V484 H310 V104"/>
-  <text class="relation-label" x="450" y="476">implements</text>
+  <rect class="class-card" x="50" y="280" width="260" height="140"/>
+  <rect class="class-header" x="50" y="280" width="260" height="48"/>
+  <text class="class-title" x="180.0" y="310" text-anchor="middle">Globals</text>
+  <text class="class-field" x="64" y="350">+ currentUser Map&lt;String, dynamic&gt;?</text>
+  <text class="class-field" x="64" y="372">+ userName String?</text>
+  <text class="class-field" x="64" y="394">+ fullName String?</text>
+  <rect class="class-card" x="320" y="280" width="260" height="140"/>
+  <rect class="class-header" x="320" y="280" width="260" height="48"/>
+  <text class="class-title" x="450.0" y="310" text-anchor="middle">AuthService</text>
+  <text class="class-field" x="334" y="350">+ instance AuthService</text>
+  <line class="class-divider" x1="320" y1="372" x2="580" y2="372"/>
+  <text class="class-method" x="334" y="384">+ signOut() Future&lt;void&gt;</text>
+  <text class="class-method" x="334" y="406">+ onLogout VoidCallback?</text>
+  <rect class="class-card" x="590" y="280" width="260" height="118"/>
+  <rect class="class-header" x="590" y="280" width="260" height="48"/>
+  <text class="class-title" x="720.0" y="310" text-anchor="middle">SupabaseClient</text>
+  <text class="class-field" x="604" y="350">+ auth GoTrueClient</text>
+  <line class="class-divider" x1="590" y1="372" x2="850" y2="372"/>
+  <text class="class-method" x="604" y="384">+ from(table) PostgrestQueryBuilder</text>
+  <path class="relation" d="M450 280 V260 H720 V280"/>
+  <text class="relation-label" x="585" y="252">uses</text>
+  <path class="relation" d="M450 80 V60 H180 V80"/>
+  <text class="relation-label" x="315" y="52">implements</text>
+  <path class="relation" d="M720 80 V60 H180 V80"/>
+  <text class="relation-label" x="450" y="52">implements</text>
 </svg>

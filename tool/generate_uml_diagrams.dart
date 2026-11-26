@@ -223,11 +223,30 @@ String _buildClassSvg(
 ) {
   const width = 900;
   const cardWidth = 260;
-  const height = 1050;
+  const minHeight = 1050;
   const left = 50;
   const top = 80;
+  const rowGap = 60;
 
   final classes = allClasses.where((item) => item.group == group).toList();
+  final rowCount = (classes.length + 2) ~/ 3;
+  final rowHeights = List<int>.filled(rowCount, 0);
+  for (var index = 0; index < classes.length; index++) {
+    final row = index ~/ 3;
+    final cardHeight = _classCardHeight(classes[index]).ceil();
+    if (cardHeight > rowHeights[row]) {
+      rowHeights[row] = cardHeight;
+    }
+  }
+  final rowTops = List<int>.filled(rowCount, top);
+  for (var row = 1; row < rowCount; row++) {
+    rowTops[row] = rowTops[row - 1] + rowHeights[row - 1] + rowGap;
+  }
+  final contentHeight = rowCount == 0
+      ? minHeight
+      : rowTops.last + rowHeights.last + top;
+  final height = contentHeight > minHeight ? contentHeight : minHeight;
+
   final positions = <String, _Rect>{};
   final buffer = StringBuffer();
   buffer.writeln(
@@ -244,7 +263,7 @@ String _buildClassSvg(
     final column = index % 3;
     final row = index ~/ 3;
     final x = left + column * 270;
-    final y = top + row * 240;
+    final y = rowTops[row];
     final cardHeight = _classCardHeight(classes[index]);
     positions[classes[index].name] = _Rect(
       x.toDouble(),
@@ -330,111 +349,294 @@ void _writeRelationship(
   String label,
   List<_Rect> obstacles,
 ) {
-  final sameRow = (from.y - to.y).abs() < 20;
-  late int startX;
-  late int startY;
-  late int endX;
-  late int endY;
-  late int labelX;
-  late int labelY;
+  final points = _routeRelationship(from, to, obstacles);
+  final path = StringBuffer(
+    'M${points.first.x.round()} ${points.first.y.round()}',
+  );
+  var labelX = points.first.x;
+  var labelY = points.first.y;
+  var longestSegment = -1.0;
 
-  if (sameRow) {
-    final startRight = from.x < to.x
-        ? (from.x + from.width).toInt()
-        : from.x.toInt();
-    final endLeft = from.x < to.x ? to.x.toInt() : (to.x + to.width).toInt();
-    final segmentStart = startRight < endLeft ? startRight : endLeft;
-    final segmentEnd = startRight < endLeft ? endLeft : startRight;
-    final lineY = (from.y + 24).toInt();
-    var isBlocked = false;
-    for (final obstacle in obstacles) {
-      if (identical(obstacle, from) || identical(obstacle, to)) continue;
-      final obstacleLeft = obstacle.x.toInt();
-      final obstacleRight = (obstacle.x + obstacle.width).toInt();
-      final crossesX =
-          obstacleRight > segmentStart && obstacleLeft < segmentEnd;
-      final crossesY =
-          lineY >= obstacle.y && lineY <= obstacle.y + obstacle.height;
-      if (crossesX && crossesY) {
-        isBlocked = true;
-        break;
+  for (var index = 1; index < points.length; index++) {
+    final previous = points[index - 1];
+    final current = points[index];
+    final segmentLength =
+        (current.x - previous.x).abs() + (current.y - previous.y).abs();
+    if (previous.y == current.y) {
+      path.write(' H${current.x.round()}');
+      if (segmentLength > longestSegment) {
+        longestSegment = segmentLength;
+        labelX = (previous.x + current.x) / 2;
+        labelY = previous.y - 8;
+      }
+    } else {
+      path.write(' V${current.y.round()}');
+      if (segmentLength > longestSegment) {
+        longestSegment = segmentLength;
+        labelX = previous.x + 8;
+        labelY = (previous.y + current.y) / 2;
       }
     }
-
-    if (isBlocked) {
-      startX = startRight;
-      endX = endLeft;
-      startY = lineY;
-      endY = (to.y + 24).toInt();
-      final laneY =
-          ([
-                    from.y + from.height,
-                    to.y + to.height,
-                    ...obstacles
-                        .where(
-                          (obstacle) =>
-                              obstacle.x < segmentEnd &&
-                              obstacle.x + obstacle.width > segmentStart,
-                        )
-                        .map((obstacle) => obstacle.y + obstacle.height),
-                  ].reduce(
-                    (value, element) => value > element ? value : element,
-                  ) +
-                  24)
-              .toInt();
-      labelX = (startX + endX) ~/ 2;
-      labelY = laneY - 8;
-      buffer.writeln(
-        '  <path class="relation" d="M$startX $startY '
-        'V$laneY H$endX V$endY"/>',
-      );
-      buffer.writeln(
-        '  <text class="relation-label" x="$labelX" '
-        'y="$labelY">${_escape(label)}</text>',
-      );
-      return;
-    }
-
-    if (from.x < to.x) {
-      startX = (from.x + from.width).toInt();
-      endX = to.x.toInt();
-    } else {
-      startX = from.x.toInt();
-      endX = (to.x + to.width).toInt();
-    }
-    startY = (from.y + 24).toInt();
-    endY = (to.y + 24).toInt();
-    labelX = (startX + endX) ~/ 2;
-    labelY = startY - 8;
-
-    buffer.writeln('  <path class="relation" d="M$startX $startY H$endX"/>');
-  } else {
-    startX = (from.x + from.width / 2).toInt();
-    endX = (to.x + to.width / 2).toInt();
-    if (from.y < to.y) {
-      startY = (from.y + from.height).toInt();
-      endY = to.y.toInt();
-    } else {
-      startY = from.y.toInt();
-      endY = (to.y + to.height).toInt();
-    }
-    final laneY = (startY < endY)
-        ? (startY + endY) ~/ 2
-        : (startY + endY) ~/ 2;
-    labelX = (startX + endX) ~/ 2;
-    labelY = laneY - 8;
-
-    final endOffset = endX - 18;
-    buffer.writeln(
-      '  <path class="relation" d="M$startX $startY '
-      'V$laneY H$endOffset V$laneY H$endX V$endY"/>',
-    );
   }
 
+  buffer.writeln('  <path class="relation" d="$path"/>');
   buffer.writeln(
-    '  <text class="relation-label" x="$labelX" '
-    'y="$labelY">${_escape(label)}</text>',
+    '  <text class="relation-label" x="${labelX.round()}" '
+    'y="${labelY.round()}">${_escape(label)}</text>',
   );
+}
+
+List<_Point> _routeRelationship(_Rect from, _Rect to, List<_Rect> obstacles) {
+  const clearance = 20.0;
+  final xSet = <double>{};
+  final ySet = <double>{};
+
+  for (final rect in obstacles) {
+    xSet
+      ..add(rect.x - clearance)
+      ..add(rect.x)
+      ..add(rect.x + rect.width / 2)
+      ..add(rect.x + rect.width)
+      ..add(rect.x + rect.width + clearance);
+    ySet
+      ..add(rect.y - clearance)
+      ..add(rect.y)
+      ..add(rect.y + rect.height / 2)
+      ..add(rect.y + rect.height)
+      ..add(rect.y + rect.height + clearance);
+  }
+
+  final xCoordinates = xSet.toList()..sort();
+  final yCoordinates = ySet.toList()..sort();
+  final nodeAtGrid = <int, int>{};
+  final nodes = <_Point>[];
+
+  for (var yIndex = 0; yIndex < yCoordinates.length; yIndex++) {
+    for (var xIndex = 0; xIndex < xCoordinates.length; xIndex++) {
+      final x = xCoordinates[xIndex];
+      final y = yCoordinates[yIndex];
+      if (_isInsideAnyRect(x, y, obstacles)) continue;
+
+      nodeAtGrid[yIndex * xCoordinates.length + xIndex] = nodes.length;
+      nodes.add(_Point(x, y));
+    }
+  }
+
+  final graph = List<List<_RouteEdge>>.generate(
+    nodes.length,
+    (_) => <_RouteEdge>[],
+  );
+
+  void connect(int firstNode, int secondNode, int direction, double distance) {
+    graph[firstNode].add(_RouteEdge(secondNode, direction, distance));
+    graph[secondNode].add(_RouteEdge(firstNode, direction, distance));
+  }
+
+  for (var yIndex = 0; yIndex < yCoordinates.length; yIndex++) {
+    final validXIndices = <int>[
+      for (var xIndex = 0; xIndex < xCoordinates.length; xIndex++)
+        if (nodeAtGrid.containsKey(yIndex * xCoordinates.length + xIndex))
+          xIndex,
+    ];
+    for (var first = 0; first < validXIndices.length; first++) {
+      final firstXIndex = validXIndices[first];
+      final firstNode = nodeAtGrid[yIndex * xCoordinates.length + firstXIndex]!;
+      for (var second = first + 1; second < validXIndices.length; second++) {
+        final secondXIndex = validXIndices[second];
+        final firstX = xCoordinates[firstXIndex];
+        final secondX = xCoordinates[secondXIndex];
+        if (!_isHorizontalSegmentClear(
+          firstX,
+          secondX,
+          yCoordinates[yIndex],
+          obstacles,
+        )) {
+          break;
+        }
+
+        final secondNode =
+            nodeAtGrid[yIndex * xCoordinates.length + secondXIndex]!;
+        connect(firstNode, secondNode, 0, (secondX - firstX).abs());
+      }
+    }
+  }
+
+  for (var xIndex = 0; xIndex < xCoordinates.length; xIndex++) {
+    final validYIndices = <int>[
+      for (var yIndex = 0; yIndex < yCoordinates.length; yIndex++)
+        if (nodeAtGrid.containsKey(yIndex * xCoordinates.length + xIndex))
+          yIndex,
+    ];
+    for (var first = 0; first < validYIndices.length; first++) {
+      final firstYIndex = validYIndices[first];
+      final firstNode = nodeAtGrid[firstYIndex * xCoordinates.length + xIndex]!;
+      for (var second = first + 1; second < validYIndices.length; second++) {
+        final secondYIndex = validYIndices[second];
+        final firstY = yCoordinates[firstYIndex];
+        final secondY = yCoordinates[secondYIndex];
+        if (!_isVerticalSegmentClear(
+          xCoordinates[xIndex],
+          firstY,
+          secondY,
+          obstacles,
+        )) {
+          break;
+        }
+
+        final secondNode =
+            nodeAtGrid[secondYIndex * xCoordinates.length + xIndex]!;
+        connect(firstNode, secondNode, 1, (secondY - firstY).abs());
+      }
+    }
+  }
+
+  int nodeFor(_Point point) {
+    final xIndex = xCoordinates.indexOf(point.x);
+    final yIndex = yCoordinates.indexOf(point.y);
+    final node = nodeAtGrid[yIndex * xCoordinates.length + xIndex];
+    if (node == null) {
+      throw StateError('Relationship endpoint is blocked by a class card.');
+    }
+    return node;
+  }
+
+  List<_Point> anchors(_Rect rect) => [
+    _Point(rect.x, rect.y + rect.height / 2),
+    _Point(rect.x + rect.width, rect.y + rect.height / 2),
+    _Point(rect.x + rect.width / 2, rect.y),
+    _Point(rect.x + rect.width / 2, rect.y + rect.height),
+  ];
+
+  final startNodes = anchors(from).map(nodeFor).toSet();
+  final targetNodes = anchors(to).map(nodeFor).toSet();
+  final stateCount = nodes.length * 3;
+  final distances = List<double>.filled(stateCount, double.infinity);
+  final previousStates = List<int>.filled(stateCount, -1);
+  final visited = List<bool>.filled(stateCount, false);
+
+  for (final node in startNodes) {
+    distances[node * 3 + 2] = 0;
+  }
+
+  var destinationState = -1;
+  while (true) {
+    var currentState = -1;
+    var currentDistance = double.infinity;
+    for (var state = 0; state < stateCount; state++) {
+      if (!visited[state] && distances[state] < currentDistance) {
+        currentState = state;
+        currentDistance = distances[state];
+      }
+    }
+    if (currentState == -1) break;
+
+    visited[currentState] = true;
+    final currentNode = currentState ~/ 3;
+    final previousDirection = currentState % 3;
+    if (targetNodes.contains(currentNode)) {
+      destinationState = currentState;
+      break;
+    }
+
+    for (final edge in graph[currentNode]) {
+      final nextState = edge.to * 3 + edge.direction;
+      if (visited[nextState]) continue;
+
+      final bendPenalty =
+          previousDirection != 2 && previousDirection != edge.direction
+          ? 24
+          : 0;
+      final distance = currentDistance + edge.distance + bendPenalty;
+      if (distance < distances[nextState]) {
+        distances[nextState] = distance;
+        previousStates[nextState] = currentState;
+      }
+    }
+  }
+
+  if (destinationState == -1) {
+    throw StateError('Unable to route class relationship around cards.');
+  }
+
+  final reversedPoints = <_Point>[];
+  for (
+    var state = destinationState;
+    state != -1;
+    state = previousStates[state]
+  ) {
+    final point = nodes[state ~/ 3];
+    if (reversedPoints.isEmpty ||
+        reversedPoints.last.x != point.x ||
+        reversedPoints.last.y != point.y) {
+      reversedPoints.add(point);
+    }
+  }
+
+  final points = reversedPoints.reversed.toList();
+  for (var index = points.length - 2; index > 0; index--) {
+    final previous = points[index - 1];
+    final current = points[index];
+    final next = points[index + 1];
+    if ((previous.x == current.x && current.x == next.x) ||
+        (previous.y == current.y && current.y == next.y)) {
+      points.removeAt(index);
+    }
+  }
+  return points;
+}
+
+bool _isInsideAnyRect(double x, double y, List<_Rect> rects) {
+  return rects.any(
+    (rect) =>
+        x > rect.x &&
+        x < rect.x + rect.width &&
+        y > rect.y &&
+        y < rect.y + rect.height,
+  );
+}
+
+bool _isHorizontalSegmentClear(
+  double firstX,
+  double secondX,
+  double y,
+  List<_Rect> rects,
+) {
+  final left = firstX < secondX ? firstX : secondX;
+  final right = firstX < secondX ? secondX : firstX;
+  return !rects.any(
+    (rect) =>
+        ((y > rect.y && y < rect.y + rect.height) ||
+            y == rect.y ||
+            y == rect.y + rect.height) &&
+        right > rect.x &&
+        left < rect.x + rect.width,
+  );
+}
+
+bool _isVerticalSegmentClear(
+  double x,
+  double firstY,
+  double secondY,
+  List<_Rect> rects,
+) {
+  final top = firstY < secondY ? firstY : secondY;
+  final bottom = firstY < secondY ? secondY : firstY;
+  return !rects.any(
+    (rect) =>
+        ((x > rect.x && x < rect.x + rect.width) ||
+            x == rect.x ||
+            x == rect.x + rect.width) &&
+        bottom > rect.y &&
+        top < rect.y + rect.height,
+  );
+}
+
+class _RouteEdge {
+  const _RouteEdge(this.to, this.direction, this.distance);
+
+  final int to;
+  final int direction;
+  final double distance;
 }
 
 class _ClassDefinition {

@@ -92,6 +92,45 @@ classes:
     group: Dashboard
     methods:
       - build(context) Widget
+  - name: DashboardPriorityPatientsTable
+    group: Dashboard
+    methods:
+      - build(context) Widget
+  - name: PriorityPatientRow
+    group: Dashboard
+    fields:
+      - name String
+      - room String
+      - status String
+      - statusPriority int
+      - statusColor Color
+      - spo2 int
+      - pulse int
+      - temp double
+      - lastSyncMinutes int
+      - lastSyncLabel String
+  - name: TableView
+    group: Dashboard
+    fields:
+      - title String
+      - showAllButton bool
+      - columns List<TableViewColumn<T>>
+      - rows List<T>
+      - onViewAll VoidCallback?
+      - onRowTap ValueChanged<T>?
+      - emptyState Widget?
+    methods:
+      - build(context) Widget
+      - createState() State<TableView<T>>
+  - name: TableViewColumn
+    group: Dashboard
+    fields:
+      - label String
+      - cellBuilder TableCellBuilder<T>
+      - compare TableRowComparator<T>
+      - minWidth double
+      - flex int
+      - alignRight bool
   - name: UserMenuPage
     group: Dashboard
     methods:
@@ -222,6 +261,24 @@ class_relationships:
   - from: Dashboard
     to: DashboardQuickActions
     label: contains
+  - from: Dashboard
+    to: DashboardPriorityPatientsTable
+    label: contains
+  - from: Dashboard
+    to: TableView
+    label: contains
+  - from: DashboardPriorityPatientsTable
+    to: TableView
+    label: uses
+  - from: DashboardPriorityPatientsTable
+    to: PriorityPatientRow
+    label: displays
+  - from: TableView
+    to: TableViewColumn
+    label: contains
+  - from: TableView
+    to: PriorityPatientRow
+    label: renders
   - from: DashboardInfoBar
     to: DashboardInfoCard
     label: contains

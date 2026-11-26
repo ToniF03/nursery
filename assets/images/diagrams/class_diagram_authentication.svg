@@ -35,6 +35,6 @@
   <line class="class-divider" x1="320" y1="172" x2="580" y2="172"/>
   <text class="class-method" x="334" y="184">+ signUpWithEmail(...) Future&lt;void&gt;</text>
   <text class="class-method" x="334" y="206">+ build(context) Widget</text>
-  <path class="relation" d="M310 104 H320"/>
-  <text class="relation-label" x="315" y="96">opens</text>
+  <path class="relation" d="M310 150 H320"/>
+  <text class="relation-label" x="315" y="142">opens</text>
 </svg>
