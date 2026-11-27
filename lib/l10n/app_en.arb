@@ -26,6 +26,14 @@
             }
         }
     },
+    "goodEvening": "Good Evening, {name}",
+    "@goodEvening": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
     "searchHeadline": "Search for patients, schedules, or messages",
     "roomWithNumber": "Room {roomNumber}",
     "@roomWithNumber": {

@@ -32,6 +32,20 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
     return '$hours:$minutes';
   }
 
+  
+
+  int get currentHour => DateTime.now().hour;
+
+  String get greeting {
+    if (currentHour < 12) {
+      return AppLocalizations.of(context)!.goodMorning(Globals().userName ?? "");
+    } else if (currentHour < 18) {
+      return AppLocalizations.of(context)!.goodAfternoon(Globals().userName ?? "");
+    } else {
+      return AppLocalizations.of(context)!.goodEvening(Globals().userName ?? "");
+    }
+  }
+
   void _startAlignedClock() {
     // Wait until the next minute before starting the periodic clock timer.
     final DateTime now = DateTime.now();
@@ -64,9 +78,7 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final greeting = AppLocalizations.of(
-          context,
-        )!.goodMorning(Globals().userName ?? "");
+        final greeting = this.greeting;
 
         final greetingStyle = TextStyle(
           fontSize: isSmall ? 18 : 20,

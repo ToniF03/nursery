@@ -46,6 +46,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String goodEvening(String name) {
+    return 'Guten Abend, $name';
+  }
+
+  @override
   String get searchHeadline => 'Suche nach Patienten, Terminen oder Nachrichten';
 
   @override

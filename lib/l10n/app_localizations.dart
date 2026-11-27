@@ -163,6 +163,12 @@ abstract class AppLocalizations {
   /// **'Good Afternoon, {name}'**
   String goodAfternoon(String name);
 
+  /// No description provided for @goodEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Evening, {name}'**
+  String goodEvening(String name);
+
   /// No description provided for @searchHeadline.
   ///
   /// In en, this message translates to:
