@@ -15,18 +15,22 @@ class Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withAlpha(25),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: color,
-          fontSize: 12,
-          fontWeight: bold ? FontWeight.bold : FontWeight.w500,
+    return Align(
+      alignment: Alignment.centerLeft,
+      widthFactor: 1,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: color.withAlpha(25),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: color,
+            fontSize: 12,
+            fontWeight: bold ? FontWeight.bold : FontWeight.w500,
+          ),
         ),
       ),
     );

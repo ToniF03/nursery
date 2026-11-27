@@ -94,6 +94,9 @@ classes:
       - build(context) Widget
   - name: DashboardPriorityPatientsTable
     group: Dashboard
+    fields:
+      - patients List<PriorityPatientRow>?
+      - demoPatientCount int
     methods:
       - build(context) Widget
   - name: PriorityPatientRow
@@ -109,6 +112,12 @@ classes:
       - temp double
       - lastSyncMinutes int
       - lastSyncLabel String
+  - name: DemoPatientDataGenerator
+    group: Dashboard
+    fields:
+      - _random Random
+    methods:
+      - generatePriorityPatients(count) List<PriorityPatientRow>
   - name: TableView
     group: Dashboard
     fields:
@@ -273,6 +282,12 @@ class_relationships:
   - from: DashboardPriorityPatientsTable
     to: PriorityPatientRow
     label: displays
+  - from: DashboardPriorityPatientsTable
+    to: DemoPatientDataGenerator
+    label: uses
+  - from: DemoPatientDataGenerator
+    to: PriorityPatientRow
+    label: generates
   - from: TableView
     to: TableViewColumn
     label: contains

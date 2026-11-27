@@ -49,7 +49,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchHeadline => 'Search for patients, schedules, or messages';
 
   @override
-  String roomWithNumber(Object roomNumber) {
+  String roomWithNumber(String roomNumber) {
     return 'Room $roomNumber';
   }
 
@@ -169,4 +169,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noNewNotifications => 'No new notifications';
+
+  @override
+  String get critical => 'Critical';
+
+  @override
+  String get warning => 'Warning';
+
+  @override
+  String get stable => 'Stable';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get hospitalized => 'Hospitalized';
 }

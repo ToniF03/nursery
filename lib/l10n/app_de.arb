@@ -73,5 +73,10 @@
     "temp": "Temp",
     "lastSync": "Letzte Sync",
     "viewAll": "Alle anzeigen",
-    "noNewNotifications": "Aktuell keine neuen Benachrichtigungen"
+    "noNewNotifications": "Aktuell keine neuen Benachrichtigungen",
+    "critical": "Kritisch",
+    "warning": "Warnung",
+    "stable": "Stabil",
+    "unknown": "Unbekannt",
+    "hospitalized": "Hospitalisiert"
 }

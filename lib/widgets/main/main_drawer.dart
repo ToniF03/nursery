@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
+import 'package:nursery/widgets/pill.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({super.key, required this.onSelectedMobileIndex});
@@ -19,6 +20,7 @@ class MainDrawerState extends State<MainDrawer> {
     required IconData icon,
     required String label,
     required VoidCallback onTap,
+    String? pillText,
   }) {
     return Tooltip(
       message: isCollapsed ? label : '',
@@ -30,6 +32,7 @@ class MainDrawerState extends State<MainDrawer> {
         title: isCollapsed
             ? Center(child: Icon(icon))
             : Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+        trailing: isCollapsed || pillText == null ? null : Pill(text: pillText, color: const Color(0xFF3F4948)),
         onTap: onTap,
       ),
     );
@@ -40,7 +43,7 @@ class MainDrawerState extends State<MainDrawer> {
     final l10n = AppLocalizations.of(context)!;
 
     return SizedBox(
-      width: isCollapsed ? 70 : 200,
+      width: isCollapsed ? 70 : 230,
       child: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
@@ -101,6 +104,7 @@ class MainDrawerState extends State<MainDrawer> {
                     _buildDrawerTile(
                       icon: Icons.mail_outline,
                       label: l10n.messaging,
+                      pillText: '0',
                       onTap: () {
                         widget.onSelectedMobileIndex(3);
                         showDialog(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart' hide GlobalCupertinoLocalizations, GlobalMaterialLocalizations;
 import 'package:intl/intl.dart' as intl;
 import 'package:material_ui/material_ui.dart';
@@ -172,7 +173,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Room {roomNumber}'**
-  String roomWithNumber(Object roomNumber);
+  String roomWithNumber(String roomNumber);
 
   /// No description provided for @high.
   ///
@@ -407,6 +408,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No new notifications'**
   String get noNewNotifications;
+
+  /// No description provided for @critical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get critical;
+
+  /// No description provided for @warning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get warning;
+
+  /// No description provided for @stable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get stable;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// No description provided for @hospitalized.
+  ///
+  /// In en, this message translates to:
+  /// **'Hospitalized'**
+  String get hospitalized;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

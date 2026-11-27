@@ -1,10 +1,50 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:nursery/l10n/app_localizations.dart';
+import 'package:nursery/models/priority_patient_row.dart';
 import 'package:nursery/widgets/dashboard/dashboard_priority_patients_table.dart';
 import 'package:nursery/widgets/table_view.dart';
 
 void main() {
+  const priorityPatients = [
+    PriorityPatientRow(
+      name: 'John Doe',
+      room: 'Room 101',
+      status: 'Critical',
+      statusPriority: 3,
+      statusColor: Colors.red,
+      spo2: 90,
+      pulse: 120,
+      temp: 39,
+      lastSyncMinutes: 10,
+      lastSyncLabel: '10 mins ago',
+    ),
+    PriorityPatientRow(
+      name: 'Anna Smith',
+      room: 'Room 104',
+      status: 'Warning',
+      statusPriority: 2,
+      statusColor: Colors.orange,
+      spo2: 94,
+      pulse: 98,
+      temp: 38,
+      lastSyncMinutes: 3,
+      lastSyncLabel: '3 mins ago',
+    ),
+    PriorityPatientRow(
+      name: 'Max Weber',
+      room: 'Room 102',
+      status: 'Stable',
+      statusPriority: 1,
+      statusColor: Colors.green,
+      spo2: 98,
+      pulse: 74,
+      temp: 36.8,
+      lastSyncMinutes: 25,
+      lastSyncLabel: '25 mins ago',
+    ),
+  ];
+
   testWidgets('sorts the externally supplied rows by every column', (
     tester,
   ) async {
@@ -60,13 +100,19 @@ void main() {
   ) async {
     await tester.pumpWidget(
       const MaterialApp(
+        locale: Locale('de'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: DashboardPriorityPatientsTable()),
+        home: Scaffold(
+          body: DashboardPriorityPatientsTable(patients: priorityPatients),
+        ),
       ),
     );
 
     expect(find.text('John Doe - Room 101'), findsOneWidget);
+    expect(find.text('Kritisch'), findsOneWidget);
+    expect(find.text('Warnung'), findsOneWidget);
+    expect(find.text('Stabil'), findsOneWidget);
     expect(
       _topOf(tester, 'John Doe - Room 101'),
       lessThan(_topOf(tester, 'Max Weber - Room 102')),

@@ -1,81 +1,63 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:nursery/core/app_layout_state.dart';
+import 'package:nursery/data/demo_patient_data_generator.dart';
 import 'package:nursery/l10n/app_localizations.dart';
+import 'package:nursery/models/priority_patient_row.dart';
 import 'package:nursery/widgets/not_implemented_dialog.dart';
 import 'package:nursery/widgets/pill.dart';
 import 'package:nursery/widgets/table_view.dart';
 
-class PriorityPatientRow {
-  const PriorityPatientRow({
-    required this.name,
-    required this.room,
-    required this.status,
-    required this.statusPriority,
-    required this.statusColor,
-    required this.spo2,
-    required this.pulse,
-    required this.temp,
-    required this.lastSyncMinutes,
-    required this.lastSyncLabel,
+class DashboardPriorityPatientsTable extends StatefulWidget {
+  const DashboardPriorityPatientsTable({
+    super.key,
+    this.patients,
+    this.demoPatientCount = 10,
   });
 
-  final String name;
-  final String room;
-  final String status;
-  final int statusPriority;
-  final Color statusColor;
-  final int spo2;
-  final int pulse;
-  final double temp;
-  final int lastSyncMinutes;
-  final String lastSyncLabel;
+  final List<PriorityPatientRow>? patients;
+  final int demoPatientCount;
+
+  @override
+  State<DashboardPriorityPatientsTable> createState() =>
+      _DashboardPriorityPatientsTableState();
 }
 
-const List<PriorityPatientRow> demoPriorityPatients = [
-  PriorityPatientRow(
-    name: 'John Doe',
-    room: 'Room 101',
-    status: 'Critical',
-    statusPriority: 3,
-    statusColor: Colors.red,
-    spo2: 92,
-    pulse: 110,
-    temp: 37.5,
-    lastSyncMinutes: 10,
-    lastSyncLabel: '10 mins ago',
-  ),
-  PriorityPatientRow(
-    name: 'Anna Smith',
-    room: 'Room 104',
-    status: 'Warning',
-    statusPriority: 2,
-    statusColor: Colors.orange,
-    spo2: 95,
-    pulse: 98,
-    temp: 38.2,
-    lastSyncMinutes: 3,
-    lastSyncLabel: '3 mins ago',
-  ),
-  PriorityPatientRow(
-    name: 'Max Weber',
-    room: 'Room 102',
-    status: 'Stable',
-    statusPriority: 1,
-    statusColor: Colors.green,
-    spo2: 98,
-    pulse: 74,
-    temp: 36.8,
-    lastSyncMinutes: 25,
-    lastSyncLabel: '25 mins ago',
-  ),
-];
+class _DashboardPriorityPatientsTableState
+    extends State<DashboardPriorityPatientsTable> {
+  late List<PriorityPatientRow> _demoPatients;
 
-class DashboardPriorityPatientsTable extends StatelessWidget {
-  const DashboardPriorityPatientsTable({super.key});
+  @override
+  void initState() {
+    super.initState();
+    if (widget.patients == null) {
+      _generateDemoPatients();
+    }
+  }
+
+  @override
+  void didUpdateWidget(DashboardPriorityPatientsTable oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.patients == null &&
+        (oldWidget.patients != null ||
+            oldWidget.demoPatientCount != widget.demoPatientCount)) {
+      _generateDemoPatients();
+    }
+  }
+
+  void _generateDemoPatients() {
+    _demoPatients =
+        DemoPatientDataGenerator().generatePriorityPatients(
+          widget.demoPatientCount,
+        )..sort(
+          (first, second) =>
+              second.statusPriority.compareTo(first.statusPriority),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final patients = widget.patients ?? _demoPatients;
 
     return Padding(
       padding: EdgeInsets.all(isSmall ? 8 : 12),
@@ -107,8 +89,10 @@ class DashboardPriorityPatientsTable extends StatelessWidget {
           ),
           TableViewColumn(
             label: localizations.status,
-            cellBuilder: (context, patient) =>
-                Pill(text: patient.status, color: patient.statusColor),
+            cellBuilder: (context, patient) => Pill(
+              text: _localizedStatus(localizations, patient.status),
+              color: patient.statusColor,
+            ),
             compare: (first, second) =>
                 first.statusPriority.compareTo(second.statusPriority),
             minWidth: 105,
@@ -150,8 +134,18 @@ class DashboardPriorityPatientsTable extends StatelessWidget {
             alignRight: true,
           ),
         ],
-        rows: demoPriorityPatients,
+        rows: patients,
       ),
     );
   }
 }
+
+String _localizedStatus(AppLocalizations localizations, String status) =>
+    switch (status) {
+      'Critical' => localizations.critical,
+      'Warning' => localizations.warning,
+      'Stable' => localizations.stable,
+      'Unknown' => localizations.unknown,
+      'Hospitalized' => localizations.hospitalized,
+      _ => status,
+    };
