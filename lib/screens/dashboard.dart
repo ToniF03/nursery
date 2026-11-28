@@ -36,10 +36,7 @@ class _DashboardState extends State<Dashboard> {
             // Search and account actions.
             const DashboardTopBar(),
 
-            Padding(
-              padding: EdgeInsets.all(isSmall ? 8 : 12),
-              child: const DashboardInfoBar(),
-            ),
+            const DashboardInfoBar(),
 
             const DashboardQuickActions(),
 
