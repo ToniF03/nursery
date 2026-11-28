@@ -1,10 +1,11 @@
 #import "@preview/pintorita:0.1.4"
 
-#let accent-color = rgb("#4A9B9B")
+#let default-accent-color = rgb("#4A9B9B")
 #let bg-light = rgb("#F4F7F9")
 #let border-color = rgb("#D0D7DE")
 
 #let user-story(
+  accent-color: default-accent-color,
   title: "",
   id: "",
   priority: "",
@@ -65,19 +66,21 @@
   v(1em)
 }
 
-#let front-page() = {
+#let front-page(title, author, accent-color, icon) = {
   align(center)[
     #v(3cm)
-    #align(center + horizon)[
-      #image("images/logo_with_subtitle_transparent.svg", width: 75%)
-    ]
-    #text(size: 26pt, weight: "bold", fill: black)[Documentation]
+    #if icon != none {
+      align(center + horizon)[
+        #image(icon, width: 75%)
+      ]
+    }
+    #text(size: 26pt, weight: "bold", fill: black)[#title]
     #v(3cm)
     #line(length: 40%, stroke: 1pt + border-color)
     #v(1em)
-    #text(size: 11pt, fill: gray)[Idea, Development and Design by]
+    #text(size: 11pt, fill: gray)[Created by]
     #v(0.2em)
-    #text(size: 14pt, weight: "bold", fill: black)[Toni Fey]
+    #text(size: 14pt, weight: "bold", fill: black)[#author]
   ]
   pagebreak()
   outline(
@@ -87,21 +90,28 @@
 )
 }
 
-#let back-page() = {
+#let back-page(title, author, accent-color) = {
   pagebreak()
   align(center)[
     #align(center + bottom)[
-    #text(size: 18pt, weight: "bold", fill: accent-color)[Nursery Documentation]
+    #text(size: 18pt, weight: "bold", fill: accent-color)[#title]
     #line(length: 100%, stroke: 0.5pt + border-color)
     #v(0.8em)
 
-    #text(size: 11pt, fill: gray)[Copyright © 2026 Toni Fey. All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form without prior written permission.]
+    #text(size: 11pt, fill: gray)[Copyright © #author. All rights reserved.]
     ]
   ]
 }
 
-#let nursery-template(body) = {
-  set document(title: "Nursery Documentation", author: "Toni Fey")
+#let nursery-template(
+  title: "Document title",
+  front-page-title: "Front Page Title",
+  author: "Author",
+  accent-color: default-accent-color,
+  icon: none,
+  body
+) = {
+  set document(title: title, author: author)
   set page(
     paper: "a4",
     margin: (top: 2.5cm, bottom: 2.5cm, left: 2.2cm, right: 2.2cm),
@@ -110,8 +120,8 @@
         #set text(size: 8.5pt, fill: gray)
         #grid(
           columns: (1fr, 1fr),
-          align(left)[Nursery - Project Documentation],
-          align(right)[Toni Fey]
+          align(left)[#title],
+          align(right)[#author]
         )
         #v(-0.6em)
         #line(length: 100%, stroke: 0.5pt + border-color)
@@ -161,7 +171,7 @@
   )
 
   show raw.where(lang: "pintora"): it => pintorita.render(it.text)
-  front-page()
+  front-page(front-page-title, author, accent-color, icon)
   body
-  back-page()
+  back-page(title, author, accent-color)
 }

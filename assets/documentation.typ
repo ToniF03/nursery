@@ -1,5 +1,13 @@
-#import "template.typ": *
-#show: nursery-template
+#import "template.typ": nursery-template, user-story as base-user-story, wireframe-box
+
+#let user-story = base-user-story.with(accent-color: rgb("#4A9B9B"))
+#show: nursery-template.with(
+  title: "Nursery Documentation",
+  front-page-title: "Documentation",
+  author: "Toni Fey",
+  accent-color: rgb("#4A9B9B"),
+  icon: "images/logo_with_subtitle_transparent.svg",
+)
 
 #let flutterVersion = "3.50.1"
 #let dartVersion = "3.14.0"
