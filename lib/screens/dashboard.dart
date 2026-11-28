@@ -3,6 +3,7 @@ import 'package:nursery/core/app_layout_state.dart';
 import 'package:nursery/widgets/dashboard/dashboard_info_bar.dart';
 import 'package:nursery/widgets/dashboard/dashboard_priority_patients_table.dart';
 import 'package:nursery/widgets/dashboard/dashboard_quick_actions.dart';
+import 'package:nursery/widgets/dashboard/dashboard_shift_handover.dart';
 import 'package:nursery/widgets/dashboard/dashboard_top_bar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -36,10 +37,15 @@ class _DashboardState extends State<Dashboard> {
             // Search and account actions.
             const DashboardTopBar(),
 
+            // Info bar with greeting and clock.
             const DashboardInfoBar(),
 
+            const DashboardShiftHandover(),
+
+            // Quick action buttons for common tasks.
             const DashboardQuickActions(),
 
+            // Table of priority patients.
             const DashboardPriorityPatientsTable(),
           ],
         ),

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:nursery/models/priority_patient_row.dart';
+import 'package:nursery/models/shift_handover_note.dart';
 
 class DemoPatientDataGenerator {
   DemoPatientDataGenerator({int? seed}) : _random = Random(seed);
@@ -9,55 +10,135 @@ class DemoPatientDataGenerator {
   final Random _random;
 
   static const _firstNames = [
+    'Abigail',
+    'Adam',
     'Alex',
-    'Anna',
-    'Ben',
-    'Clara',
-    'David',
-    'Elena',
-    'Emma',
-    'Felix',
-    'Hannah',
-    'Jonas',
-    'Laura',
-    'Lea',
+    'Amelia',
+    'Andrew',
+    'Ava',
+    'Benjamin',
+    'Chloe',
+    'Daniel',
+    'Eleanor',
+    'Elijah',
+    'Emily',
+    'Ethan',
+    'Grace',
+    'Harper',
+    'Henry',
+    'Isabella',
+    'Jack',
+    'James',
+    'Lily',
     'Liam',
-    'Luca',
-    'Marie',
+    'Lucas',
     'Mia',
+    'Michael',
     'Noah',
-    'Paul',
-    'Sofia',
-    'Theo',
+    'Oliver',
+    'Olivia',
+    'Owen',
+    'Sophia',
+    'Theodore',
+    'Tina',
+    'William',
   ];
 
   static const _lastNames = [
-    'Bauer',
-    'Becker',
-    'Fischer',
-    'Hoffmann',
-    'Keller',
-    'Klein',
-    'Koch',
-    'Krause',
-    'Meyer',
-    'Neumann',
-    'Richter',
-    'Schmidt',
-    'Schneider',
-    'Schulz',
-    'Schwarz',
-    'Weber',
+    'Adams',
+    'Anderson',
+    'Baker',
+    'Bennett',
+    'Brooks',
+    'Carter',
+    'Collins',
+    'Cooper',
+    'Davis',
+    'Edwards',
+    'Evans',
+    'Foster',
+    'Gray',
+    'Harris',
+    'Hayes',
+    'Hill',
+    'Jackson',
+    'Johnson',
+    'Kelly',
+    'Lewis',
+    'Martin',
+    'Mitchell',
+    'Morgan',
+    'Parker',
+    'Reed',
+    'Roberts',
+    'Scott',
+    'Smith',
+    'Taylor',
+    'Turner',
+    'Walker',
+    'White',
+    'Wilson',
+  ];
+
+  static const _handoverProfiles = [
+    _HandoverProfile(
+      note:
+          'Oxygen saturation was below the usual range during the last check. '
+          'Please repeat observations and escalate any further decline.',
+      color: Colors.red,
+    ),
+    _HandoverProfile(
+      note:
+          'Heart rate remains elevated after rest. Please recheck during the '
+          'next round and update the nurse in charge if it continues.',
+      color: Colors.orange,
+    ),
+    _HandoverProfile(
+      note:
+          'Patient reported increased pain after medication. Reassess the pain '
+          'score at the next check.',
+      color: Colors.orange,
+    ),
+    _HandoverProfile(
+      note:
+          "Blood pressure was lower than the patient's usual baseline. Please "
+          'repeat the measurement at the next observation.',
+      color: Colors.orange,
+    ),
+    _HandoverProfile(
+      note:
+          'Patient is at increased risk of falling. Keep the call bell within '
+          'reach and offer assistance when moving.',
+      color: Colors.orange,
+    ),
+    _HandoverProfile(
+      note:
+          'Please check that the dressing remains clean and dry during the '
+          'next round.',
+      color: Colors.blue,
+    ),
+    _HandoverProfile(
+      note:
+          'Appetite was reduced at lunch. Offer fluids and record intake at '
+          'the next meal.',
+      color: Colors.blue,
+    ),
+    _HandoverProfile(
+      note:
+          'Patient is resting comfortably after the morning round. Continue '
+          'routine observations.',
+      color: Colors.green,
+    ),
+    _HandoverProfile(
+      note:
+          "Family requested an update after the physician's round. Please "
+          'follow up when the plan is available.',
+      color: Colors.blue,
+    ),
   ];
 
   List<PriorityPatientRow> generatePriorityPatients(int count) {
-    if (count < 0) {
-      throw ArgumentError.value(
-        count,
-        'count',
-        'Must be greater than or equal to zero.',
-      );
-    }
+    _validateCount(count);
 
     return List<PriorityPatientRow>.generate(count, (index) {
       final status = switch (_random.nextInt(10)) {
@@ -103,9 +184,7 @@ class DemoPatientDataGenerator {
       final lastSyncMinutes = _random.nextInt(60);
 
       return PriorityPatientRow(
-        name:
-            '${_firstNames[_random.nextInt(_firstNames.length)]} '
-            '${_lastNames[_random.nextInt(_lastNames.length)]}',
+        name: _generatePatientName(),
         room: 'Room ${101 + index}',
         status: profile.label,
         statusPriority: profile.priority,
@@ -124,6 +203,36 @@ class DemoPatientDataGenerator {
     }, growable: false);
   }
 
+  List<ShiftHandoverNote> generateShiftHandoverNotes(int count) {
+    _validateCount(count);
+
+    return List<ShiftHandoverNote>.generate(count, (index) {
+      final profile =
+          _handoverProfiles[_random.nextInt(_handoverProfiles.length)];
+      return ShiftHandoverNote(
+        patientName: _generatePatientName(),
+        room: 'Room ${101 + index}',
+        note: profile.note,
+        color: profile.color,
+      );
+    }, growable: false);
+  }
+
+  void _validateCount(int count) {
+    if (count < 0) {
+      throw ArgumentError.value(
+        count,
+        'count',
+        'Must be greater than or equal to zero.',
+      );
+    }
+  }
+
+  String _generatePatientName() {
+    return '${_firstNames[_random.nextInt(_firstNames.length)]} '
+        '${_lastNames[_random.nextInt(_lastNames.length)]}';
+  }
+
   int _between(int minimum, int maximum) {
     return minimum + _random.nextInt(maximum - minimum + 1);
   }
@@ -133,6 +242,13 @@ class DemoPatientDataGenerator {
     if (minutes == 1) return '1 min ago';
     return '$minutes mins ago';
   }
+}
+
+class _HandoverProfile {
+  const _HandoverProfile({required this.note, required this.color});
+
+  final String note;
+  final Color color;
 }
 
 enum _PatientStatus { critical, warning, stable }

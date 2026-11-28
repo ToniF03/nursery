@@ -86,5 +86,17 @@
     "warning": "Warnung",
     "stable": "Stabil",
     "unknown": "Unbekannt",
-    "hospitalized": "Hospitalisiert"
+    "hospitalized": "Hospitalisiert",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "addANewNote": "Neue Notiz hinzufügen...",
+    "shiftHandover": "Schichtübergabe",
+    "early": "Früh",
+    "late": "Spät",
+    "night": "Nacht",
+    "notes": "Notizen",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "tomorrow": "Morgen",
+    "scanDocument": "Dokument scannen"
 }

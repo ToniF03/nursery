@@ -60,7 +60,7 @@ class _DashboardPriorityPatientsTableState
     final patients = widget.patients ?? _demoPatients;
 
     return Padding(
-      padding: EdgeInsets.all(isSmall ? 8 : 12),
+      padding: EdgeInsets.all(layoutPadding),
       child: TableView<PriorityPatientRow>(
         title: localizations.priorityPatients,
         onViewAll: () {

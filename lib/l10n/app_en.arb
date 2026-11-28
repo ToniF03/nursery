@@ -86,5 +86,17 @@
     "warning": "Warning",
     "stable": "Stable",
     "unknown": "Unknown",
-    "hospitalized": "Hospitalized"
+    "hospitalized": "Hospitalized",
+    "save": "Save",
+    "cancel": "Cancel",
+    "addANewNote": "Add a new note...",
+    "shiftHandover": "Shift Handover",
+    "early": "Early",
+    "late": "Late",
+    "night": "Night",
+    "notes": "Notes",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "scanDocument": "Scan Document"
 }

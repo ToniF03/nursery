@@ -189,4 +189,40 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get hospitalized => 'Hospitalisiert';
+
+  @override
+  String get save => 'Speichern';
+
+  @override
+  String get cancel => 'Abbrechen';
+
+  @override
+  String get addANewNote => 'Neue Notiz hinzufügen...';
+
+  @override
+  String get shiftHandover => 'Schichtübergabe';
+
+  @override
+  String get early => 'Früh';
+
+  @override
+  String get late => 'Spät';
+
+  @override
+  String get night => 'Nacht';
+
+  @override
+  String get notes => 'Notizen';
+
+  @override
+  String get today => 'Heute';
+
+  @override
+  String get yesterday => 'Gestern';
+
+  @override
+  String get tomorrow => 'Morgen';
+
+  @override
+  String get scanDocument => 'Dokument scannen';
 }

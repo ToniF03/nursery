@@ -62,9 +62,41 @@ void main() {
     );
   });
 
+  test('generates complete, repeatable English shift handover notes', () {
+    final first = DemoPatientDataGenerator(
+      seed: 456,
+    ).generateShiftHandoverNotes(20);
+    final second = DemoPatientDataGenerator(
+      seed: 456,
+    ).generateShiftHandoverNotes(20);
+
+    expect(first, hasLength(20));
+    expect(first.map((note) => note.room).toSet(), hasLength(20));
+    expect(
+      first.map((note) => '${note.patientName}|${note.room}|${note.note}'),
+      second.map((note) => '${note.patientName}|${note.room}|${note.note}'),
+    );
+
+    for (final note in first) {
+      expect(note.patientName, isNotEmpty);
+      expect(note.room, startsWith('Room '));
+      expect(note.note, isNotEmpty);
+      expect([
+        Colors.red,
+        Colors.orange,
+        Colors.blue,
+        Colors.green,
+      ], contains(note.color));
+    }
+  });
+
   test('rejects a negative patient count', () {
     expect(
       () => DemoPatientDataGenerator().generatePriorityPatients(-1),
+      throwsArgumentError,
+    );
+    expect(
+      () => DemoPatientDataGenerator().generateShiftHandoverNotes(-1),
       throwsArgumentError,
     );
   });

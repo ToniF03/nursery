@@ -784,7 +784,7 @@ dart run tool/generate_uml_diagrams.dart
 #pagebreak()
 
 == Class Diagram
-The class diagram shows the main classes of the current Flutter application and their dependencies. `Nursery` initializes the application and its localization, `MyHomePage` provides the responsive application shell, and `AuthGate` switches between authentication and the dashboard based on the current Supabase session. The dashboard is composed of reusable widgets for navigation, overview information, quick actions, alerts, and the timeline. `AuthService`, `Globals`, and the Supabase client provide shared authentication and profile access. Private Flutter state classes are omitted to keep the diagram focused on the public application structure.
+The class diagram shows the main classes of the current Flutter application and their dependencies. `Nursery` initializes the application and its localization, `MyHomePage` provides the responsive application shell, and `AuthGate` switches between authentication and the dashboard based on the current Supabase session. The dashboard is composed of reusable widgets for navigation, overview information, shift handover notes, quick actions, alerts, and the timeline. `DemoPatientDataGenerator` provides demo patient and handover data. `AuthService`, `Globals`, and the Supabase client provide shared authentication and profile access. Private Flutter state classes are omitted to keep the diagram focused on the public application structure.
 
 The class definitions and relationships are maintained in `assets/diagrams.yaml` and generated with the same UML generator:
 

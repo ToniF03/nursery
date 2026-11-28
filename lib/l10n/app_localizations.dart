@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_localizations/flutter_localizations.dart' hide GlobalCupertinoLocalizations, GlobalMaterialLocalizations;
+import 'package:material_ui/material_ui.dart' show GlobalMaterialLocalizations;
 import 'package:intl/intl.dart' as intl;
-import 'package:material_ui/material_ui.dart';
 
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
@@ -78,17 +76,14 @@ abstract class AppLocalizations {
   /// delegates.
   ///
   /// Returns a list of localizations delegates containing this delegate along with
-  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
-  /// and GlobalWidgetsLocalizations.delegate.
+  /// GlobalMaterialLocalizations.delegates.
   ///
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
+    ...GlobalMaterialLocalizations.delegates,
   ];
 
   /// A list of this localizations delegate's supported locales.
@@ -444,6 +439,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hospitalized'**
   String get hospitalized;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @addANewNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a new note...'**
+  String get addANewNote;
+
+  /// No description provided for @shiftHandover.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift Handover'**
+  String get shiftHandover;
+
+  /// No description provided for @early.
+  ///
+  /// In en, this message translates to:
+  /// **'Early'**
+  String get early;
+
+  /// No description provided for @late.
+  ///
+  /// In en, this message translates to:
+  /// **'Late'**
+  String get late;
+
+  /// No description provided for @night.
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get night;
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrow;
+
+  /// No description provided for @scanDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Document'**
+  String get scanDocument;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

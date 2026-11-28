@@ -9,6 +9,7 @@ final ValueNotifier<bool> isSmallNotifier = ValueNotifier<bool>(false);
 
 bool get isDesktop => isDesktopNotifier.value;
 bool get isSmall => isSmallNotifier.value;
+double get layoutPadding => isSmall ? 8 : 12;
 
 // Updates the layout state only when the desktop/mobile mode changes.
 void setIsDesktop(bool value) {

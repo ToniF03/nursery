@@ -231,13 +231,13 @@ dart run tool/generate_uml_diagrams.dart
 
 The generated files are:
 
-- [`assets/images/use_case_diagram_1.svg`](assets/images/use_case_diagram_1.svg)
-- [`assets/images/use_case_diagram_2.svg`](assets/images/use_case_diagram_2.svg)
-- [`assets/images/class_diagram_application.svg`](assets/images/class_diagram_application.svg)
-- [`assets/images/class_diagram_authentication.svg`](assets/images/class_diagram_authentication.svg)
-- [`assets/images/class_diagram_dashboard.svg`](assets/images/class_diagram_dashboard.svg)
-- [`assets/images/class_diagram_widgets.svg`](assets/images/class_diagram_widgets.svg)
-- [`assets/images/class_diagram_services.svg`](assets/images/class_diagram_services.svg)
+- [`assets/images/diagrams/use_case_diagram_1.svg`](assets/images/diagrams/use_case_diagram_1.svg)
+- [`assets/images/diagrams/use_case_diagram_2.svg`](assets/images/diagrams/use_case_diagram_2.svg)
+- [`assets/images/diagrams/class_diagram_application.svg`](assets/images/diagrams/class_diagram_application.svg)
+- [`assets/images/diagrams/class_diagram_authentication.svg`](assets/images/diagrams/class_diagram_authentication.svg)
+- [`assets/images/diagrams/class_diagram_dashboard.svg`](assets/images/diagrams/class_diagram_dashboard.svg)
+- [`assets/images/diagrams/class_diagram_widgets.svg`](assets/images/diagrams/class_diagram_widgets.svg)
+- [`assets/images/diagrams/class_diagram_services.svg`](assets/images/diagrams/class_diagram_services.svg)
 
 Compile the documentation locally with:
 

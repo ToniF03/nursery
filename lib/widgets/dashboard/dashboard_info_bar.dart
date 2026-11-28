@@ -87,7 +87,7 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(isSmall ? 8 : 12),
+      padding: EdgeInsets.all(layoutPadding),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final greeting = this.greeting;

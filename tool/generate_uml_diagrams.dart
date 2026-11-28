@@ -24,9 +24,12 @@ void main(List<String> arguments) {
   final useCases = (useCaseSpec['use_cases'] as YamlList)
       .cast<String>()
       .toList();
-  for (var index = 0; index < useCases.length; index += 6) {
-    final end = index + 6 > useCases.length ? useCases.length : index + 6;
-    final part = index ~/ 6 + 1;
+  const useCasesPerDiagram = 7;
+  for (var index = 0; index < useCases.length; index += useCasesPerDiagram) {
+    final end = index + useCasesPerDiagram > useCases.length
+        ? useCases.length
+        : index + useCasesPerDiagram;
+    final part = index ~/ useCasesPerDiagram + 1;
     final file = File('${imageDirectory.path}/use_case_diagram_$part.svg');
     file.writeAsStringSync(
       _buildUseCaseSvg(useCaseSpec, useCases.sublist(index, end), part),

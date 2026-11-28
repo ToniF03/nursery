@@ -11,6 +11,7 @@ use_cases:
     - View dashboard overview
     - View current time and staff ratio
     - View alerts and shift timeline
+    - View shift handover notes
     - Open account menu
     - View profile information
     - Sign out
@@ -21,6 +22,7 @@ use_cases:
     - Healthcare professional -> Register account
     - Healthcare professional -> Sign in
     - Healthcare professional -> View dashboard overview
+    - Healthcare professional -> View shift handover notes
     - Healthcare professional -> Open account menu
     - Healthcare professional -> Sign out
     - Healthcare professional -> Use quick action
@@ -38,6 +40,7 @@ use_cases:
     - Check authentication session -> View dashboard overview
     - View dashboard overview -> View current time and staff ratio
     - View dashboard overview -> View alerts and shift timeline
+    - View dashboard overview -> View shift handover notes
     - Open account menu -> View profile information
     - Use quick action -> Display not-implemented dialog
 
@@ -88,6 +91,19 @@ classes:
       - initState() void
       - dispose() void
       - build(context) Widget
+  - name: DashboardShiftHandover
+    group: Dashboard
+    fields:
+      - _scrollController ScrollController
+      - _handoverNotes List<ShiftHandoverNote>
+      - _topFadeStop double
+      - _bottomFadeStop double
+    methods:
+      - initState() void
+      - dispose() void
+      - _updateFadeStops() void
+      - build(context) Widget
+      - _buildShiftHandoverNote(context, header, note, color) Widget
   - name: DashboardQuickActions
     group: Dashboard
     methods:
@@ -112,12 +128,20 @@ classes:
       - temp double
       - lastSyncMinutes int
       - lastSyncLabel String
+  - name: ShiftHandoverNote
+    group: Dashboard
+    fields:
+      - patientName String
+      - room String
+      - note String
+      - color Color
   - name: DemoPatientDataGenerator
     group: Dashboard
     fields:
       - _random Random
     methods:
       - generatePriorityPatients(count) List<PriorityPatientRow>
+      - generateShiftHandoverNotes(count) List<ShiftHandoverNote>
   - name: TableView
     group: Dashboard
     fields:
@@ -268,6 +292,9 @@ class_relationships:
     to: DashboardInfoBar
     label: contains
   - from: Dashboard
+    to: DashboardShiftHandover
+    label: contains
+  - from: Dashboard
     to: DashboardQuickActions
     label: contains
   - from: Dashboard
@@ -287,6 +314,15 @@ class_relationships:
     label: uses
   - from: DemoPatientDataGenerator
     to: PriorityPatientRow
+    label: generates
+  - from: DashboardShiftHandover
+    to: DemoPatientDataGenerator
+    label: uses
+  - from: DashboardShiftHandover
+    to: ShiftHandoverNote
+    label: displays
+  - from: DemoPatientDataGenerator
+    to: ShiftHandoverNote
     label: generates
   - from: TableView
     to: TableViewColumn

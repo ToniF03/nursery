@@ -189,4 +189,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hospitalized => 'Hospitalized';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get addANewNote => 'Add a new note...';
+
+  @override
+  String get shiftHandover => 'Shift Handover';
+
+  @override
+  String get early => 'Early';
+
+  @override
+  String get late => 'Late';
+
+  @override
+  String get night => 'Night';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String get scanDocument => 'Scan Document';
 }

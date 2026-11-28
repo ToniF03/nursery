@@ -5,6 +5,8 @@ import 'package:nursery/l10n/app_localizations.dart';
 typedef TableCellBuilder<T> = Widget Function(BuildContext context, T row);
 typedef TableRowComparator<T> = int Function(T first, T second);
 
+// TODO: Pagination for long tables, with a "View All" button to show the full list.
+
 class TableViewColumn<T> {
   const TableViewColumn({
     required this.label,
@@ -174,7 +176,7 @@ class _TableViewState<T> extends State<TableView<T>> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.all(isSmall ? 8 : 12),
+            padding: EdgeInsets.all(layoutPadding),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

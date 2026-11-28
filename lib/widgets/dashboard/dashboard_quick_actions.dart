@@ -11,7 +11,7 @@ class DashboardQuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(isSmall ? 8 : 12),
+      padding: EdgeInsets.all(layoutPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,7 +26,7 @@ class DashboardQuickActions extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: isSmall ? 8 : 12),
+          SizedBox(height: layoutPadding),
           HorizontalFadeList(
             children: [
               QuickActionButton(
@@ -42,6 +42,16 @@ class DashboardQuickActions extends StatelessWidget {
               QuickActionButton(
                 icon: Icons.monitor_heart_outlined,
                 label: AppLocalizations.of(context)!.recordVitals,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const NotImplementedDialog(),
+                  );
+                },
+              ),
+              QuickActionButton(
+                icon: Icons.scanner_outlined,
+                label: AppLocalizations.of(context)!.scanDocument,
                 onPressed: () {
                   showDialog(
                     context: context,

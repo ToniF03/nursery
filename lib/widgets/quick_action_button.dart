@@ -23,7 +23,7 @@ class _QuickActionButtonState extends State<QuickActionButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.all(isSmall ? 8 : 12),
+      padding: EdgeInsetsGeometry.all(layoutPadding),
       child: Material(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
