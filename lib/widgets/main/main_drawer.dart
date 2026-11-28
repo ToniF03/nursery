@@ -82,6 +82,7 @@ class MainDrawerState extends State<MainDrawer> {
                     _buildDrawerTile(
                       icon: Icons.people,
                       label: l10n.patients,
+                      pillText: '32',
                       onTap: () {
                         widget.onSelectedMobileIndex(1);
                         showDialog(

@@ -11,7 +11,7 @@ class DashboardPriorityPatientsTable extends StatefulWidget {
   const DashboardPriorityPatientsTable({
     super.key,
     this.patients,
-    this.demoPatientCount = 10,
+    this.demoPatientCount = 32,
   });
 
   final List<PriorityPatientRow>? patients;
