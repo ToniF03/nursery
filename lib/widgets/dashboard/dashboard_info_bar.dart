@@ -21,8 +21,13 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
   @override
   void initState() {
     super.initState();
+    Globals().userNameListenable.addListener(_onUserNameChanged);
     // Start the clock aligned to a minute boundary, then update every second.
     _startAlignedClock();
+  }
+
+  void _onUserNameChanged() {
+    if (mounted) setState(() {});
   }
 
   String _currentTime() {
@@ -32,17 +37,21 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
     return '$hours:$minutes';
   }
 
-  
-
   int get currentHour => DateTime.now().hour;
 
   String get greeting {
     if (currentHour < 12) {
-      return AppLocalizations.of(context)!.goodMorning(Globals().userName ?? "");
+      return AppLocalizations.of(
+        context,
+      )!.goodMorning(Globals().userName ?? "");
     } else if (currentHour < 18) {
-      return AppLocalizations.of(context)!.goodAfternoon(Globals().userName ?? "");
+      return AppLocalizations.of(
+        context,
+      )!.goodAfternoon(Globals().userName ?? "");
     } else {
-      return AppLocalizations.of(context)!.goodEvening(Globals().userName ?? "");
+      return AppLocalizations.of(
+        context,
+      )!.goodEvening(Globals().userName ?? "");
     }
   }
 
@@ -69,6 +78,7 @@ class _DashboardInfoBarState extends State<DashboardInfoBar> {
 
   @override
   void dispose() {
+    Globals().userNameListenable.removeListener(_onUserNameChanged);
     _alignTimer?.cancel();
     _clockTimer?.cancel();
     super.dispose();

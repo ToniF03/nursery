@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:nursery/core/globals.dart';
 import 'package:nursery/core/logout_helper.dart';
 import 'package:nursery/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,8 +20,16 @@ class _UserMenuPage extends State<UserMenuPage> {
   @override
   void initState() {
     super.initState();
+    final metadata = supabase.auth.currentUser?.userMetadata;
+    final displayNameValue =
+        metadata?['displayName'] ?? metadata?['display_name'];
+    final metadataName = displayNameValue is String
+        ? displayNameValue.trim()
+        : '';
+    final fullName = Globals().fullName?.trim() ?? '';
+    name = metadataName.isNotEmpty ? metadataName : fullName;
     // Load the user's display name when the menu opens.
-    getUserName();
+    if (name.isEmpty) getUserName();
   }
 
   void navigateToFirst() {
@@ -39,10 +48,13 @@ class _UserMenuPage extends State<UserMenuPage> {
           .maybeSingle();
 
       if (!mounted) return;
+      final firstName = userData?['first_name'] as String? ?? '';
+      final lastName = userData?['last_name'] as String? ?? '';
+      final profileName = '$firstName $lastName'.trim();
+      if (profileName.isEmpty) return;
+
       setState(() {
-        final firstName = userData?['first_name'] as String? ?? '';
-        final lastName = userData?['last_name'] as String? ?? '';
-        name = '$firstName $lastName'.trim();
+        name = profileName;
       });
     } catch (e) {
       debugPrint('Get Table Exception: $e');
